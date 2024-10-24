@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c1bd3601648f28a252a6030e067b6, type: 3}
   m_Name: UnityFigmaBridgeSettings
   m_EditorClassIdentifier: 
-  DocumentUrl: https://www.figma.com/design/urjSIZjZq9Ybb5pxmnn1WD/Untitled?node-id=0-1&node-type=canvas&t=WFKR2wrIBBcbD9Eu-0
-  BuildPrototypeFlow: 1
-  RunTimeAssetsScenePath: Assets/1.Scene/InGame.unity
+  DocumentUrl: https://www.figma.com/design/urjSIZjZq9Ybb5pxmnn1WD/UI.fig?node-id=0-1&node-type=canvas&t=GuGNJM4LZfkVNpwP-0
+  BuildPrototypeFlow: 0
+  RunTimeAssetsScenePath: Assets/1.Scene/02. Jang Sijin/Pigma.unity
   EnableAutoLayout: 0
   ScreenBindingNamespace: 
   ServerRenderImageScale: 3
