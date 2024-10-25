@@ -5,7 +5,6 @@ using UnityEngine;
 public class CircleControl : MonoBehaviour
 {
     public bool isDrag;
-    //인스펙터에서 잠깐 조정하려고
     private Rigidbody2D rigid;
     private SpringJoint2D springJoint;
     private Collider2D col;
@@ -35,9 +34,9 @@ public class CircleControl : MonoBehaviour
             {
                 mousePoint.x = 3.14f;
             }
+            //------------진자운동 부분--------------
 
-            // 스프링 연결 지점 설정 - 사용자
-            // 키링의 끝부분을 마우스 포인트로 지정
+            // 키링의 시작 부분을 마우스 포인트로 지정
             springJoint.connectedAnchor = mousePoint;
             // 마우스 포인트를 따라가는 속도 느리게
             springJoint.connectedAnchor
@@ -46,8 +45,6 @@ public class CircleControl : MonoBehaviour
             springJoint.distance = 1.6f;
             // 콜라이더 비활성화
             col.enabled = false;
-
-
         }
 
     }
@@ -55,7 +52,6 @@ public class CircleControl : MonoBehaviour
     public void Drag()
     {
         isDrag = true;
-      //  springJoint.enabled = true; // 드래그 시 스프링 활성화
     }
 
     public void Drop()
@@ -63,7 +59,6 @@ public class CircleControl : MonoBehaviour
         isDrag = false;
         col.enabled = true;
         springJoint.enabled = false;
-
     }
 
 }
