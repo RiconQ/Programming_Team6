@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/1.Scene/InGame.unity
-    guid: 825a5c8163f20da44891ee169854f6fc
+    path: Assets/1.Scene/01. Kim Ghhun/Kim Proto.unity
+    guid: 5b6ae1024af64cf4abc44becfa50db1d
   m_configObjects: {}
