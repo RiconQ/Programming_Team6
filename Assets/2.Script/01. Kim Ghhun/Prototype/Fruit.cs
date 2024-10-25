@@ -12,6 +12,7 @@ namespace KimGhHun_Proto
         public int level;
         public bool isDrag;
         public bool isMerge;
+        public bool isAttach;
 
         public Rigidbody2D rb;
         private Animator animator;
@@ -31,6 +32,23 @@ namespace KimGhHun_Proto
         private void OnEnable()
         {
             animator.SetInteger("Level", level);
+        }
+
+        private void OnDisable()
+        {
+            level = 0;
+            isDrag = false;
+            isMerge = false;
+            isAttach = false;
+
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+            transform.localScale = Vector3.zero;
+
+            rb.simulated = false;
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            col.enabled = true;
         }
 
         private void Update()
@@ -55,6 +73,21 @@ namespace KimGhHun_Proto
         {
             isDrag = false;
             rb.simulated = true;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            StartCoroutine(Attach_co());
+        }
+
+        private IEnumerator Attach_co()
+        {
+            if (isAttach) yield break;
+
+            isAttach = true;
+            gameManager.SfxPlay(GameManager.ESfx.Attach);
+            yield return new WaitForSeconds(0.2f);
+            isAttach = false;
         }
 
         private void OnCollisionStay2D(Collision2D collision)
@@ -108,7 +141,7 @@ namespace KimGhHun_Proto
                     transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
                 }
                 else
-                { 
+                {
                     transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.2f);
                 }
                 yield return null;
@@ -136,6 +169,7 @@ namespace KimGhHun_Proto
 
             animator.SetInteger("Level", level + 1);
             EffectPlay();
+            gameManager.SfxPlay(GameManager.ESfx.LevelUp);
 
             yield return new WaitForSeconds(0.3f);
 
