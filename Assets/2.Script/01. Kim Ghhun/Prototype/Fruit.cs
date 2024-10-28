@@ -16,8 +16,8 @@ namespace KimGhHun_Proto
 
         public Rigidbody2D rb;
         private Animator animator;
-        CircleCollider2D col;
-        SpriteRenderer sr;
+        private CircleCollider2D col;
+        private SpriteRenderer sr;
 
         float deadTime;
 
@@ -45,7 +45,7 @@ namespace KimGhHun_Proto
             transform.localRotation = Quaternion.identity;
             transform.localScale = Vector3.zero;
 
-            rb.simulated = false;
+            rb.simulated = true;
             rb.velocity = Vector2.zero;
             rb.angularVelocity = 0f;
             col.enabled = true;
@@ -53,16 +53,16 @@ namespace KimGhHun_Proto
 
         private void Update()
         {
-            if (isDrag)
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                float leftBorader = -3.25f;
-                float rightBorader = 3.25f;
-                mousePos.y = 7.5f;
-                mousePos.z = 0f;
-                mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
-                transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
-            }
+            //if (isDrag)
+            //{
+            //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //    float leftBorader = -3.25f;
+            //    float rightBorader = 3.25f;
+            //    mousePos.y = 7.5f;
+            //    mousePos.z = 0f;
+            //    mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
+            //    transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
+            //}
         }
         public void Drag()
         {
@@ -182,7 +182,7 @@ namespace KimGhHun_Proto
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.transform.CompareTag("Finish"))
+            if (collision.transform.CompareTag("Finish") && !this.Equals(gameManager.lastFruit))
             {
                 deadTime += Time.deltaTime;
                 if (deadTime > 2f)
