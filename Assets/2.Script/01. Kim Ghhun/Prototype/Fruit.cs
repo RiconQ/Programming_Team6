@@ -23,7 +23,6 @@ namespace KimGhHun_Proto
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             col = GetComponent<CircleCollider2D>();
             sr = GetComponent<SpriteRenderer>();
@@ -161,7 +160,6 @@ namespace KimGhHun_Proto
             rb.velocity = Vector3.zero;
             rb.angularVelocity = 0;
 
-
             rb.simulated = false;
             col.enabled = false;
 
@@ -197,6 +195,8 @@ namespace KimGhHun_Proto
             yield return new WaitForSeconds(0.3f);
 
             level++;
+
+            rb.mass = 1f + 0.5f * level;
 
             gameManager.maxLevel = Mathf.Max(level, gameManager.maxLevel);
 
