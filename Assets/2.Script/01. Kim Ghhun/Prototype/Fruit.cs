@@ -106,10 +106,11 @@ namespace KimGhHun_Proto
                     if (meY < otherY || (meY == otherY && meX > otherX))
                     {
                         //other hide
-                        other.Hide(transform.position);
+                        Vector3 targetPos = new Vector3((meX + otherX) / 2, (meY + otherY) / 2, 0);
+                        other.Hide(targetPos);
 
                         //me levelup
-                        LevelUp();
+                        LevelUp(targetPos);
                     }
                 }
             }
@@ -153,19 +154,41 @@ namespace KimGhHun_Proto
             gameObject.SetActive(false);
         }
 
-        private void LevelUp()
+        private void LevelUp(Vector3 targetPos)
         {
             isMerge = true;
 
             rb.velocity = Vector3.zero;
             rb.angularVelocity = 0;
 
-            StartCoroutine(LevelUp_co());
+
+            rb.simulated = false;
+            col.enabled = false;
+
+            StartCoroutine(LevelUp_co(targetPos));
         }
 
-        private IEnumerator LevelUp_co()
+        private IEnumerator LevelUp_co(Vector3 targetPos)
         {
-            yield return new WaitForSeconds(0.2f);
+            int frameCount = 0;
+
+            while (frameCount < 20)
+            {
+                frameCount++;
+                if (targetPos != Vector3.up * 100)
+                {
+                    transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
+                }
+                else
+                {
+                    transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.2f);
+                }
+                yield return null;
+            }
+
+            rb.simulated = true;
+            col.enabled = true;
+            //yield return new WaitForSeconds(0.2f);
 
             animator.SetInteger("Level", level + 1);
             EffectPlay();
