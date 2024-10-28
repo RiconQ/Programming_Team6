@@ -30,7 +30,7 @@ namespace KimGhHun_Proto
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 float leftBorader = -4f;
                 float rightBorader = 4f;
-                mousePos.y = 9f;
+                mousePos.y = 4f;
                 mousePos.z = 0f;
                 mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
                 transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);

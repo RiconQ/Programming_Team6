@@ -40,6 +40,7 @@ namespace KimGhHun_Proto
         [Header("etc")]
         public GameObject line;
         public GameObject bottom;
+        public GameObject eventTriggerObj;
 
 
         public KeyRing keyRing;
@@ -81,6 +82,7 @@ namespace KimGhHun_Proto
             bottom.SetActive(true);
             scoreText.gameObject.SetActive(true);
             maxScoreText.gameObject.SetActive(true);
+            eventTriggerObj.SetActive(true);
 
             startGroup.SetActive(false);
 
@@ -169,6 +171,8 @@ namespace KimGhHun_Proto
             if (isOver) return;
             Debug.Log("GameOver");
             isOver = true;
+
+            eventTriggerObj.SetActive(false);
 
             StartCoroutine(GameOverRoutine());
         }

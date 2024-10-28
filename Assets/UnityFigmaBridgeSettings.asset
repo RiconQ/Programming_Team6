@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119c1bd3601648f28a252a6030e067b6, type: 3}
   m_Name: UnityFigmaBridgeSettings
   m_EditorClassIdentifier: 
-  DocumentUrl: https://www.figma.com/design/urjSIZjZq9Ybb5pxmnn1WD/UI.fig?node-id=0-1&node-type=canvas&t=FRRaSqdG8tQrDPdn-0
+  DocumentUrl: https://www.figma.com/design/urjSIZjZq9Ybb5pxmnn1WD/UI.fig?node-id=0-1&node-type=canvas&t=yJjCD9JSA7CnWzyq-0
   BuildPrototypeFlow: 0
   RunTimeAssetsScenePath: Assets/1.Scene/02. Jang Sijin/Pigma.unity
   EnableAutoLayout: 0
@@ -22,4 +22,10 @@ MonoBehaviour:
   CreateScreenNameCSharpFile: 0
   GenerateNodesMarkedForExport: 1
   OnlyImportSelectedPages: 1
-  PageDataList: []
+  PageDataList:
+  - Name: Page 1
+    NodeId: 0:1
+    Selected: 1
+  - Name: Page 2
+    NodeId: 236:2
+    Selected: 1
