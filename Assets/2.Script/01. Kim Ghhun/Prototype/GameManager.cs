@@ -58,7 +58,7 @@ namespace KimGhHun_Proto
 
         private void Awake()
         {
-            Application.targetFrameRate = 60;
+            //Application.targetFrameRate = 60;
 
             fruitPool = new List<Fruit>();
             effectPool = new List<ParticleSystem>();
@@ -133,6 +133,7 @@ namespace KimGhHun_Proto
 
             keyRing.connectedFruit = lastFruit;
             keyRing.SetConnect();
+            lastFruit.GetComponent<Collider2D>().enabled = false;
 
             SfxPlay(ESfx.Next);
         }

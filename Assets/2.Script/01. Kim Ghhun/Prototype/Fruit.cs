@@ -75,20 +75,20 @@ namespace KimGhHun_Proto
             rb.simulated = true;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            StartCoroutine(Attach_co());
-        }
-
-        private IEnumerator Attach_co()
-        {
-            if (isAttach) yield break;
-
-            isAttach = true;
-            gameManager.SfxPlay(GameManager.ESfx.Attach);
-            yield return new WaitForSeconds(0.2f);
-            isAttach = false;
-        }
+        //private void OnCollisionEnter2D(Collision2D collision)
+        //{
+        //    StartCoroutine(Attach_co());
+        //}
+        //
+        //private IEnumerator Attach_co()
+        //{
+        //    if (isAttach) yield break;
+        //
+        //    isAttach = true;
+        //    gameManager.SfxPlay(GameManager.ESfx.Attach);
+        //    yield return new WaitForSeconds(0.2f);
+        //    isAttach = false;
+        //}
 
         private void OnCollisionStay2D(Collision2D collision)
         {

@@ -23,14 +23,14 @@ namespace KimGhHun_Proto
         {
             joint.connectedBody = connectedFruit.GetComponent<Rigidbody2D>();
         }
-        private void Update()
+        private void FixedUpdate()
         {
             if (isDrag)
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 float leftBorader = -4f;
                 float rightBorader = 4f;
-                mousePos.y = 7.5f;
+                mousePos.y = 9f;
                 mousePos.z = 0f;
                 mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
                 transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
@@ -40,7 +40,6 @@ namespace KimGhHun_Proto
         public void Drag()
         {
             isDrag = true;
-            connectedFruit.GetComponent<Collider2D>().enabled = false;
         }
 
         public void Drop()
