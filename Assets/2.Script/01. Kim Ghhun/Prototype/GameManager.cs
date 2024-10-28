@@ -42,6 +42,9 @@ namespace KimGhHun_Proto
         public GameObject bottom;
 
 
+        public KeyRing keyRing;
+
+
         public enum ESfx
         {
             LevelUp,
@@ -125,8 +128,11 @@ namespace KimGhHun_Proto
             if (isOver) return;
             lastFruit = GetFruit(); ;
             lastFruit.gameManager = this;
-            lastFruit.level = Random.Range(0, maxLevel);
+            lastFruit.level = Random.Range(0, 2);
             lastFruit.gameObject.SetActive(true);
+
+            keyRing.connectedFruit = lastFruit;
+            keyRing.SetConnect();
 
             SfxPlay(ESfx.Next);
         }
@@ -141,14 +147,17 @@ namespace KimGhHun_Proto
         {
             if (lastFruit == null) return;
 
-            lastFruit.Drag();
+            //lastFruit.Drag();
+            keyRing.Drag();
         }
 
         public void TouchUp()
         {
             if (lastFruit == null) return;
 
-            lastFruit.Drop();
+            //lastFruit.Drop();
+            keyRing.Drop();
+
             lastFruit = null;
 
             StartCoroutine(WaitNext_co());
