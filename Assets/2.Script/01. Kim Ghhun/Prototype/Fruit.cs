@@ -205,7 +205,9 @@ namespace KimGhHun_Proto
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.transform.CompareTag("Finish") && !this.Equals(gameManager.lastFruit))
+            if (collision.transform.CompareTag("Finish") 
+                && !this.Equals(gameManager.lastFruit) 
+                && transform.position.y >= collision.transform.position.y)
             {
                 deadTime += Time.deltaTime;
                 if (deadTime > 2f)
@@ -217,6 +219,16 @@ namespace KimGhHun_Proto
                     gameManager.GameOver();
                 }
             }
+            else if(collision.transform.CompareTag("Finish")
+                && !this.Equals(gameManager.lastFruit)
+                && transform.position.y < collision.transform.position.y
+                )
+            {
+                deadTime = 0f;
+
+                sr.color = Color.white;
+            }
+            
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
