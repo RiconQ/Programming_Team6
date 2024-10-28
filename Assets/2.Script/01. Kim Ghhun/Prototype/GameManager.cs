@@ -135,6 +135,8 @@ namespace KimGhHun_Proto
             keyRing.SetConnect();
             lastFruit.GetComponent<Collider2D>().enabled = false;
 
+            lastFruit.rb.mass = 1f + 0.5f * lastFruit.level;
+
             SfxPlay(ESfx.Next);
         }
 

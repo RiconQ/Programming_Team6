@@ -106,7 +106,7 @@ MonoBehaviour:
   isDrag: 0
   isMerge: 0
   isAttach: 0
-  rb: {fileID: 0}
+  rb: {fileID: 20459282393900778}
 --- !u!58 &4488099023301144517
 CircleCollider2D:
   m_ObjectHideFlags: 0
