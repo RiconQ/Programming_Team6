@@ -56,7 +56,7 @@ namespace KimGhHun_Proto
             transform.localScale = Vector3.zero;
 
             rb.simulated = true;
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             rb.angularVelocity = 0f;
             col.enabled = true;
         }

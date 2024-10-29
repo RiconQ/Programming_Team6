@@ -5808,6 +5808,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedFruit: {fileID: 0}
+  maxAngle: 60
+  rotationSmoothness: 0.2
+  forceMultiplier: 100
   rotateObj: {fileID: 1504875845}
 --- !u!4 &1224412121
 Transform:

@@ -10,12 +10,11 @@ namespace KimGhHun_Proto
         private bool isDrag;
         private Vector2 accumulatedDirection;
         private Vector3 previousPosition;
-        private float accumulatedDistance;
 
         [Header("Settings")]
-        public float maxAngle = 60f;            // 좌우 회전 각도 제한
-        public float rotationSmoothness = 0.2f; // 회전 속도
-        public float forceMultiplier = 50f;     // Drop할 때 적용할 힘의 배율 - 더 높은 값으로 조정
+        public float maxAngle = 60f;             // 좌우 회전 각도 제한
+        public float rotationSmoothness = 0.2f;  // 회전 속도
+        public float forceMultiplier = 50f;      // Drop할 때 적용할 힘의 배율
         public Transform rotateObj;
 
         private void Awake()
@@ -27,7 +26,6 @@ namespace KimGhHun_Proto
         {
             joint.connectedBody = connectedFruit.GetComponent<Rigidbody2D>();
             accumulatedDirection = Vector2.zero;
-            accumulatedDistance = 0f;
             previousPosition = rotateObj.position; // 회전 기준으로 위치 초기화
         }
 
@@ -45,10 +43,12 @@ namespace KimGhHun_Proto
                 Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
                 rotateObj.rotation = Quaternion.Lerp(rotateObj.rotation, targetRotation, rotationSmoothness);
 
-                // 회전 이동을 통한 누적 방향 및 거리 계산
+                // 누적된 방향과 이동 거리 계산
                 Vector2 moveDirection = (rotateObj.position - previousPosition).normalized;
-                accumulatedDirection += moveDirection;
-                accumulatedDistance += Vector3.Distance(rotateObj.position, previousPosition);
+                if (moveDirection != Vector2.zero)
+                {
+                    accumulatedDirection = moveDirection; // 가장 최근 방향 업데이트
+                }
                 previousPosition = rotateObj.position;
             }
         }
@@ -68,14 +68,13 @@ namespace KimGhHun_Proto
             {
                 Rigidbody2D fruitRb = connectedFruit.GetComponent<Rigidbody2D>();
 
-                // 누적된 방향 벡터와 거리 기반으로 힘 계산
+                // 가장 최근 방향(accumulatedDirection)을 기반으로 큰 힘 적용
                 Vector2 launchDirection = accumulatedDirection.normalized;
-                float launchPower = accumulatedDistance * forceMultiplier;
+                float launchPower = forceMultiplier; // 고정된 힘을 주기 위해 직접 forceMultiplier 사용
 
-                // Debug로 가속력 크기 확인
                 Debug.Log($"Launch Direction: {launchDirection}, Launch Power: {launchPower}");
 
-                // 방향과 거리 기반의 자유로운 던지기 효과 적용
+                // 방향과 강한 힘을 적용하여 총알처럼 발사
                 fruitRb.AddForce(launchDirection * launchPower, ForceMode2D.Impulse);
 
                 connectedFruit.GetComponent<Collider2D>().enabled = true;
