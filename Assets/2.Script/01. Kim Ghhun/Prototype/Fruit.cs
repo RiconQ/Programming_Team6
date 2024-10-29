@@ -26,6 +26,11 @@ namespace KimGhHun_Proto
             sr = GetComponent<SpriteRenderer>();
         }
 
+        private void Start()
+        {
+            
+        }
+
         private void OnEnable()
         {
         }

@@ -14,6 +14,9 @@ namespace KimGhHun_Proto
 
         private bool isDrag;
 
+        //추가
+        public Transform rotateObj;
+
         private void Awake()
         {
             joint = GetComponent<DistanceJoint2D>();
@@ -33,7 +36,16 @@ namespace KimGhHun_Proto
                 mousePos.y = 4f;
                 mousePos.z = 0f;
                 mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
-                transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
+                // transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
+
+
+                //추가------------
+                float targetAngle = Mathf.Lerp(-60f, 60f, (mousePos.x - leftBorader) / (rightBorader - leftBorader));
+
+                // 현재 각도에서 목표 각도로 천천히 회전
+                Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
+                rotateObj.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.2f); // 0.1f 값을 줄이면 더 느리게 회전
+
             }
         }
 
@@ -48,6 +60,7 @@ namespace KimGhHun_Proto
             joint.connectedBody = null;
             connectedFruit.GetComponent<Collider2D>().enabled = true;
             connectedFruit.rb.AddForce(connectedFruit.rb.velocity * connectedFruit.rb.mass * 100);
+
         }
     }
 }
