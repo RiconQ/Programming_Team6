@@ -1,0 +1,239 @@
+[33mcommit b4a3c94cff48ff6456cd214c7e8b6373d2d9191a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFirebase[m[33m)[m
+Author: 조현준 <chj97610@gmail.com>
+Date:   Tue Oct 29 17:28:15 2024 +0900
+
+    [Update] Use lfs for push
+
+[33mcommit 682a6f2080551b1bd892e17d61f3484e529ba8c7[m
+Author: 조현준 <chj97610@gmail.com>
+Date:   Tue Oct 29 16:49:27 2024 +0900
+
+    [Add] Firebase - Realtime Database Import
+    
+    랭킹 및 로그인 기능 대비
+
+[33mcommit a5f13a459ab187f8016b5a882bd5dda4a96df1a0[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Tue Oct 29 11:08:49 2024 +0900
+
+    [Update] NextFruit Image 갱신
+
+[33mcommit 60a8a9b1754bd4318973a750f7104196b5a4bc06[m
+Merge: 507be08 b005971
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Mon Oct 28 17:46:56 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit 507be08a6ebbd2ca302f31ef447cb86457bfb459[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Mon Oct 28 17:46:54 2024 +0900
+
+    [Update] Out, In Game UI 배치 및 이벤트 설정
+
+[33mcommit b0059712cd870d31d6c4899c2edb3d5049595055[m
+Merge: 831c13a 33a9626
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 15:08:42 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit 831c13a54bc0f0f27b1a98f95ab268671a315c46[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 15:08:26 2024 +0900
+
+    [Update] Mass Update
+
+[33mcommit 33a96265e36149480594c6ad821212bff07167cf[m
+Merge: c105786 239fbe3
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Mon Oct 28 14:54:01 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit c105786a9992c80a812d28a502383200105523fd[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Mon Oct 28 14:54:00 2024 +0900
+
+    [Update] Out, In Game UI 배치 및 이벤트 설정
+
+[33mcommit 239fbe3e9ede68c09c806d3033d160cd69ab3be6[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 14:41:29 2024 +0900
+
+    [Update] Game OVer Update
+
+[33mcommit d7fea6d84d736e4852960837ef114daead306677[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 13:40:43 2024 +0900
+
+    [Update] Fruit Merge 수정
+
+[33mcommit ed2ab92bffbde708c89be3e72e808208a3323a86[m
+Merge: d23e634 26ef069
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 11:45:03 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit d23e63495bdf8cf441655a26f4556fa8e1c8fdd3[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 11:45:00 2024 +0900
+
+    [Update] 스크립트 수정
+
+[33mcommit 26ef069da249b1cf096de5caad6a60aa5b12351c[m
+Merge: a024f39 614eab6
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Mon Oct 28 10:44:54 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit a024f39aad98cce66455721927729c8cf7dc2045[m
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Mon Oct 28 10:44:41 2024 +0900
+
+    [Update] Pot Colider
+
+[33mcommit 614eab6b885f6fc9e7d1124a2b79959d76076f2b[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Mon Oct 28 10:40:56 2024 +0900
+
+    [Update] 키링, 항아리 병합
+
+[33mcommit 4cfda84665d64beaad469a389ba3b527ba0963a5[m
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Fri Oct 25 16:45:16 2024 +0900
+
+    [Fix] SpawmPoint 수정
+
+[33mcommit d08071aa24016929d1059bf099dca67a81a27fb0[m
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Fri Oct 25 16:41:36 2024 +0900
+
+    [Fix] Keyring System
+
+[33mcommit 236758a883879d74b823f99b478b4d28bd40c236[m
+Merge: cf446bb f0b9caa
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Fri Oct 25 16:32:08 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit cf446bb0f9adefba1ff89edd579c1ebcd2fcae8c[m
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Fri Oct 25 16:31:57 2024 +0900
+
+    [Fix] Keyring System
+
+[33mcommit f0b9caa55aff97a2c1a3e58b1b44d17e9cd093f5[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Fri Oct 25 16:27:43 2024 +0900
+
+    [Update] Prototype Build
+
+[33mcommit e80aa0b52b6384dcd64aa3281b438bc12e1cd28e[m
+Merge: 0e343f6 d842689
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Fri Oct 25 16:09:50 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit 0e343f65addcd980b6168e818e5ce9c4afa54e1f[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Fri Oct 25 16:09:48 2024 +0900
+
+    [Update] Prototype
+
+[33mcommit d842689a76345cfbba913010da511150dee96648[m
+Merge: a490052 fa149cb
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Thu Oct 24 18:07:14 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit a490052aba22cbf58eacd2f0f1ad8c9b0bd78eb9[m
+Author: 홍성견 <ghdtjdrus114@gmail.com>
+Date:   Thu Oct 24 18:07:10 2024 +0900
+
+    [Update]KeyringSystem
+    
+    수정/보완 필요
+
+[33mcommit fa149cb3eaf3c8c51fe57d6f206c517d38d98e02[m
+Merge: 333036e 19cb6f2
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Thu Oct 24 17:57:56 2024 +0900
+
+    Merge branch 'main' of https://github.com/RiconQ/Programming_Team6
+
+[33mcommit 333036ec8a128739b369611448b9a33def5ae904[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Thu Oct 24 17:55:44 2024 +0900
+
+    [Update] Prototype
+
+[33mcommit 19cb6f282fba8145bda100e95c08fba01a9e7acb[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Thu Oct 24 16:20:39 2024 +0900
+
+    [Update] Pigma Package
+    
+    피그마 패키지 추가
+
+[33mcommit 46db3e57c61a4422d8310069ae1a6ae8a306dc2b[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Thu Oct 24 13:32:23 2024 +0900
+
+    [Update] UI 초안 작업 완료
+    
+    1. 타이틀 UI
+    2. 노말 모드 UI
+    3. 한계 모드 UI
+    
+    UI 배치 및 버튼 이벤트 적용 완료
+
+[33mcommit 9cdf7a0e156578965acf298be9c628c41536795a[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Thu Oct 24 12:06:06 2024 +0900
+
+    [Add] Prototype Asset
+
+[33mcommit e6169c4bbb5596c3975852f55156b38004de29aa[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Thu Oct 24 11:56:48 2024 +0900
+
+    [Update] URP, Foldering
+
+[33mcommit f07fd2de3c218501b64e3b35b2328a2251422fdf[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Thu Oct 24 11:23:07 2024 +0900
+
+    [Add] Figma to Unity Importer Packages
+    
+    피그마 연동 관련 패키지 추가
+
+[33mcommit a3654e931f3462254b441b52f17bbd7f2effab14[m
+Author: Jang-Sijin <76439399+Jang-Sijin@users.noreply.github.com>
+Date:   Thu Oct 24 10:44:05 2024 +0900
+
+    Project Settings 진행 & 필요 Assets 추가
+    
+    # Project Settings 진행 & 필요 Assets 추가
+            1-1. Project Settings
+                    1-1-1. 기본 폴더 추가 [완료]
+                    1-1-2. InGame Scene 추가 [완료]
+            1-2. Assets 추가
+                    1-2-1. Dotween 추가 [완료]
+
+[33mcommit a356fbb8b14de85ec79513172bc8bd3822459526[m
+Author: 김지훈 <ricon4246@gmail.com>
+Date:   Fri Oct 4 17:06:16 2024 +0900
+
+    [Init] Init Project
+
+[33mcommit 4cc0cab1f5148ec053b293c3ea24f28b0240009f[m
+Author: 김지훈 <64973117+RiconQ@users.noreply.github.com>
+Date:   Fri Oct 4 16:57:33 2024 +0900
+
+    Initial commit

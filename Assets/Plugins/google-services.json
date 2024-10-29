@@ -1,0 +1,30 @@
+{
+    "project_info": {
+        "project_number": "530986736581",
+        "project_id": "programming-team6",
+        "storage_bucket": "programming-team6.appspot.com",
+        "firebase_url": "https://programming-team6-default-rtdb.firebaseio.com/"
+    },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530986736581:android:f338cc964919fd577f49ac",
+        "android_client_info": {
+          "package_name": "com.Team6.SuikaGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1wKfEKRHqUT6hKYLilJRqrmsmlRkRKPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
