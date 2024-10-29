@@ -20,7 +20,7 @@ namespace KimGhHun_Proto
         public List<Fruit> fruitPool;
         public GameObject effectPrefab;
         public Transform effectGroup;
-        public List<ParticleSystem> effectPool;        
+        public List<ParticleSystem> effectPool;
 
         [Range(1, 30)]
         public int poolSize = 10;
@@ -46,6 +46,7 @@ namespace KimGhHun_Proto
         public GameObject bottom;
         public GameObject eventTriggerObj;
 
+        public Sprite[] fruitSprite;
 
         public KeyRing keyRing;
 
@@ -62,7 +63,7 @@ namespace KimGhHun_Proto
         private int sfxIndex;
 
         private void Awake()
-        {            
+        {
             fruitPool = new List<Fruit>();
             effectPool = new List<ParticleSystem>();
 
@@ -78,7 +79,7 @@ namespace KimGhHun_Proto
             maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
 
             // 미리 nextFruit를 설정
-            nextFruit = GetFruit();            
+            nextFruit = GetFruit();
         }
 
 
@@ -126,23 +127,23 @@ namespace KimGhHun_Proto
                 {
                     Fruit fruit = fruitPool[poolIndex];
                     fruit.level = Random.Range(0, 2); // 레벨을 여기서 미리 설정
-                    UpdateNextFruitImage(fruit);
+                    //UpdateNextFruitImage();
                     return fruit;
                 }
             }
 
             Fruit newFruit = MakeFruit();
             newFruit.level = Random.Range(0, 2); // 새로 생성되는 경우에도 레벨을 설정
-            UpdateNextFruitImage(newFruit);
+            //UpdateNextFruitImage();
             return newFruit;
         }
 
         // NextFruit 메서드에서 호출하기 전에 미리 이미지 업데이트        
-        private void UpdateNextFruitImage(Fruit updateFruitImage)
+        private void UpdateNextFruitImage()
         {
-            if (updateFruitImage != null)
+            if (nextFruit != null)
             {
-                _nextFruitImage.sprite = updateFruitImage.GetComponent<SpriteRenderer>().sprite;
+                _nextFruitImage.sprite = fruitSprite[nextFruit.level];
                 _nextFruitImage.gameObject.SetActive(true); // UI가 비활성화된 경우 활성화
             }
         }
@@ -155,6 +156,7 @@ namespace KimGhHun_Proto
             lastFruit = nextFruit;  // 예약된 _nextFruit을 사용
             lastFruit.gameManager = this;
             lastFruit.gameObject.SetActive(true);
+            lastFruit.UpdateFruitSprite();
 
             keyRing.connectedFruit = lastFruit;
             keyRing.SetConnect();
@@ -165,7 +167,8 @@ namespace KimGhHun_Proto
             SfxPlay(ESfx.Next);
 
             // 다음 Fruit을 예약하고 UI에 업데이트
-            nextFruit = GetFruit();            
+            nextFruit = GetFruit();
+            UpdateNextFruitImage();
         }
 
         private IEnumerator WaitNext_co()
@@ -273,7 +276,7 @@ namespace KimGhHun_Proto
 
         private void Update()
         {
-            if(Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel"))
             {
                 Application.Quit();
             }

@@ -47,6 +47,7 @@ namespace KimGhHun_Proto
             isDrag = false;
             joint.connectedBody = null;
             connectedFruit.GetComponent<Collider2D>().enabled = true;
+            connectedFruit.rb.AddForce(connectedFruit.rb.velocity * connectedFruit.rb.mass * 100);
         }
     }
 }

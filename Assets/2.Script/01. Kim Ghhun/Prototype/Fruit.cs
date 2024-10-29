@@ -15,7 +15,6 @@ namespace KimGhHun_Proto
         public bool isAttach;
 
         public Rigidbody2D rb;
-        private Animator animator;
         private CircleCollider2D col;
         private SpriteRenderer sr;
 
@@ -23,14 +22,20 @@ namespace KimGhHun_Proto
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
             col = GetComponent<CircleCollider2D>();
             sr = GetComponent<SpriteRenderer>();
         }
 
         private void OnEnable()
         {
-            animator.SetInteger("Level", level);
+        }
+
+        public void UpdateFruitSprite()
+        {
+            Debug.Log($"Level {level}");
+            sr.sprite = gameManager.fruitSprite[level];
+            transform.localScale = new Vector3(1f + 0.5f * level, 1f + 0.5f * level, 1);
+            Debug.Log($"scale {transform.localScale}");
         }
 
         private void OnDisable()
@@ -187,14 +192,14 @@ namespace KimGhHun_Proto
             rb.simulated = true;
             col.enabled = true;
             //yield return new WaitForSeconds(0.2f);
-
-            animator.SetInteger("Level", level + 1);
             EffectPlay();
             gameManager.SfxPlay(GameManager.ESfx.LevelUp);
 
-            yield return new WaitForSeconds(0.3f);
+            //yield return new WaitForSeconds(0.3f);
 
             level++;
+
+            UpdateFruitSprite();
 
             rb.mass = 1f + 0.5f * level;
 
