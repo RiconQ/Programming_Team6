@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 namespace KimGhHun_Proto
 {
@@ -19,11 +20,13 @@ namespace KimGhHun_Proto
         public List<Fruit> fruitPool;
         public GameObject effectPrefab;
         public Transform effectGroup;
-        public List<ParticleSystem> effectPool;
+        public List<ParticleSystem> effectPool;        
+
         [Range(1, 30)]
         public int poolSize = 10;
         public int poolIndex;
         public Fruit lastFruit;
+        public Fruit nextFruit;
 
         [Header("Audio")]
         public AudioSource bgmPlayer;
@@ -36,6 +39,7 @@ namespace KimGhHun_Proto
         public GameObject endGroup;
         public GameObject startGroup;
         public TMP_Text subScoreText;
+        [SerializeField] private Image _nextFruitImage;
 
         [Header("etc")]
         public GameObject line;
@@ -58,9 +62,7 @@ namespace KimGhHun_Proto
         private int sfxIndex;
 
         private void Awake()
-        {
-            //Application.targetFrameRate = 60;
-
+        {            
             fruitPool = new List<Fruit>();
             effectPool = new List<ParticleSystem>();
 
@@ -69,12 +71,16 @@ namespace KimGhHun_Proto
                 MakeFruit();
             }
 
-            if(!PlayerPrefs.HasKey("MaxScore"))
+            if (!PlayerPrefs.HasKey("MaxScore"))
             {
                 PlayerPrefs.SetInt("MaxScore", 0);
             }
             maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
+
+            // 미리 nextFruit를 설정
+            nextFruit = GetFruit();            
         }
+
 
         public void GameStart()
         {
@@ -118,19 +124,36 @@ namespace KimGhHun_Proto
                 poolIndex = (poolIndex + 1) % fruitPool.Count;
                 if (!fruitPool[poolIndex].gameObject.activeSelf)
                 {
-                    return fruitPool[poolIndex];
+                    Fruit fruit = fruitPool[poolIndex];
+                    fruit.level = Random.Range(0, 2); // 레벨을 여기서 미리 설정
+                    UpdateNextFruitImage(fruit);
+                    return fruit;
                 }
             }
 
-            return MakeFruit();
+            Fruit newFruit = MakeFruit();
+            newFruit.level = Random.Range(0, 2); // 새로 생성되는 경우에도 레벨을 설정
+            UpdateNextFruitImage(newFruit);
+            return newFruit;
+        }
+
+        // NextFruit 메서드에서 호출하기 전에 미리 이미지 업데이트        
+        private void UpdateNextFruitImage(Fruit updateFruitImage)
+        {
+            if (updateFruitImage != null)
+            {
+                _nextFruitImage.sprite = updateFruitImage.GetComponent<SpriteRenderer>().sprite;
+                _nextFruitImage.gameObject.SetActive(true); // UI가 비활성화된 경우 활성화
+            }
         }
 
         private void NextFruit()
         {
-            if (isOver) return;
-            lastFruit = GetFruit(); ;
+            if (isOver)
+                return;
+
+            lastFruit = nextFruit;  // 예약된 _nextFruit을 사용
             lastFruit.gameManager = this;
-            lastFruit.level = Random.Range(0, 2);
             lastFruit.gameObject.SetActive(true);
 
             keyRing.connectedFruit = lastFruit;
@@ -140,6 +163,9 @@ namespace KimGhHun_Proto
             lastFruit.rb.mass = 1f + 0.5f * lastFruit.level;
 
             SfxPlay(ESfx.Next);
+
+            // 다음 Fruit을 예약하고 UI에 업데이트
+            nextFruit = GetFruit();            
         }
 
         private IEnumerator WaitNext_co()
