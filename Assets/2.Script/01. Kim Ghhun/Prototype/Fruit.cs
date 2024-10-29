@@ -26,13 +26,14 @@ namespace KimGhHun_Proto
             sr = GetComponent<SpriteRenderer>();
         }
 
-        private void Start()
-        {
-            
-        }
-
         private void OnEnable()
         {
+            // 기본 초기화 설정
+            rb.simulated = true;
+            rb.gravityScale = 2.0f;
+            col.enabled = true;
+            deadTime = 0f;
+            sr.color = Color.white;
         }
 
         public void UpdateFruitSprite()
@@ -62,17 +63,18 @@ namespace KimGhHun_Proto
 
         private void Update()
         {
-            //if (isDrag)
-            //{
-            //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //    float leftBorader = -3.25f;
-            //    float rightBorader = 3.25f;
-            //    mousePos.y = 7.5f;
-            //    mousePos.z = 0f;
-            //    mousePos.x = Mathf.Clamp(mousePos.x, leftBorader, rightBorader);
-            //    transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
-            //}
+            if (isDrag)
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float leftBorder = -3.25f;
+                float rightBorder = 3.25f;
+                mousePos.y = 7.5f;
+                mousePos.z = 0f;
+                mousePos.x = Mathf.Clamp(mousePos.x, leftBorder, rightBorder);
+                transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
+            }
         }
+
         public void Drag()
         {
             isDrag = true;
@@ -81,23 +83,8 @@ namespace KimGhHun_Proto
         public void Drop()
         {
             isDrag = false;
-            rb.simulated = true;
+            rb.simulated = true; // Drop 시 물리 효과 재적용
         }
-
-        //private void OnCollisionEnter2D(Collision2D collision)
-        //{
-        //    StartCoroutine(Attach_co());
-        //}
-        //
-        //private IEnumerator Attach_co()
-        //{
-        //    if (isAttach) yield break;
-        //
-        //    isAttach = true;
-        //    gameManager.SfxPlay(GameManager.ESfx.Attach);
-        //    yield return new WaitForSeconds(0.2f);
-        //    isAttach = false;
-        //}
 
         private void OnCollisionStay2D(Collision2D collision)
         {
@@ -114,11 +101,8 @@ namespace KimGhHun_Proto
 
                     if (meY < otherY || (meY == otherY && meX > otherX))
                     {
-                        //other hide
                         Vector3 targetPos = new Vector3((meX + otherX) / 2, (meY + otherY) / 2, 0);
                         other.Hide(targetPos);
-
-                        //me levelup
                         LevelUp(targetPos);
                     }
                 }
@@ -131,6 +115,7 @@ namespace KimGhHun_Proto
 
             rb.simulated = false;
             col.enabled = false;
+
             if (targetPos == Vector3.up * 100)
             {
                 EffectPlay();
@@ -196,11 +181,8 @@ namespace KimGhHun_Proto
 
             rb.simulated = true;
             col.enabled = true;
-            //yield return new WaitForSeconds(0.2f);
             EffectPlay();
             gameManager.SfxPlay(GameManager.ESfx.LevelUp);
-
-            //yield return new WaitForSeconds(0.3f);
 
             level++;
 
@@ -215,9 +197,7 @@ namespace KimGhHun_Proto
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.transform.CompareTag("Finish") 
-                && !this.Equals(gameManager.lastFruit) 
-                && transform.position.y >= collision.transform.position.y)
+            if (collision.transform.CompareTag("Finish") && !this.Equals(gameManager.lastFruit) && transform.position.y >= collision.transform.position.y)
             {
                 deadTime += Time.deltaTime;
                 if (deadTime > 2f)
@@ -229,17 +209,13 @@ namespace KimGhHun_Proto
                     gameManager.GameOver();
                 }
             }
-            else if(collision.transform.CompareTag("Finish")
-                && !this.Equals(gameManager.lastFruit)
-                && transform.position.y < collision.transform.position.y
-                )
+            else if (collision.transform.CompareTag("Finish") && !this.Equals(gameManager.lastFruit) && transform.position.y < collision.transform.position.y)
             {
                 deadTime = 0f;
-
                 sr.color = Color.white;
             }
-            
         }
+
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.transform.CompareTag("Finish"))
