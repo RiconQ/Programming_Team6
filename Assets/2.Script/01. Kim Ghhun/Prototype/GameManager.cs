@@ -64,6 +64,8 @@ namespace KimGhHun_Proto
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
+
             fruitPool = new List<Fruit>();
             effectPool = new List<ParticleSystem>();
 
@@ -86,7 +88,7 @@ namespace KimGhHun_Proto
         public void GameStart()
         {
             line.SetActive(true);
-          //  bottom.SetActive(true);
+            //  bottom.SetActive(true);
             scoreText.gameObject.SetActive(true);
             maxScoreText.gameObject.SetActive(true);
             eventTriggerObj.SetActive(true);
@@ -96,7 +98,8 @@ namespace KimGhHun_Proto
             bgmPlayer.Play();
             SfxPlay(ESfx.Button);
 
-            Invoke("NextFruit", 0.5f);
+            NextFruit();
+          //  Invoke("NextFruit", 0.5f);
         }
 
         private Fruit MakeFruit()
@@ -165,7 +168,7 @@ namespace KimGhHun_Proto
             lastFruit.rb.mass = 1f + 1f * lastFruit.level;
 
             //Ãß°¡
-            lastFruit.rb.gravityScale=2.5f + 0.5f * lastFruit.level;
+            lastFruit.rb.gravityScale = 2.5f + 0.5f * lastFruit.level;
 
             SfxPlay(ESfx.Next);
 
