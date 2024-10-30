@@ -48,6 +48,7 @@ namespace KimGhHun_Proto
                 if (moveDirection != Vector2.zero)
                 {
                     accumulatedDirection = moveDirection; // 가장 최근 방향 업데이트
+                    Debug.Log("accumulatedDirection 갱신");
                 }
                 previousPosition = rotateObj.position;
             }

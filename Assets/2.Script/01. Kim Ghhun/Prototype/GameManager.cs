@@ -86,7 +86,7 @@ namespace KimGhHun_Proto
         public void GameStart()
         {
             line.SetActive(true);
-            bottom.SetActive(true);
+          //  bottom.SetActive(true);
             scoreText.gameObject.SetActive(true);
             maxScoreText.gameObject.SetActive(true);
             eventTriggerObj.SetActive(true);
@@ -162,7 +162,10 @@ namespace KimGhHun_Proto
             keyRing.SetConnect();
             lastFruit.GetComponent<Collider2D>().enabled = false;
 
-            lastFruit.rb.mass = 1f + 0.5f * lastFruit.level;
+            lastFruit.rb.mass = 1f + 1f * lastFruit.level;
+
+            //Ãß°¡
+            lastFruit.rb.gravityScale=2.5f + 0.5f * lastFruit.level;
 
             SfxPlay(ESfx.Next);
 
