@@ -126,14 +126,14 @@ namespace KimGhHun_Proto
                 if (!fruitPool[poolIndex].gameObject.activeSelf)
                 {
                     Fruit fruit = fruitPool[poolIndex];
-                    fruit.level = Random.Range(0, 2); // 레벨을 여기서 미리 설정
+                    fruit.level = Random.Range(0, 5); // 레벨을 여기서 미리 설정
                     //UpdateNextFruitImage();
                     return fruit;
                 }
             }
 
             Fruit newFruit = MakeFruit();
-            newFruit.level = Random.Range(0, 2); // 새로 생성되는 경우에도 레벨을 설정
+            newFruit.level = Random.Range(0, 5); // 새로 생성되는 경우에도 레벨을 설정
             //UpdateNextFruitImage();
             return newFruit;
         }
@@ -165,7 +165,7 @@ namespace KimGhHun_Proto
             lastFruit.rb.mass = 1f + 1f * lastFruit.level;
 
             //추가
-            lastFruit.rb.gravityScale=2.5f + 0.5f * lastFruit.level;
+            lastFruit.rb.gravityScale = 2.5f + 0.5f * lastFruit.level;
 
             SfxPlay(ESfx.Next);
 

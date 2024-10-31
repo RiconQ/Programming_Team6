@@ -40,7 +40,7 @@ namespace KimGhHun_Proto
         {
             Debug.Log($"Level {level}");
             sr.sprite = gameManager.fruitSprite[level];
-            transform.localScale = new Vector3(1f + 0.5f * level, 1f + 0.5f * level, 1);
+            transform.localScale = new Vector3(0.5f + 0.25f * level, 0.5f + 0.25f * level, 1);
             Debug.Log($"scale {transform.localScale}");
         }
 
@@ -92,7 +92,7 @@ namespace KimGhHun_Proto
             {
                 Fruit other = collision.transform.GetComponent<Fruit>();
 
-                if (level == other.level && !isMerge && !other.isMerge && level < 7)
+                if (level == other.level && !isMerge && !other.isMerge && level < 10) // 최대 레벨 : 10
                 {
                     float meX = transform.position.x;
                     float meY = transform.position.y;
@@ -191,6 +191,29 @@ namespace KimGhHun_Proto
             rb.mass = 1f + 0.5f * level;
 
             gameManager.maxLevel = Mathf.Max(level, gameManager.maxLevel);
+
+            // #1. 일정 범위 안에 있는 구슬들을 감지 
+            Collider2D[] cols = Physics2D.OverlapCircleAll(targetPos, transform.localScale.x + 0.1f);
+
+            // #2. 감지된 구슬들에 AddForce 적용 - Impulse로 순간적인 힘 적용
+            foreach (Collider2D col in cols)
+            {
+                // #2-1. 구슬 아닌 것도 감지되는데, 이거는 예외 처리
+                if (!col.CompareTag("Fruit")) continue;
+
+                // #2-2. -1 ~ 1 범위에서 랜덤
+                float r = Random.Range(-1, 1);
+
+                // #2-3. 랜덤 값을 토대로 발사 각도 세팅(-60 ~ 60)
+                Vector2 v = new Vector2(Mathf.Sin(Mathf.PI / 3 * r), Mathf.Cos(Mathf.PI / 3 * r));
+
+                // #2-4. 발사
+                Rigidbody2D colrb = col.GetComponent<Rigidbody2D>();
+                float cv1 = 10f; // 보정1 : 10
+                float cv2 = Mathf.Pow(rb.mass, 0.25f); // 보정2 : 생성된 구슬 질량의 1/4 제곱
+                float cv3 = Mathf.Pow(colrb.mass, 0.75f); ; // 보정3 : 감지된 구슬 질량의 3/4 제곱
+                colrb.AddForce(cv1 * cv2 * cv3 * v, ForceMode2D.Impulse);
+            }
 
             isMerge = false;
         }
