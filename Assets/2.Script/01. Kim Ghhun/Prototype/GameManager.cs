@@ -120,20 +120,21 @@ namespace KimGhHun_Proto
 
         private Fruit GetFruit()
         {
+            int spawnMaxLevel = 5;
             for (int i = 0; i < fruitPool.Count; i++)
             {
                 poolIndex = (poolIndex + 1) % fruitPool.Count;
                 if (!fruitPool[poolIndex].gameObject.activeSelf)
                 {
                     Fruit fruit = fruitPool[poolIndex];
-                    fruit.level = Random.Range(0, 5); // 레벨을 여기서 미리 설정
+                    fruit.level = Random.Range(0, spawnMaxLevel); // 레벨을 여기서 미리 설정
                     //UpdateNextFruitImage();
                     return fruit;
                 }
             }
 
             Fruit newFruit = MakeFruit();
-            newFruit.level = Random.Range(0, 5); // 새로 생성되는 경우에도 레벨을 설정
+            newFruit.level = Random.Range(0, spawnMaxLevel); // 새로 생성되는 경우에도 레벨을 설정
             //UpdateNextFruitImage();
             return newFruit;
         }

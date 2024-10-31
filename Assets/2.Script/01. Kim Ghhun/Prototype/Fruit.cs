@@ -201,13 +201,18 @@ namespace KimGhHun_Proto
                 // #2-1. 구슬 아닌 것도 감지되는데, 이거는 예외 처리
                 if (!col.CompareTag("Fruit")) continue;
 
-                // #2-2. -1 ~ 1 범위에서 랜덤
+                // #2-2. 적용 각도 외에 있는 경우, 이것도 열외 처리 
+                Vector2 direction = (col.transform.position - targetPos).normalized; // 방향 벡터 구하기
+                float angle = Vector2.SignedAngle(Vector2.up, direction); // 윗 방향으로부터의 각도
+                if (Mathf.Abs(angle) > 60) continue; // 윗방향과 60도 이상 차이나면 열외 
+
+                // #2-3. -1 ~ 1 범위에서 랜덤
                 float r = Random.Range(-1, 1);
 
-                // #2-3. 랜덤 값을 토대로 발사 각도 세팅(-60 ~ 60)
+                // #2-4. 랜덤 값을 토대로 발사 각도 세팅(-60 ~ 60)
                 Vector2 v = new Vector2(Mathf.Sin(Mathf.PI / 3 * r), Mathf.Cos(Mathf.PI / 3 * r));
 
-                // #2-4. 발사
+                // #2-5. 발사
                 Rigidbody2D colrb = col.GetComponent<Rigidbody2D>();
                 float cv1 = 10f; // 보정1 : 10
                 float cv2 = Mathf.Pow(rb.mass, 0.25f); // 보정2 : 생성된 구슬 질량의 1/4 제곱
