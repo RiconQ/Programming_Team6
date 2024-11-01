@@ -128,7 +128,7 @@ namespace KimGhHun_Proto
         {
             int frameCount = 0;
 
-            while (frameCount < 20)
+            while (frameCount < 1)
             {
                 frameCount++;
                 if (targetPos != Vector3.up * 100)
@@ -165,7 +165,7 @@ namespace KimGhHun_Proto
         {
             int frameCount = 0;
 
-            while (frameCount < 20)
+            while (frameCount < 5)
             {
                 frameCount++;
                 if (targetPos != Vector3.up * 100)
