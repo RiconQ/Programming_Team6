@@ -24,11 +24,11 @@ public class FruitData : ScriptableObject
         {
             int idx = 0;
             FruitAttribute attribute = new FruitAttribute();
-            attribute.index = (int)(double)jsonData[i]["index"];
-            attribute.name = jsonData[i]["name"].ToString();
-            attribute.mass = (float)(double)jsonData[i]["mass"];
-            attribute.scaleX = (float)(double)jsonData[i]["scaleX"];
-            attribute.scaleY = (float)(double)jsonData[i]["scaleY"];
+            attribute.index = (int)(double)jsonData[i][idx++];
+            attribute.name = jsonData[i][idx++].ToString();
+            attribute.mass = (float)(double)jsonData[i][idx++];
+            attribute.scaleX = (float)(double)jsonData[i][idx++];
+            attribute.scaleY = (float)(double)jsonData[i][idx++];
 
             fruits[i].SetAttribute(attribute);
         }
