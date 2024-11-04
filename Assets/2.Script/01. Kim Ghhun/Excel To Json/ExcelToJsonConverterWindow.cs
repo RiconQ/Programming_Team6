@@ -4,10 +4,11 @@ using System.IO;
 
 public class ExcelToJsonConverterWindow : EditorWindow
 {
-    private string excelFilePath; // 엑셀 파일 경로
-    private string jsonOutputPath; // JSON 출력 경로
+    private string excelFilePath; 
+    private string jsonOutputPath;
 
-    // 창을 열기 위한 메뉴 항목 추가
+    public int sheetNum;
+    
     [MenuItem("Tools/Excel to JSON Converter")]
     public static void ShowWindow()
     {
@@ -30,6 +31,11 @@ public class ExcelToJsonConverterWindow : EditorWindow
 
         EditorGUILayout.TextField("Excel File Path", excelFilePath);
 
+        GUILayout.Space(5);
+
+        GUILayout.Label("Sheet Number", EditorStyles.boldLabel);
+        sheetNum = EditorGUILayout.IntField("Enter Sheet Number", sheetNum);
+
         GUILayout.Space(10);
 
         GUILayout.Label("Json Output Path", EditorStyles.boldLabel);
@@ -44,21 +50,22 @@ public class ExcelToJsonConverterWindow : EditorWindow
             }
         }
 
+
         EditorGUILayout.TextField("Json File Path", jsonOutputPath);
 
         GUILayout.Space(10);
 
         if (GUILayout.Button("Convert Excel To Json"))
         {
-            // ExcelToJson 클래스의 인스턴스를 생성하여 변환 메서드 호출
+            // Create ExcelToJson Class Instance and Call Convert Method 
             ExcelToJson converter = new ExcelToJson
             {
                 excelFilePath = excelFilePath,
                 jsonOutputPath = jsonOutputPath
             };
 
-            // 변환 메서드 호출
-            converter.ConvertExcelToJson();
+            // Call Convert Method 
+            converter.ConvertExcelToJson(sheetNum);
         }
     }
 }

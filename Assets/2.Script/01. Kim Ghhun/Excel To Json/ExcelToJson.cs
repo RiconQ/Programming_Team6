@@ -13,9 +13,9 @@ public class ExcelToJson
     [HideInInspector]
     public string jsonOutputPath;
 
-    public void ConvertExcelToJson()
+    public void ConvertExcelToJson(int sheetNum)
     {
-        if(string.IsNullOrEmpty(excelFilePath) || string.IsNullOrEmpty(jsonOutputPath))
+        if (string.IsNullOrEmpty(excelFilePath) || string.IsNullOrEmpty(jsonOutputPath))
         {
             Debug.LogError("Excel Path, Json Path is NULL");
             return;
@@ -25,7 +25,17 @@ public class ExcelToJson
         using (FileStream stream = new FileStream(excelFilePath, FileMode.Open, FileAccess.Read))
         {
             IWorkbook workbook = new XSSFWorkbook(stream); //For .xlsx
-            ISheet sheet = workbook.GetSheetAt(0); // Select First Sheet
+
+            ISheet sheet;
+            try
+            {
+                sheet = workbook.GetSheetAt(sheetNum); // Select Sheet
+            }
+            catch
+            {
+                Debug.LogError("Invalid Sheet Num");
+                return;
+            }
 
             // List for data from converted json
             var rowsData = new List<Dictionary<string, object>>();
@@ -33,12 +43,12 @@ public class ExcelToJson
             int cellCount = headerRow.LastCellNum;
 
             // Extract Data looping every row in sheet
-            for(int i = 1; i <= sheet.LastRowNum; i++) // 0 is Header
+            for (int i = 1; i <= sheet.LastRowNum; i++) // 0 is Header
             {
                 IRow row = sheet.GetRow(i);
                 var rowData = new Dictionary<string, object>();
 
-                for(int j = 0; j < cellCount; j++)
+                for (int j = 0; j < cellCount; j++)
                 {
                     string columnName = headerRow.GetCell(j).ToString(); //Get ColumnName from Header
                     ICell cell = row.GetCell(j);
@@ -47,7 +57,7 @@ public class ExcelToJson
 
                 rowsData.Add(rowData); // Add Row data to List
             }
-            
+
             //save Data after convert Json
             string json = JsonConvert.SerializeObject(rowsData, Formatting.Indented);
             File.WriteAllText(jsonOutputPath, json);
@@ -62,17 +72,17 @@ public class ExcelToJson
         {
             case CellType.Numeric:
                 return cell.NumericCellValue;
-                /*
-                double numericValue = cell.NumericCellValue;
-                if (numericValue == (int)numericValue)
-                {
-                    return (int)numericValue;
-                }
-                else
-                {
-                    return (float)numericValue;
-                }
-                */
+            /*
+            double numericValue = cell.NumericCellValue;
+            if (numericValue == (int)numericValue)
+            {
+                return (int)numericValue;
+            }
+            else
+            {
+                return (float)numericValue;
+            }
+            */
             case CellType.String:
                 return cell.StringCellValue;
             case CellType.Formula:
