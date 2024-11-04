@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -26,21 +25,21 @@ public class ExcelToJson
         {
             IWorkbook workbook = new XSSFWorkbook(stream); //For .xlsx
 
-            ISheet sheet;
-            try
+            if (sheetNum < 0 || sheetNum >= workbook.NumberOfSheets)
             {
-                sheet = workbook.GetSheetAt(sheetNum); // Select Sheet
+                Debug.LogError($"유효하지 않은 시트 번호: {sheetNum}. 총 시트 수: {workbook.NumberOfSheets}");
+                return; // 유효하지 않은 경우 종료
             }
-            catch
-            {
-                Debug.LogError("Invalid Sheet Num");
-                return;
-            }
+
+            ISheet sheet = workbook.GetSheetAt(sheetNum); // Select Sheet;
+
+            IFormulaEvaluator evaluator = workbook.GetCreationHelper().CreateFormulaEvaluator();
 
             // List for data from converted json
             var rowsData = new List<Dictionary<string, object>>();
             IRow headerRow = sheet.GetRow(0);
             int cellCount = headerRow.LastCellNum;
+
 
             // Extract Data looping every row in sheet
             for (int i = 1; i <= sheet.LastRowNum; i++) // 0 is Header
@@ -51,8 +50,15 @@ public class ExcelToJson
                 for (int j = 0; j < cellCount; j++)
                 {
                     string columnName = headerRow.GetCell(j).ToString(); //Get ColumnName from Header
+
+                    if(row.GetCell(j) == null)
+                    {
+                        Debug.LogError("Cell range ERROR! Please delete the remaining rows except for the last one");
+                    }
+
                     ICell cell = row.GetCell(j);
-                    rowData[columnName] = GetValueFromCell(cell); //Get Cell Value
+
+                    rowData[columnName] = GetValueFromCell(cell, evaluator); //Get Cell Value
                 }
 
                 rowsData.Add(rowData); // Add Row data to List
@@ -66,27 +72,36 @@ public class ExcelToJson
         }
     }
 
-    private object GetValueFromCell(ICell cell)
+    private object GetValueFromCell(CellValue cellValue)
     {
+        switch (cellValue.CellType)
+        {
+            case CellType.Numeric:
+                return cellValue.NumberValue;
+            case CellType.String:
+                return cellValue.StringValue;
+            //case CellType.Formula:
+            //    return cell.CellFormula;
+            case CellType.Boolean:
+                return cellValue.BooleanValue;
+            default:
+                return null;
+        }
+    }
+
+    private object GetValueFromCell(ICell cell, IFormulaEvaluator eval)
+    {
+        if (cell == null) return null;
+
         switch (cell.CellType)
         {
             case CellType.Numeric:
                 return cell.NumericCellValue;
-            /*
-            double numericValue = cell.NumericCellValue;
-            if (numericValue == (int)numericValue)
-            {
-                return (int)numericValue;
-            }
-            else
-            {
-                return (float)numericValue;
-            }
-            */
             case CellType.String:
                 return cell.StringCellValue;
             case CellType.Formula:
-                return cell.CellFormula;
+                var evaluatedCell = eval.Evaluate(cell);
+                return GetValueFromCell(evaluatedCell);
             case CellType.Boolean:
                 return cell.BooleanCellValue;
             default:

@@ -23,11 +23,13 @@ public class FruitData : ScriptableObject
         for (int i = 0; i < fruits.Length; i++)
         {
             FruitAttribute attribute = new FruitAttribute();
-            attribute.index = (int)(double)jsonData[i]["index"];
-            attribute.name = jsonData[i]["name"].ToString();
-            attribute.mass = (float)(double)jsonData[i]["mass"];
-            attribute.scaleX = (float)(double)jsonData[i]["scaleX"];
-            attribute.scaleY = (float)(double)jsonData[i]["scaleY"];
+            attribute.id = i;
+            attribute.name = jsonData[i]["Name"].ToString();
+            attribute.mass = (float)(double)jsonData[i]["Mass"];
+            attribute.scaleX = (float)(double)jsonData[i]["Scale_X"];
+            attribute.scaleY = (float)(double)jsonData[i]["Scale_Y"];
+            attribute.score = (int)(double)jsonData[i]["Synthesis_Score"];
+            attribute.imgName = jsonData[i]["Spawn_Img"].ToString();
 
             fruits[i].SetAttribute(attribute);
         }
@@ -37,9 +39,11 @@ public class FruitData : ScriptableObject
 [System.Serializable]
 public class FruitAttribute
 {
-    public int index;
+    public int id;
     public string name;
     public float mass;
     public float scaleX;
     public float scaleY;
+    public int score;
+    public string imgName;
 }
