@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 public class ExcelToJsonConverterWindow : EditorWindow
 {
@@ -32,9 +33,11 @@ public class ExcelToJsonConverterWindow : EditorWindow
         GUILayout.Space(10);
 
         GUILayout.Label("Json Output Path", EditorStyles.boldLabel);
+
+        string outputFileName = Path.GetFileNameWithoutExtension(excelFilePath);
         if (GUILayout.Button("Select Json Output Path"))
         {
-            string path = EditorUtility.SaveFilePanel("Select Json Output Path", "", "output.json", "json");
+            string path = EditorUtility.SaveFilePanel("Select Json Output Path", "", outputFileName , "json");
             if (!string.IsNullOrEmpty(path))
             {
                 jsonOutputPath = path;

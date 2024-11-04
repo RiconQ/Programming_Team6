@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b811e5bde6689c34ea94b2c28cc7692c, type: 3}
+  m_Name: TestFruit
+  m_EditorClassIdentifier: 
+  fruits:
+  - {fileID: 1045899256764748817, guid: be9b8c7768cd49d44b15cede2108e58f, type: 3}
+  - {fileID: 1045899256764748817, guid: 4b91bc7a5bc200d4aa6c726830fd206a, type: 3}
+  - {fileID: 1045899256764748817, guid: dfcbb52b1ea328e43b3d6a240909d48d, type: 3}
+  - {fileID: 1045899256764748817, guid: 00fbc727cd74fa348a5932e29a3cf442, type: 3}
+  - {fileID: 1045899256764748817, guid: 8f1c6adfb3bb39f409668fa267cb7906, type: 3}
+  - {fileID: 1045899256764748817, guid: ad4b7f3402453eb47a8b51b5677ef904, type: 3}
+  - {fileID: 1045899256764748817, guid: d1645a9364377af4d928a767ac0df6bd, type: 3}
+  - {fileID: 1045899256764748817, guid: a07da6487fac3ed4284d5036e3988d79, type: 3}
+  - {fileID: 1045899256764748817, guid: 867f0355aa8ee7e47ad7eeef579b8cf8, type: 3}
+  - {fileID: 1045899256764748817, guid: dc2bbb20ebfd1fb45bf7306730197f27, type: 3}
+  - {fileID: 1045899256764748817, guid: 26efdfc973006e54fade6ea0f32b9578, type: 3}

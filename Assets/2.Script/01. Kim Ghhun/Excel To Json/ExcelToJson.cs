@@ -62,6 +62,17 @@ public class ExcelToJson
         {
             case CellType.Numeric:
                 return cell.NumericCellValue;
+                /*
+                double numericValue = cell.NumericCellValue;
+                if (numericValue == (int)numericValue)
+                {
+                    return (int)numericValue;
+                }
+                else
+                {
+                    return (float)numericValue;
+                }
+                */
             case CellType.String:
                 return cell.StringCellValue;
             case CellType.Formula:
