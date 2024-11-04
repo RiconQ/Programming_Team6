@@ -80,8 +80,6 @@ public class ExcelToJson
                 return cellValue.NumberValue;
             case CellType.String:
                 return cellValue.StringValue;
-            //case CellType.Formula:
-            //    return cell.CellFormula;
             case CellType.Boolean:
                 return cellValue.BooleanValue;
             default:

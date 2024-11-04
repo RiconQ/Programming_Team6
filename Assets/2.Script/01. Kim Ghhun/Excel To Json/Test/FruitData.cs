@@ -29,7 +29,7 @@ public class FruitData : ScriptableObject
             attribute.scaleX = (float)(double)jsonData[i]["Scale_X"];
             attribute.scaleY = (float)(double)jsonData[i]["Scale_Y"];
             attribute.score = (int)(double)jsonData[i]["Synthesis_Score"];
-            attribute.imgName = jsonData[i]["Spawn_Img"].ToString();
+            attribute.imgName = jsonData[i]["Default_Img"].ToString();
 
             fruits[i].SetAttribute(attribute);
         }
