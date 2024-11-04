@@ -98,7 +98,7 @@ public class UIAnchor : MonoBehaviour
 		mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
 		mNeedsHalfPixelOffset = (Application.platform == RuntimePlatform.WindowsPlayer ||
 			Application.platform == RuntimePlatform.XBOX360 ||
-			// Application.platform == RuntimePlatform.WindowsWebPlayer ||
+			//Application.platform == RuntimePlatform.WindowsWebPlayer ||
 			Application.platform == RuntimePlatform.WebGLPlayer ||
 			Application.platform == RuntimePlatform.WindowsEditor);
 
