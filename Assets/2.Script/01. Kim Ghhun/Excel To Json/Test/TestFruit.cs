@@ -8,6 +8,7 @@ public class TestFruit : MonoBehaviour
     public int score;
     public int level;
     public Rigidbody2D rb;
+    public UISprite uiSprite;
 
     public void SetAttribute(FruitAttribute attribute)
     {
@@ -16,5 +17,7 @@ public class TestFruit : MonoBehaviour
         score = attribute.score;
         transform.localScale = new Vector3(attribute.scaleX, attribute.scaleY, 1);
         rb.mass = attribute.mass;
+        uiSprite.atlas = attribute.atlas;
+        uiSprite.spriteName = attribute.imgName;
     }
 }
