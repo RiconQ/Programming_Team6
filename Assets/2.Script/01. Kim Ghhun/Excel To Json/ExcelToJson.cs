@@ -47,6 +47,9 @@ public class ExcelToJson
                 IRow row = sheet.GetRow(i);
                 var rowData = new Dictionary<string, object>();
 
+                if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()))
+                    break;
+
                 for (int j = 0; j < cellCount; j++)
                 {
                     string columnName = headerRow.GetCell(j).ToString(); //Get ColumnName from Header
