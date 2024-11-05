@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.U2D;
 
 [CreateAssetMenu(fileName ="FruitData", menuName ="Fruit/FruitData")]
 public class FruitData : ScriptableObject
 {
     public TestFruit[] fruits;
+    public NGUIAtlas atlas;
 
     public void UpdateFruitAttribute(string jsonPath)
     {
@@ -30,6 +32,8 @@ public class FruitData : ScriptableObject
             attribute.scaleY = (float)(double)jsonData[i]["Scale_Y"];
             attribute.score = (int)(double)jsonData[i]["Synthesis_Score"];
             attribute.imgName = jsonData[i]["Default_Img"].ToString();
+            attribute.atlas = atlas;
+
 
             fruits[i].SetAttribute(attribute);
         }
@@ -46,4 +50,5 @@ public class FruitAttribute
     public float scaleY;
     public int score;
     public string imgName;
+    public NGUIAtlas atlas;
 }

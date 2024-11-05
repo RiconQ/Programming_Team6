@@ -1,10 +1,15 @@
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 [CustomEditor(typeof(FruitData))]
 public class FruitDataEditor : Editor
 {
+    private string excelFilePath;
     private string jsonFilePath;
+    private string excelToJsonPath;
+
+    public int sheetNum;
 
     public override void OnInspectorGUI()
     {
@@ -12,13 +17,26 @@ public class FruitDataEditor : Editor
 
         DrawDefaultInspector();
 
-        if(GUILayout.Button("Select Json File"))
+        if(GUILayout.Button("Select Excel File"))
+        {
+            excelFilePath = EditorUtility.OpenFilePanel("Select Excel File", "", "xlsx");
+            excelToJsonPath = Path.ChangeExtension(excelFilePath, "json");
+            jsonFilePath = string.Empty;
+        }
+        sheetNum = EditorGUILayout.IntField("Enter Sheet Number", sheetNum);
+
+        EditorGUILayout.TextField("Excel File Path", excelFilePath);
+
+        GUILayout.Space(15);
+
+        if (GUILayout.Button("Select Json File"))
         {
             jsonFilePath = EditorUtility.OpenFilePanel("Select Json File", "", "json");
+            excelFilePath = string.Empty;
         }
         EditorGUILayout.TextField("Json File Path", jsonFilePath);
 
-        GUILayout.Space(10);
+        GUILayout.Space(15);
         
         if (GUILayout.Button("Load Json and Update Attribute"))
         {
@@ -27,6 +45,17 @@ public class FruitDataEditor : Editor
                 fruitData.UpdateFruitAttribute(jsonFilePath);
                 EditorUtility.SetDirty(fruitData);
                 Debug.Log("Update Attribute");
+            }
+            else if(!string.IsNullOrEmpty(excelFilePath))
+            {
+                ExcelToJson converter = new ExcelToJson
+                {
+                    excelFilePath = excelFilePath,
+                    jsonOutputPath = excelToJsonPath
+                };
+                converter.ConvertExcelToJson(sheetNum);
+
+                fruitData.UpdateFruitAttribute(excelToJsonPath);
             }
             else
             {
