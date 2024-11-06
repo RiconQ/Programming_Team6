@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
     public ParticleSystem effect;
     public Rigidbody2D rigid;
     CircleCollider2D circle_col;
-    SpriteRenderer sp_render;
+    [SerializeField]private UISprite sprite;
 
     // [JSON 예정] 구슬 관련 정보
     [Header("Info")]
@@ -42,7 +42,7 @@ public class Ball : MonoBehaviour
         isDrag = false;
         rigid = GetComponent<Rigidbody2D>();
         circle_col = GetComponent<CircleCollider2D>();
-        sp_render = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<UISprite>();
     }
 
     private void OnEnable()
@@ -51,6 +51,7 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
         transform.DOScale(ballScale, 0.5f).SetEase(Ease.OutBack);
         rigid.mass = GetBallMass(level);
+        sprite.atlas = fruitData.atlas;
 
         // 드랍 범위 제한 설정
         // 시간 관계상 부득이 여기만 하드 코딩하였습니다... (오류 해결 실패)
@@ -121,14 +122,14 @@ public class Ball : MonoBehaviour
                 if (isBouns)
                 {
                     isBouns = false;
-                    sp_render.color = Color.white;
+                    sprite.color = Color.white;
                     Debug.Log("Get Bouns!");
                     GameManager.instance.Addscore(10);
                 }
                 if (other.isBouns)
                 {
                     other.isBouns = false;
-                    other.sp_render.color = Color.white;
+                    other.sprite.color = Color.white;
                     Debug.Log("Get Bouns!");
                     GameManager.instance.Addscore(10);
                 }
@@ -159,7 +160,7 @@ public class Ball : MonoBehaviour
         if(collision.tag == "Finish")
         {
             deadTime += Time.deltaTime;
-            if (deadTime > warningTime) sp_render.color = new Color(0.8f, 0.2f, 0.2f);
+            if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
             if (deadTime > failTime)
             {
                 GameManager.instance.GameOver();
@@ -173,7 +174,7 @@ public class Ball : MonoBehaviour
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-            sp_render.color = Color.white;
+            sprite.color = Color.white;
         }
     }
 
@@ -236,7 +237,9 @@ public class Ball : MonoBehaviour
         level++;
         var ballScale = GetBallScale(level);
         transform.localScale = Vector2.one * ballScale;
-        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
+        sprite.spriteName = GetBallSprite(level);
+        gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
+        //gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
         EffectPlay();
         // 아이템 등장 확률 계산 및 적용
         if(level == 3)
@@ -244,7 +247,7 @@ public class Ball : MonoBehaviour
             if (Random.Range(0, 100) < lv3ItemChance)
             {
                 isBouns = true;
-                sp_render.color = Color.green;
+                sprite.color = Color.green;
             }
         }
 
@@ -274,5 +277,5 @@ public class Ball : MonoBehaviour
     }
 
     private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
-    //private Sprite GetBallSprite(int level) => fruitData.fruits[level].attribute.atlas.GetSprite(fruitData.fruits[level].attribute.imgName);
+    private string GetBallSprite(int level) => fruitData.fruits[level].attribute.imgName;
 }
