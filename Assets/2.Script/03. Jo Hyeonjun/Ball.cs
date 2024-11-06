@@ -50,6 +50,7 @@ public class Ball : MonoBehaviour
         // ������ ������ �� ȿ��. DOTween Ȱ��
         var ballScale = GetBallScale(level);
         transform.DOScale(ballScale, 0.5f).SetEase(Ease.OutBack);
+        this.GetComponent<CircleCollider2D>().radius = 47;
         rigid.mass = GetBallMass(level);
         sprite.atlas = fruitData.atlas;
 

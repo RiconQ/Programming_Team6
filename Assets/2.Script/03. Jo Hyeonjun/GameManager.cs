@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         lastBall = newBall;
 
         lastBall.level = UnityEngine.Random.Range(0, SpawnSpecies);
-        lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
+        //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
 
         SoundManager.instance.PlaySFX("Next");

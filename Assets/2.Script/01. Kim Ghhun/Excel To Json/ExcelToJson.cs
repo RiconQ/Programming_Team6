@@ -40,14 +40,14 @@ public class ExcelToJson
             IRow headerRow = sheet.GetRow(0);
             int cellCount = headerRow.LastCellNum;
 
+            Debug.Log(sheet.LastRowNum);
 
             // Extract Data looping every row in sheet
             for (int i = 1; i <= sheet.LastRowNum; i++) // 0 is Header
             {
                 IRow row = sheet.GetRow(i);
                 var rowData = new Dictionary<string, object>();
-
-                if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()))
+                if (row.GetCell(0) == null)
                     break;
 
                 for (int j = 0; j < cellCount; j++)
