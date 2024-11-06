@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Core")]
     private int score;
-    private int MaxScore;
+    private int maxScore;
     private bool isGameOver;
 
     [Header("Setting")]
@@ -32,23 +33,26 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text maxScoreText;
 
+    // [UI Changed Event]
+    public event Action<int> OnScoreChanged;
+    public event Action<int> OnScoreMaxChanged;
 
     // 게임 매니져 싱글톤 적용
-    public static GameManager instance;
+    public static GameManager Instance;
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             // 싱글톤 용 인스턴스 생성
-            instance = this;
+            Instance = this;
 
             // 프레임 조절
             Application.targetFrameRate = 60;
 
             // 스코어 관련
             if (!PlayerPrefs.HasKey("MaxScore")) PlayerPrefs.SetInt("MaxScore", 0);
-            MaxScore = PlayerPrefs.GetInt("MaxScore");
-            maxScoreText.text = MaxScore.ToString();
+            maxScore = PlayerPrefs.GetInt("MaxScore");
+            maxScoreText.text = maxScore.ToString();
 
             // 오브젝트 풀링 관련
             BallPool = new List<Ball>();
@@ -102,7 +106,7 @@ public class GameManager : MonoBehaviour
         Ball newBall = GetBall();
         lastBall = newBall;
 
-        lastBall.level = Random.Range(0, SpawnSpecies);
+        lastBall.level = UnityEngine.Random.Range(0, SpawnSpecies);
         lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
 
@@ -138,8 +142,15 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
         score += add;
-        scoreText.text = score.ToString();
-        if (score > MaxScore) maxScoreText.text = score.ToString();
+        //scoreText.text = score.ToString();
+        OnScoreChanged?.Invoke(score);
+
+        if (score > maxScore)
+        {
+            maxScore = score;
+            //maxScoreText.text = maxScore.ToString();
+            OnScoreMaxChanged?.Invoke(maxScore);
+        }
     }
 
     // 게임 오버 메소드
@@ -169,8 +180,8 @@ public class GameManager : MonoBehaviour
         }
 
         // 최대 점수 기록
-        MaxScore = Mathf.Max(score, MaxScore);
-        PlayerPrefs.SetInt("MaxScore", MaxScore);
+        maxScore = Mathf.Max(score, maxScore);
+        PlayerPrefs.SetInt("MaxScore", maxScore);
 
         // BGM 정지 및 게임 오버 사운드
         SoundManager.instance.StopBGM();

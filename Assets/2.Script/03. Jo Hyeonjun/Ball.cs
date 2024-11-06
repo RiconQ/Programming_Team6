@@ -5,71 +5,73 @@ using DG.Tweening;
 
 public class Ball : MonoBehaviour
 {
-    // ±¸½½ÀÇ »óÅÂ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [Header("State")]
     public int level; 
-    private bool isDrag; // µå·¡±× ÁßÀÎ°¡?
-    private bool isMerge; // ÇÕÃÄÁö´Â ÁßÀÎ°¡?
-    private bool isBouns; // ¾ÆÀÌÅÛ Æ÷ÇÔµÈ ±¸½½ÀÎ°¡?
+    private bool isDrag; // ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½?
+    private bool isMerge; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½?
+    private bool isBouns; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½?
 
-    // ±¸½½ ÄÄÆ÷³ÍÆ®
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     [Header("Component")]
     public ParticleSystem effect;
     public Rigidbody2D rigid;
     CircleCollider2D circle_col;
-    SpriteRenderer sp_render;
+    [SerializeField]private UISprite sprite;
 
-    // [JSON ¿¹Á¤] ±¸½½ °ü·Ã Á¤º¸
+    // [JSON ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [Header("Info")]
-    public float[] ballScale = { 0.30f, 0.36f, 0.44f, 0.56f, 0.68f, 
-                                  0.80f, 0.96f, 1.10f, 1.20f, 1.36f, 1.60f};
-    public float[] ballMass =  { 1.0f, 1.5f, 2.0f, 2.5f, 3.0f, 
-                                  3.5f, 4.0f, 4.5f, 5.0f, 5.5f, 6.0f};
-    [Range(0, 100)] 
-    public int lv3ItemChance; // ·¹º§ 3(4¹øÂ°) - ¾ÆÀÌÅÛ Æ÷ÇÔµÈ ±¸½½ÀÏ È®·ü
+    public FruitDataImporter fruitData;
 
-    // °ÔÀÓ ¿À¹ö °ü·Ã
+    [Range(0, 100)] 
+    public int lv3ItemChance; // ï¿½ï¿½ï¿½ï¿½ 3(4ï¿½ï¿½Â°) - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [Header("About Game Over")]
     public float warningTime = 0.50f;
     public float failTime = 0.75f;
 
-    // µå¶ø ¹üÀ§ X Á¦ÇÑ
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X ï¿½ï¿½ï¿½ï¿½
     [Header("Drop Border")]
     private float BorderLeft;
     private float BorderRight;
 
     private void Awake()
     {
-        // ±¸½½ ÄÄÆ÷³ÍÆ® ºÒ·¯¿À±â
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
         isDrag = false;
         rigid = GetComponent<Rigidbody2D>();
         circle_col = GetComponent<CircleCollider2D>();
-        sp_render = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<UISprite>();
     }
 
     private void OnEnable()
     {
-        // ±¸½½ÀÌ µîÀåÇÒ ¶§ È¿°ú. DOTween È°¿ë
-        transform.DOScale(ballScale[level], 0.5f).SetEase(Ease.OutBack);
-        // µå¶ø ¹üÀ§ Á¦ÇÑ ¼³Á¤
-        // ½Ã°£ °ü°è»ó ºÎµæÀÌ ¿©±â¸¸ ÇÏµå ÄÚµùÇÏ¿´½À´Ï´Ù... (¿À·ù ÇØ°á ½ÇÆÐ)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¿ï¿½ï¿½. DOTween È°ï¿½ï¿½
+        var ballScale = GetBallScale(level);
+        transform.DOScale(ballScale, 0.5f).SetEase(Ease.OutBack);
+        rigid.mass = GetBallMass(level);
+        sprite.atlas = fruitData.atlas;
+
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¸ ï¿½Ïµï¿½ ï¿½Úµï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½... (ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½ ï¿½ï¿½ï¿½ï¿½)
         BorderLeft = -2.75f + transform.localScale.x;
         BorderRight = 2.75f - transform.localScale.x;
     }
 
     private void OnDisable()
     {
-        // ±¸½½ ºñÈ°¼ºÈ­ µÉ ¶§
-        // ¼Ó¼º ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½
+        // ï¿½Ó¼ï¿½ ï¿½Ê±ï¿½È­
         level = 0;
         isDrag = false;
         isMerge = false;
         isBouns = false;
-        // transform ÃÊ±âÈ­
+        // transform ï¿½Ê±ï¿½È­
         transform.localPosition = Vector3.zero;
         transform.localScale = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        // ¹°¸® ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         rigid.simulated = false;
         rigid.velocity = Vector2.zero;
         rigid.angularVelocity = 0;
@@ -81,7 +83,7 @@ public class Ball : MonoBehaviour
         if (isDrag)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // µå¶ø °¡´É ¹üÀ§ Á¦ÇÑ
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             mousePos.x = Mathf.Clamp(mousePos.x, BorderLeft, BorderRight);
             mousePos.y = 4;
             mousePos.z = 0;
@@ -99,7 +101,7 @@ public class Ball : MonoBehaviour
         rigid.simulated = true;
     }
 
-    // ±¸½½ÀÌ ´Ù¸¥ ÄÝ¶óÀÌ´õ¿¡ Á¢ÃËÇßÀ» ¶§
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     private bool isAttach;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -108,31 +110,31 @@ public class Ball : MonoBehaviour
         {
             Ball other = collision.gameObject.GetComponent<Ball>();
 
-            // ÇÕ¼º Á¶°Ç ¸¸Á· ½Ã (ÀÏ´Ü ÃÖ´ë ·¹º§Àº »ç¶óÁöÁö ¾ÊÀ½)
+            // ï¿½Õ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½Ï´ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
             if (level == other.level && !isMerge && !other.isMerge && level < 10)
             {
                 float myX = transform.position.x;
                 float myY = transform.position.y;
                 float otherX = other.transform.position.x;
                 float otherY = other.transform.position.y;
-                // ÇÕ¼ºµÇ´Â 2°³ÀÇ ±¸½½ Áß¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Â °æ¿ì
-                // ¿ì¼± µð¹ö±× Ãâ·Â ¹× 10Á¡ Áõ°¡·Î Ã³¸®
+                // ï¿½Õ¼ï¿½ï¿½Ç´ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+                // ï¿½ì¼± ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (isBouns)
                 {
                     isBouns = false;
-                    sp_render.color = Color.white;
+                    sprite.color = Color.white;
                     Debug.Log("Get Bouns!");
-                    GameManager.instance.Addscore(10);
+                    GameManager.Instance.Addscore(10);
                 }
                 if (other.isBouns)
                 {
                     other.isBouns = false;
-                    other.sp_render.color = Color.white;
+                    other.sprite.color = Color.white;
                     Debug.Log("Get Bouns!");
-                    GameManager.instance.Addscore(10);
+                    GameManager.Instance.Addscore(10);
                 }
 
-                // ÀÌ °´Ã¼°¡ ´õ ¾Æ·¡¿¡ ÀÖ°Å³ª, °°Àº ³ôÀÌ¸é ¿À¸¥ÂÊ¿¡ ÀÖÀ» ¶§
+                // ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ö°Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                 if (myY < otherY || (myY == otherY && myX > otherX))
                 {
                     Vector3 targetPos = new Vector3((myX + otherX) / 2, (myY + otherY) / 2, 0);
@@ -151,52 +153,52 @@ public class Ball : MonoBehaviour
         isAttach = false;
     }
 
-    // ±¸½½ÀÌ ½ÇÆÐ ¶óÀÎ¿¡ ¸Ó¹°·¯ ÀÖÀ» ¶§ (°ÔÀÓ ¿À¹ö ÆÇÁ¤ ¸Þ¼Òµå)
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½Ó¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½)
     private float deadTime;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.tag == "Finish")
         {
             deadTime += Time.deltaTime;
-            if (deadTime > warningTime) sp_render.color = new Color(0.8f, 0.2f, 0.2f);
+            if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
             if (deadTime > failTime)
             {
-                GameManager.instance.GameOver();
+                GameManager.Instance.GameOver();
             }
         }
     }
     
-    // ±¸½½ÀÌ ½ÇÆÐ ¶óÀÎÀ» ¹þ¾î³µÀ» ¶§
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³µï¿½ï¿½ ï¿½ï¿½
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-            sp_render.color = Color.white;
+            sprite.color = Color.white;
         }
     }
 
     public void Hide(Vector3 targetPos)
     {
-        isMerge = true; // ÇÕ¼º ÁßÀÎ »óÅÂ·Î
+        isMerge = true; // ï¿½Õ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½
         rigid.simulated = false;
-        circle_col.enabled = false; // ¹°¸® Àû¿ë off
+        circle_col.enabled = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ off
         StartCoroutine(Hide_co(targetPos));
     }
 
     private IEnumerator Hide_co(Vector3 targetPos)
     {
-        // ÇÕ¼ºµÇ´Â 2°³ÀÇ ÁßÁ¡À¸·Î ÀÌµ¿½ÃÅ°±â
+        // ï¿½Õ¼ï¿½ï¿½Ç´ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½
         int frameCount = 0;
         while(frameCount < 10)
         {
             frameCount++;
-            // °ÔÀÓ ÁøÇà ÁßÀÎ°æ¿ì
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°ï¿½ï¿½
             if (targetPos.y < 900)
             {
                 transform.position = Vector3.Lerp(transform.position, targetPos, 0.4f);
             }
-            // °ÔÀÓ ¿À¹ö·Î ÀÎÇØ »ç¶óÁö´Â °æ¿ì
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             else
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.4f);
@@ -204,25 +206,25 @@ public class Ball : MonoBehaviour
             yield return null;
         }
         isMerge = false;
-        // Á¡¼ö Áõ°¡, ÀÓ½Ã·Î ·¹º§¸¸Å­
-        GameManager.instance.Addscore(level);
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­
+        GameManager.Instance.Addscore(level);
         gameObject.SetActive(false);
     }
 
     private void LevelUp(Vector3 targetPos)
     {
-        isMerge = true; // ÇÕ¼º ÁßÀÎ »óÅÂ·Î
-        rigid.velocity = Vector2.zero; // ÀÌµ¿¼Óµµ¸¦ 0À¸·Î
-        rigid.angularVelocity = 0; // È¸Àü¼Óµµ¸¦ 0À¸·Î
+        isMerge = true; // ï¿½Õ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½
+        rigid.velocity = Vector2.zero; // ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½
+        rigid.angularVelocity = 0; // È¸ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½
         rigid.simulated = false;
-        circle_col.enabled = false; // ¹°¸® Àû¿ë off
+        circle_col.enabled = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ off
 
         StartCoroutine(LevelUp_co(targetPos));
     }
 
     private IEnumerator LevelUp_co(Vector3 targetPos)
     {
-        // ÇÕ¼ºµÇ´Â 2°³ÀÇ ÁßÁ¡À¸·Î ÀÌµ¿½ÃÅ°±â
+        // ï¿½Õ¼ï¿½ï¿½Ç´ï¿½ 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Å°ï¿½ï¿½
         int frameCount = 0;
         while (frameCount < 5)
         {
@@ -231,22 +233,27 @@ public class Ball : MonoBehaviour
             yield return null;
         }
         SoundManager.instance.PlaySFX("LvUp1");
-        // ·¹º§ ¾÷: Scale, Spriteµµ ±×¿¡ ¸Â°Ô º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: Scale, Spriteï¿½ï¿½ ï¿½×¿ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
         level++;
-        transform.localScale = Vector2.one * ballScale[level];
-        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
+
+        var ballScale = GetBallScale(level);
+        transform.localScale = Vector2.one * ballScale;
+        sprite.spriteName = GetBallSprite(level);
+        gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
+        //gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
+        
         EffectPlay();
-        // ¾ÆÀÌÅÛ µîÀå È®·ü °è»ê ¹× Àû¿ë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(level == 3)
         {
             if (Random.Range(0, 100) < lv3ItemChance)
             {
                 isBouns = true;
-                sp_render.color = Color.green;
+                sprite.color = Color.green;
             }
         }
 
-        // ´Ù½Ã ¹°¸® Àû¿ëµÇ°Ô
+        // ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½
         rigid.simulated = true;
         circle_col.enabled = true; 
         isMerge = false;
@@ -258,4 +265,19 @@ public class Ball : MonoBehaviour
         effect.transform.localScale = transform.localScale;
         effect.Play();
     }
+
+    private Vector3 GetBallScale(int level)
+    {
+        var ballScale = new Vector3
+            (
+                fruitData.fruits[level].attribute.scaleX,
+                fruitData.fruits[level].attribute.scaleY,
+                1
+            );
+
+        return ballScale;
+    }
+
+    private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
+    private string GetBallSprite(int level) => fruitData.fruits[level].attribute.imgName;
 }
