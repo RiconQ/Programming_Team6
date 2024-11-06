@@ -122,14 +122,14 @@ public class Ball : MonoBehaviour
                     isBouns = false;
                     sp_render.color = Color.white;
                     Debug.Log("Get Bouns!");
-                    GameManager.instance.Addscore(10);
+                    GameManager.Instance.Addscore(10);
                 }
                 if (other.isBouns)
                 {
                     other.isBouns = false;
                     other.sp_render.color = Color.white;
                     Debug.Log("Get Bouns!");
-                    GameManager.instance.Addscore(10);
+                    GameManager.Instance.Addscore(10);
                 }
 
                 // 이 객체가 더 아래에 있거나, 같은 높이면 오른쪽에 있을 때
@@ -161,7 +161,7 @@ public class Ball : MonoBehaviour
             if (deadTime > warningTime) sp_render.color = new Color(0.8f, 0.2f, 0.2f);
             if (deadTime > failTime)
             {
-                GameManager.instance.GameOver();
+                GameManager.Instance.GameOver();
             }
         }
     }
@@ -205,7 +205,7 @@ public class Ball : MonoBehaviour
         }
         isMerge = false;
         // 점수 증가, 임시로 레벨만큼
-        GameManager.instance.Addscore(level);
+        GameManager.Instance.Addscore(level);
         gameObject.SetActive(false);
     }
 
@@ -234,7 +234,7 @@ public class Ball : MonoBehaviour
         // 레벨 업: Scale, Sprite도 그에 맞게 변경
         level++;
         transform.localScale = Vector2.one * ballScale[level];
-        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
+        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.BallSprites[level];
         EffectPlay();
         // 아이템 등장 확률 계산 및 적용
         if(level == 3)
