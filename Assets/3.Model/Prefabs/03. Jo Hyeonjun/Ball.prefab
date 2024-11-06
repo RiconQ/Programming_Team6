@@ -164,32 +164,7 @@ MonoBehaviour:
   level: 0
   effect: {fileID: 0}
   rigid: {fileID: 0}
-  ballScale:
-  - 0.3
-  - 0.36
-  - 0.44
-  - 0.56
-  - 0.68
-  - 0.8
-  - 0.96
-  - 1.1
-  - 1.2
-  - 1.36
-  - 1.6
-  ballMass:
-  - 1
-  - 1.5
-  - 2
-  - 2.5
-  - 3
-  - 3.5
-  - 4
-  - 4.5
-  - 5
-  - 5.5
-  - 6
+  fruitData: {fileID: 11400000, guid: c0173ff8fff8f5b499b65f12dfae5efa, type: 2}
   lv3ItemChance: 30
   warningTime: 0.5
   failTime: 0.75
-  LeftWall: {fileID: 0}
-  RightWall: {fileID: 0}

@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
-[CustomEditor(typeof(FruitData))]
+[CustomEditor(typeof(FruitDataImporter))]
 public class FruitDataEditor : Editor
 {
     private string excelFilePath;
@@ -13,7 +13,7 @@ public class FruitDataEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        FruitData fruitData = (FruitData)target;
+        FruitDataImporter fruitData = (FruitDataImporter)target;
 
         DrawDefaultInspector();
 

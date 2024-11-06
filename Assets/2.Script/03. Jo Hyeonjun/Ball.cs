@@ -21,10 +21,8 @@ public class Ball : MonoBehaviour
 
     // [JSON 예정] 구슬 관련 정보
     [Header("Info")]
-    public float[] ballScale = { 0.30f, 0.36f, 0.44f, 0.56f, 0.68f, 
-                                  0.80f, 0.96f, 1.10f, 1.20f, 1.36f, 1.60f};
-    public float[] ballMass =  { 1.0f, 1.5f, 2.0f, 2.5f, 3.0f, 
-                                  3.5f, 4.0f, 4.5f, 5.0f, 5.5f, 6.0f};
+    public FruitDataImporter fruitData;
+
     [Range(0, 100)] 
     public int lv3ItemChance; // 레벨 3(4번째) - 아이템 포함된 구슬일 확률
 
@@ -50,7 +48,10 @@ public class Ball : MonoBehaviour
     private void OnEnable()
     {
         // 구슬이 등장할 때 효과. DOTween 활용
-        transform.DOScale(ballScale[level], 0.5f).SetEase(Ease.OutBack);
+        var ballScale = GetBallScale(level);
+        transform.DOScale(ballScale, 0.5f).SetEase(Ease.OutBack);
+        rigid.mass = GetBallMass(level);
+
         // 드랍 범위 제한 설정
         // 시간 관계상 부득이 여기만 하드 코딩하였습니다... (오류 해결 실패)
         BorderLeft = -2.75f + transform.localScale.x;
@@ -233,7 +234,8 @@ public class Ball : MonoBehaviour
         SoundManager.instance.PlaySFX("LvUp1");
         // 레벨 업: Scale, Sprite도 그에 맞게 변경
         level++;
-        transform.localScale = Vector2.one * ballScale[level];
+        var ballScale = GetBallScale(level);
+        transform.localScale = Vector2.one * ballScale;
         gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
         EffectPlay();
         // 아이템 등장 확률 계산 및 적용
@@ -258,4 +260,19 @@ public class Ball : MonoBehaviour
         effect.transform.localScale = transform.localScale;
         effect.Play();
     }
+
+    private Vector3 GetBallScale(int level)
+    {
+        var ballScale = new Vector3
+            (
+                fruitData.fruits[level].attribute.scaleX,
+                fruitData.fruits[level].attribute.scaleY,
+                1
+            );
+
+        return ballScale;
+    }
+
+    private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
+    //private Sprite GetBallSprite(int level) => fruitData.fruits[level].attribute.atlas.GetSprite(fruitData.fruits[level].attribute.imgName);
 }
