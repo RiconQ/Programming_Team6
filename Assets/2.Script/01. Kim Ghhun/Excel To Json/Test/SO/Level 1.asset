@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   attribute:
-    id: 0
-    level: 0
-    name: 
-    mass: 0
-    scaleX: 0
-    scaleY: 0
-    score: 0
-    imgName: 
-    atlas: {fileID: 0}
+    id: 1
+    level: 1
+    name: "\uB538\uAE30"
+    mass: 1.5
+    scaleX: 0.18
+    scaleY: 0.18
+    score: 3
+    imgName: Dongle 1
+    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}

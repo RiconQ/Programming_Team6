@@ -36,6 +36,9 @@ public class FruitDataImporter : ScriptableObject
             attribute.atlas = atlas;
 
             fruits[i].SetAttribute(attribute);
+
+            UnityEditor.EditorUtility.SetDirty(fruits[i]);
+            UnityEditor.AssetDatabase.SaveAssets();
         }
     }
 }
