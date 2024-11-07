@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
         if(isActive)
         {
             // 오른손 모드 (방향키, 낙하 버튼 UI 우측에 배치) - 위치만 변경
+
         }
         else
         {
