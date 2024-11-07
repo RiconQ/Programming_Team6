@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FruitData", menuName = "Fruit/FruitData")]
+[System.Serializable]
 public class FruitData : ScriptableObject
 {
     public FruitAttribute attribute = new FruitAttribute();
@@ -10,6 +11,9 @@ public class FruitData : ScriptableObject
     public void SetAttribute(FruitAttribute attribute)
     {
         this.attribute = attribute;
+
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.AssetDatabase.SaveAssets();
     }
 }
 [System.Serializable]

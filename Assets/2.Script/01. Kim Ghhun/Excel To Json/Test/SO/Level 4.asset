@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Level 4
   m_EditorClassIdentifier: 
   attribute:
-    id: 0
-    level: 0
-    name: 
-    mass: 0
-    scaleX: 0
-    scaleY: 0
-    score: 0
-    imgName: 
-    atlas: {fileID: 0}
+    id: 4
+    level: 4
+    name: "\uADE4"
+    mass: 3
+    scaleX: 0.31
+    scaleY: 0.31
+    score: 15
+    imgName: Dongle 4
+    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}
