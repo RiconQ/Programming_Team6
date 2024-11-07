@@ -19,6 +19,14 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private UISprite _cloudSprite;
 
+
+    //====================================================================
+
+    [SerializeField] private GameObject _switchButtons;
+    [SerializeField] private GameObject _toggleButton;
+
+    // private UI_Switch uI_Switch;
+
     private void Start()
     {
         GameManager.Instance.OnScoreChanged += OnUpdateUIScoreText;
@@ -28,6 +36,8 @@ public class UIManager : MonoBehaviour
         //_gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
         //_dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
         _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
+
+        //  uI_Switch = FindObjectOfType<UI_Switch>();
     }
 
 
@@ -55,14 +65,25 @@ public class UIManager : MonoBehaviour
     #region Toggle OnChanged Event Method
     private void OnToggleChangedUiSwitch(bool isActive)
     {
-        if(isActive)
+        Vector3 currentPosition_s = _switchButtons.transform.position;
+        Vector3 currentPosition_t = _toggleButton.transform.position;
+        if (isActive)
         {
-            // 오른손 모드 (방향키, 낙하 버튼 UI 우측에 배치) - 위치만 변경
+            // 왼손 모드 (방향키, 낙하 버튼 UI 좌측에 배치) - 위치만 변경
+            currentPosition_s.x *= -1;
+            _switchButtons.transform.position = currentPosition_s;
+
+            currentPosition_t.x *= -1;
+            _toggleButton.transform.position = currentPosition_t;
 
         }
         else
         {
-            // 왼손 모드 (방향키, 낙하 버튼 UI 좌측에 배치) - 위치만 변경
+            currentPosition_s.x *= -1;
+            _switchButtons.transform.position = currentPosition_s;
+
+            currentPosition_t.x *= -1;
+            _toggleButton.transform.position = currentPosition_t;
         }
     }
     #endregion
