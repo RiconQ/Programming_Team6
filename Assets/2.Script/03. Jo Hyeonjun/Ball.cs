@@ -54,6 +54,9 @@ public class Ball : MonoBehaviour
         rigid.mass = GetBallMass(level);
         sprite.atlas = fruitData.atlas;
 
+        sprite.spriteName = GetBallSprite(level);
+        Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
+
         // ��� ���� ���� ����
         // �ð� ����� �ε��� ���⸸ �ϵ� �ڵ��Ͽ����ϴ�... (���� �ذ� ����)
         BorderLeft = -2.75f + transform.localScale.x;
@@ -240,7 +243,8 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
         transform.localScale = Vector2.one * ballScale;
         sprite.spriteName = GetBallSprite(level);
-        gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
+        Debug.Log($"Level Up - Level : {level}, Sprite : {sprite.spriteName}");
+        //gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
         //gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
         
         EffectPlay();
