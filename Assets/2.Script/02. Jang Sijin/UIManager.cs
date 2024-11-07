@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         //_gameStopButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
         //_gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
         //_dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
-        //_uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
+        _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
     }
 
 
