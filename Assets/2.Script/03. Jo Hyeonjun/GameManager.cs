@@ -7,9 +7,8 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Core")]
-    private int score;
-    private int maxScore;
+    public int score { get; private set; }
+    public int maxScore { get; private set; }
     private bool isGameOver;
 
     [Header("Setting")]
@@ -17,8 +16,11 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Object")]
-    public Sprite[] BallSprites; // [JSON 예정] 구슬 스프라이트
+    public Sprite[] BallSprites; // JSON 적용 이후 미사용 - 구슬 스프라이트
     public Ball lastBall; // 다음에 나올 공
+    private int waitBallLv; // 예고된 공의 레벨
+    private float leftBorder;
+    private float rightBorder;
 
     [Header("Pooling")]
     public GameObject BallPrefab;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
     public event Action<int> OnScoreMaxChanged;
+    public event Action<int> OnWaitBallLvChanged;
 
     // 게임 매니져 싱글톤 적용
     public static GameManager Instance;
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
             // 스코어 관련
             if (!PlayerPrefs.HasKey("MaxScore")) PlayerPrefs.SetInt("MaxScore", 0);
             maxScore = PlayerPrefs.GetInt("MaxScore");
-            maxScoreText.text = maxScore.ToString();
+            // maxScoreText.text = maxScore.ToString();
 
             // 오브젝트 풀링 관련
             BallPool = new List<Ball>();
@@ -64,6 +67,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SoundManager.instance.PlayBGM();
+        waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
         NextBall();
     }
 
@@ -106,31 +110,58 @@ public class GameManager : MonoBehaviour
         Ball newBall = GetBall();
         lastBall = newBall;
 
-        lastBall.level = UnityEngine.Random.Range(0, SpawnSpecies);
+        lastBall.level = waitBallLv;
+        leftBorder = -2.75f + lastBall.transform.localScale.x;
+        rightBorder = 2.75f - lastBall.transform.localScale.x;
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
+        waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
+        OnWaitBallLvChanged?.Invoke(waitBallLv);
 
         SoundManager.instance.PlaySFX("Next");
         StartCoroutine(NextBall_co());
     }
 
-    // 기존 구슬이 드랍될 때까지 + 0.4초 대기 후 다음 구슬
+    // 기존 구슬이 드랍될 때까지 + 0.5초 대기 후 다음 구슬
     private IEnumerator NextBall_co()
     {
         yield return new WaitUntil(() => lastBall == null);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         NextBall();
     }
 
-    // 터치가 시작될 때 
+    // [레거시] 터치가 시작될 때 
     public void TouchDown()
     {
         if (lastBall == null) return;
         lastBall.Drag();
     }
 
-    // 터치를 땔 때
+    // [레거시] 터치를 땔 때
     public void TouchUp()
+    {
+        if (lastBall == null) return;
+        lastBall.Drop();
+        lastBall = null;
+    }
+
+    // 좌,우 버튼 누르면
+    public void MoveTheBall(int direction)
+    {
+        if (lastBall == null) return;
+        lastBall.transform.position += Vector3.right * direction * 0.1f;
+        if (lastBall.transform.position.x > rightBorder)
+        {
+            lastBall.transform.position = new Vector3(rightBorder, lastBall.transform.position.y, 0);
+        }
+        else if (lastBall.transform.position.x < leftBorder)
+        {
+            lastBall.transform.position = new Vector3(leftBorder, lastBall.transform.position.y, 0);
+        }
+    }
+
+    // 드랍 버튼 누르면
+    public void DropTheBall()
     {
         if (lastBall == null) return;
         lastBall.Drop();
@@ -188,11 +219,6 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.PlaySFX("GameOver");
     }
 
-    // [디버그 용] 리셋 버튼 - 지금은 누르면 확인 없이 바로 리셋
-    public void PressButton(int n)
-    {
-        if (n == 1) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }
 
 
