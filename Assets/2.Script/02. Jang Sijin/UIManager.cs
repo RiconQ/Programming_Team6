@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
     [Header("----------ETC")]
     [SerializeField] private UISprite _cloudSprite;
     [SerializeField] private GameObject _switchButtons;
-    [SerializeField] private GameObject _toggleButton;
     // private UI_Switch uI_Switch;
 
 
@@ -218,28 +217,24 @@ public class UIManager : MonoBehaviour
     #region Toggle OnChanged Event Method
     private void OnToggleChangedUiSwitch(bool isActive)
     {
-        /*
+
         Vector3 currentPosition_s = _switchButtons.transform.position;
-        Vector3 currentPosition_t = _toggleButton.transform.position;
+        Vector3 currentPosition_t = _uiSwitchToggle.transform.position;
+        currentPosition_s.x *= -1;
+        _switchButtons.transform.position = currentPosition_s;
+
+        currentPosition_t.x *= -1;
+        _uiSwitchToggle.transform.position = currentPosition_t;
         if (isActive)
         {
-            // �޼� ��� (����Ű, ���� ��ư UI ������ ��ġ) - ��ġ�� ����
-            currentPosition_s.x *= -1;
-            _switchButtons.transform.position = currentPosition_s;
-
-            currentPosition_t.x *= -1;
-            _toggleButton.transform.position = currentPosition_t;
+            // 왼손모드
 
         }
         else
         {
-            currentPosition_s.x *= -1;
-            _switchButtons.transform.position = currentPosition_s;
-
-            currentPosition_t.x *= -1;
-            _toggleButton.transform.position = currentPosition_t;
+            //오른손모드
         }
-        */
+
     }
     #endregion
 
