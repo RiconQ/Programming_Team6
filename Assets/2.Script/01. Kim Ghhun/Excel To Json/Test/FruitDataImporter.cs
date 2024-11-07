@@ -26,6 +26,7 @@ public class FruitDataImporter : ScriptableObject
         {
             FruitAttribute attribute = new FruitAttribute();
             attribute.id = i;
+            attribute.level = (int)(double)jsonData[i]["Fruit_Lv"];
             attribute.name = jsonData[i]["Name"].ToString();
             attribute.mass = (float)(double)jsonData[i]["Mass"];
             attribute.scaleX = (float)(double)jsonData[i]["Scale_X"];
