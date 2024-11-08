@@ -20,10 +20,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _resetCancelButton;
     [SerializeField] private UIButton _resetNoButton;
     [SerializeField] private UIButton _resetYesButton;
+    [SerializeField] private UIButton _gameoverResetButton;
 
     [Header("----------Panel")]
     [SerializeField] private UIPanel _retryPanel;
     [SerializeField] private UIPanel _pausePanel;
+    [SerializeField] private UIPanel _gameoverPanel;
 
     [Header("----------Toggle")]
     [SerializeField] private UIToggle _uiSwitchToggle;
@@ -59,11 +61,11 @@ public class UIManager : MonoBehaviour
         _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
         _resetCancelButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
         _resetNoButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
-        _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton()));
+        _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton()));;
+        _gameoverResetButton.onClick.Add(new EventDelegate(() => OnClickGameoverResetButton()));;
 
         // 토글
         _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
-        // uI_Switch = FindObjectOfType<UI_Switch>();
 
         // atlas 세팅 - 땜빵 조치
         _cloudSprite.atlas = GameManager.Instance.lastBall.fruitData.atlas;
@@ -210,6 +212,14 @@ public class UIManager : MonoBehaviour
         DOTween.KillAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    private void OnClickGameoverResetButton()
+    {
+        Time.timeScale = 1;
+        DOTween.KillAll();
+        _gameoverPanel.gameObject.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     #endregion
 
 
@@ -217,7 +227,6 @@ public class UIManager : MonoBehaviour
     #region Toggle OnChanged Event Method
     private void OnToggleChangedUiSwitch(bool isActive)
     {
-
         Vector3 currentPosition_s = _switchButtons.transform.position;
         Vector3 currentPosition_t = _uiSwitchToggle.transform.position;
         currentPosition_s.x *= -1;

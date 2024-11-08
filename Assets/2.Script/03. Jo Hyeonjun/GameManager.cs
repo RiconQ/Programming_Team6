@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text scoreText;
     public Text maxScoreText;
+    public GameObject GameOverUI;
 
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
@@ -217,6 +218,8 @@ public class GameManager : MonoBehaviour
         // BGM 정지 및 게임 오버 사운드
         SoundManager.instance.StopBGM();
         SoundManager.instance.PlaySFX("GameOver");
+       
+        GameOverUI.SetActive(true);
     }
 
 }
