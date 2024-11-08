@@ -99,89 +99,29 @@ public class UIManager : MonoBehaviour
     }
 
 
-    private float holdTime = 0.1f;         // 최초 클릭 후 반복 시작 시간 (초)
-    private float repeatInterval = 0.1f;   // 반복 호출 간격 (초)
-    private float lastPressedTime = 0f;    // 버튼이 눌린 시간 기록
-
-    // 왼쪽 버튼 눌림 상태 추적 (버튼을 누르고 있으면 true)
-    private bool isLeftRepeating = false;      // 반복 실행 여부 추적
     private bool isLeftButtonPressed = false;  // 버튼 눌린 상태 추적
-
-    // 오른쪽 버튼 눌림 상태 추적 (버튼을 누르고 있으면 true)
-    private bool isRightRepeating = false;      // 반복 실행 여부 추적
-    private bool isRightButtonPressed = false;  // 버튼 눌린 상태 추적
+    private bool isRightButtonPressed = false;  
 
     private void OnPressLeftMoveButton(GameObject go, bool isPressed)
     {
-        if (isPressed)
-        {
-            if (!isLeftButtonPressed)
-            {
-                // 버튼이 처음 눌렸을 때
-                isLeftButtonPressed = true;
-                lastPressedTime = Time.time;  // 현재 시간 기록
-                isLeftRepeating = false;          // 반복을 시작하지 않음 (FixedUpdate에서 제어)
-            }
-        }
-        else
-        {
-            // 버튼에서 손을 뗐을 때
-            isLeftButtonPressed = false;
-            isLeftRepeating = false;  // 버튼을 떼면 반복을 멈춤
-        }
+        isLeftButtonPressed = isPressed;
     }
     private void OnPressRightMoveButton(GameObject go, bool isPressed)
     {
-        if (isPressed)
-        {
-            if (!isRightButtonPressed)
-            {
-                // 버튼이 처음 눌렸을 때
-                isRightButtonPressed = true;
-                lastPressedTime = Time.time;  // 현재 시간 기록
-                isRightRepeating = false;          // 반복을 시작하지 않음 (FixedUpdate에서 제어)
-            }
-        }
-        else
-        {
-            // 버튼에서 손을 뗐을 때
-            isRightButtonPressed = false;
-            isRightRepeating = false;  // 버튼을 떼면 반복을 멈춤
-        }
+        isRightButtonPressed = isPressed;
     }
 
     void FixedUpdate()
     {
-        // 버튼이 눌리고, 최초 클릭 후 일정 시간이 지난 후 반복을 시작
+        // 버튼이 눌려있으면 지속적으로 구슬을 이동
+        // 혹여나 2개 같이 누르고 있으면... 결과적으로 멈춰있도록
         if (isLeftButtonPressed)
         {
-            if (!isLeftRepeating && (Time.time - lastPressedTime) >= holdTime)
-            {
-                // holdTime이 지난 후부터 반복 시작
-                isLeftRepeating = true;
-            }
-
-            if (isLeftRepeating)
-            {
-                // 버튼을 누르고 있을 때 반복 실행
-                GameManager.Instance.MoveTheBall(-1);
-                lastPressedTime = Time.time;  // 반복 간격을 맞추기 위해 시간 갱신
-            }
+            GameManager.Instance.MoveTheBall(-1);
         }
-        else if (isRightButtonPressed)
+        if (isRightButtonPressed)
         {
-            if (!isRightRepeating && (Time.time - lastPressedTime) >= holdTime)
-            {
-                // holdTime이 지난 후부터 반복 시작
-                isRightRepeating = true;
-            }
-
-            if (isRightRepeating)
-            {
-                // 버튼을 누르고 있을 때 반복 실행
-                GameManager.Instance.MoveTheBall(1);
-                lastPressedTime = Time.time;  // 반복 간격을 맞추기 위해 시간 갱신
-            }
+            GameManager.Instance.MoveTheBall(1);
         }
     }
 

@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
         lastBall.level = waitBallLv;
         leftBorder = -2.75f + lastBall.transform.localScale.x;
         rightBorder = 2.75f - lastBall.transform.localScale.x;
+        // 눈사람 방지 위해 x를 아주 미세하게 랜덤
+        lastBall.transform.position += Vector3.right * UnityEngine.Random.Range(-0.01f, 0.01f);
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
         waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
