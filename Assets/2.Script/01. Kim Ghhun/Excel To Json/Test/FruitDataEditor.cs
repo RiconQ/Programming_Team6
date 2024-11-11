@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(FruitDataImporter))]
 public class FruitDataEditor : Editor
 {
@@ -66,3 +67,4 @@ public class FruitDataEditor : Editor
         GUILayout.Space(10);
     }
 }
+#endif

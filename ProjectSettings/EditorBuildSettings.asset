@@ -5,10 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/1.Scene/01. Kim Ghhun/Proto/Kim Proto.unity
-    guid: 5b6ae1024af64cf4abc44becfa50db1d
   - enabled: 1
-    path: Assets/1.Scene/04. Hong Seonggyron/ProtoType_V0.1_copy.unity
-    guid: e764ca479a1a2014facb5dedb7082c11
+    path: Assets/1.Scene/03. Jo Hyeonjun/V1.0.unity
+    guid: 6ecf931e2bf91a144b36433bd35c4617
   m_configObjects: {}

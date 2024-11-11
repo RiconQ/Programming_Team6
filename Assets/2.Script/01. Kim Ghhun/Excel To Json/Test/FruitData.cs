@@ -12,8 +12,10 @@ public class FruitData : ScriptableObject
     {
         this.attribute = attribute;
 
+#if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);
         UnityEditor.AssetDatabase.SaveAssets();
+#endif
     }
 }
 [System.Serializable]
