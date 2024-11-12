@@ -1390,6 +1390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons: []
   needleLevel: 2
+  needleItemCount: 3
   disenableColor: {r: 0, g: 0, b: 0, a: 1}
   gameManager: {fileID: 1063370406}
   isUseNeedle: 0

@@ -9,6 +9,7 @@ public class NeedleManager : MonoBehaviour
 
     [SerializeField] private List<UIButton> buttons = new List<UIButton>();
     [SerializeField] private int needleLevel = 5;
+    public int needleItemCount = 10;
     [SerializeField] private Color disenableColor = Color.black;
     [SerializeField] private GameManager gameManager;
 
@@ -17,20 +18,26 @@ public class NeedleManager : MonoBehaviour
     public bool test;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
     }
 
+    private void Start()
+    {
+        UIManager.Instance.OnUpdateUIItemCount();
+    }
+
+
     private void Update()
     {
-      //  if(test)
-      //  {
-      //      ReadyUseNeedle();
-      //  }
-      //  else
-      //  {
-      //      CancleUseNeedle();
-      //  }
+        //  if(test)
+        //  {
+        //      ReadyUseNeedle();
+        //  }
+        //  else
+        //  {
+        //      CancleUseNeedle();
+        //  }
     }
 
     public void AddButton(UIButton button)
@@ -43,7 +50,7 @@ public class NeedleManager : MonoBehaviour
     {
         foreach (var button in buttons)
         {
-            if(button.transform.parent.GetComponent<Ball>().level <= needleLevel ||
+            if (button.transform.parent.GetComponent<Ball>().level <= needleLevel ||
                button.transform.parent.GetComponent<Ball>() == gameManager.lastBall)
             {
                 button.transform.parent.GetComponent<UISprite>().color = disenableColor;
@@ -53,7 +60,7 @@ public class NeedleManager : MonoBehaviour
             {
                 button.enabled = true;
                 button.transform.parent.GetComponent<UISprite>().color = Color.white;
-                
+
             }
         }
     }
@@ -65,7 +72,7 @@ public class NeedleManager : MonoBehaviour
             button.enabled = false;
             button.transform.parent.GetComponent<UISprite>().color = Color.white;
 
-           // action.Invoke();
+            // action.Invoke();
         }
     }
 }

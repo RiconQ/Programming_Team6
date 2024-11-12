@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
         UIEventListener.Get(_leftMoveButton.gameObject).onPress = OnPressLeftMoveButton;
         UIEventListener.Get(_rightMoveButton.gameObject).onPress = OnPressRightMoveButton;
 
-      //  UIEventListener.Get(_activezone).onClick += OnClickInside;
+        //  UIEventListener.Get(_activezone).onClick += OnClickInside;
         UIEventListener.Get(_backGround).onClick += OnClickOutside;
 
         _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
@@ -123,19 +123,27 @@ public class UIManager : MonoBehaviour
     // 버튼 - 아이템
     private void OnClickItemButton()
     {
-        ItemEnvironmentBox.SetActive(true);
-        NeedleManager.instance.ReadyUseNeedle(()=>
+        if (NeedleManager.instance.needleItemCount > 0)
         {
-            ItemEnvironmentBox.SetActive(false);
-        });     
+            ItemEnvironmentBox.SetActive(true);
+            NeedleManager.instance.ReadyUseNeedle(() =>
+            {
+                ItemEnvironmentBox.SetActive(false);
+            });
+            Debug.Log(NeedleManager.instance.needleItemCount);
+        }
+        else
+        {
+            Debug.Log("바늘 없음");
+        }
     }
 
 
-  //  private void OnClickInside(GameObject go)
-  //  {
-  //      Debug.Log("사각형 영역 내부에서 클릭되었습니다.");
-  //
-  //  }
+    //  private void OnClickInside(GameObject go)
+    //  {
+    //      Debug.Log("사각형 영역 내부에서 클릭되었습니다.");
+    //
+    //  }
 
     private void OnClickOutside(GameObject go)
     {
@@ -143,7 +151,7 @@ public class UIManager : MonoBehaviour
         // 사각형 밖에서의 클릭 시 처리 로직
         ItemEnvironmentBox.SetActive(false);
         NeedleManager.instance.CancleUseNeedle();
-    
+
     }
 
 
@@ -257,10 +265,10 @@ public class UIManager : MonoBehaviour
         _cloudSprite.spriteName = GameManager.Instance.lastBall.fruitData.fruits[ballLv].attribute.imgName;
     }
 
-    public void OnUpdateUIItemCount(int count)
+    public void OnUpdateUIItemCount()
     {
         UILabel needleCount = _itemNeedleButton.GetComponentInChildren<UILabel>();
-        // UI Count 업뎃하삼 
+        needleCount.text = NeedleManager.instance.needleItemCount.ToString();
     }
     #endregion
 }

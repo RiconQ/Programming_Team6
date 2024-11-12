@@ -21,5 +21,8 @@ public class Needle : MonoBehaviour
         fruit.SetActive(false);
         UIManager.Instance.ItemEnvironmentBox.SetActive(false);
         NeedleManager.instance.CancleUseNeedle();
+        NeedleManager.instance.needleItemCount-=1;
+
+        UIManager.Instance.OnUpdateUIItemCount();
     }
 }
