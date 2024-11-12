@@ -1601,10 +1601,10 @@ public class UIInput : MonoBehaviour
 		mSelectionEnd = 0;
 
 #if MOBILE && UNITY_ANDROID
-        AndroidKeyboard.Input.inputString = "";
-        AndroidKeyboard.Input.compositionString = "";
-
-        AndroidKeyboardManager.ClearText();
+        //AndroidKeyboard.Input.inputString = "";
+        //AndroidKeyboard.Input.compositionString = "";
+		//
+        //AndroidKeyboardManager.ClearText();
 #endif
 
 		UpdateLabel();

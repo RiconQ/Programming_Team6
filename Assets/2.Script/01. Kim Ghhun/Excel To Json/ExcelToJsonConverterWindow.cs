@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
+#if UNITY_EDITOR
 public class ExcelToJsonConverterWindow : EditorWindow
 {
     private string excelFilePath; 
@@ -69,3 +70,4 @@ public class ExcelToJsonConverterWindow : EditorWindow
         }
     }
 }
+#endif
