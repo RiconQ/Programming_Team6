@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _dropButton;
     [SerializeField] private UIButton _leftMoveButton;
     [SerializeField] private UIButton _rightMoveButton;
-    [SerializeField] private UIButton _itemButton;
+    [SerializeField] private UIButton _itemNeedleButton;
 
     [Header("----------SubButton")]
     [SerializeField] private UIButton _pauseResumeButton;
@@ -37,10 +39,23 @@ public class UIManager : MonoBehaviour
 
     [Header("----------ETC")]
     [SerializeField] private UISprite _cloudSprite;
+    public GameObject ItemEnvironmentBox;
+    [SerializeField] private GameObject _activezone;
+    [SerializeField] private GameObject _backGround;
     [SerializeField] private GameObject _switchButtons;
-    // private UI_Switch uI_Switch;
 
 
+    // 게임 매니져 싱글톤 적용
+    public static UIManager Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            // 싱글톤 용 인스턴스 생성
+            Instance = this;
+        }
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -52,6 +67,9 @@ public class UIManager : MonoBehaviour
         _gameStopButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
         _gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameRestartButton()));
         _dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
+
+        _itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
+
         // _leftMoveButton.onClick.Add(new EventDelegate(() => OnClickLeftMoveButton()));
         // _rightMoveButton.onClick.Add(new EventDelegate(() => OnClickRightMoveButton()));
 
@@ -59,11 +77,14 @@ public class UIManager : MonoBehaviour
         UIEventListener.Get(_leftMoveButton.gameObject).onPress = OnPressLeftMoveButton;
         UIEventListener.Get(_rightMoveButton.gameObject).onPress = OnPressRightMoveButton;
 
+        UIEventListener.Get(_activezone).onClick += OnClickInside;
+        UIEventListener.Get(_backGround).onClick += OnClickOutside;
+
         _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
         _resetCancelButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
         _resetNoButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
-        _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton()));;
-        _gameoverResetButton.onClick.Add(new EventDelegate(() => OnClickGameoverResetButton()));;
+        _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton())); ;
+        _gameoverResetButton.onClick.Add(new EventDelegate(() => OnClickGameoverResetButton())); ;
 
         // 토글
         _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
@@ -99,9 +120,39 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.DropTheBall();
     }
 
+    // 버튼 - 아이템
+    private bool isActiveItemMode = false;
+
+    private void OnClickItemButton()
+    {
+        ItemEnvironmentBox.SetActive(true);
+        NeedleManager.instance.ReadyUseNeedle(()=>
+        {
+            ItemEnvironmentBox.SetActive(false);
+        });
+        isActiveItemMode = true;
+
+    }
+
+
+    private void OnClickInside(GameObject go)
+    {
+        Debug.Log("사각형 영역 내부에서 클릭되었습니다.");
+
+    }
+
+    private void OnClickOutside(GameObject go)
+    {
+        Debug.Log("사각형 영역 외부에서 클릭되었습니다.");
+        // 사각형 밖에서의 클릭 시 처리 로직
+        ItemEnvironmentBox.SetActive(false);
+    
+    }
+
+
 
     private bool isLeftButtonPressed = false;  // 버튼 눌린 상태 추적
-    private bool isRightButtonPressed = false;  
+    private bool isRightButtonPressed = false;
 
     private void OnPressLeftMoveButton(GameObject go, bool isPressed)
     {
@@ -170,7 +221,7 @@ public class UIManager : MonoBehaviour
     {
         Vector3 currentPosition_s = _switchButtons.transform.position;
         Vector3 currentPosition_t = _uiSwitchToggle.transform.position;
-        Vector3 currentPosition_i = _itemButton.transform.position;
+        Vector3 currentPosition_i = _itemNeedleButton.transform.position;
         currentPosition_s.x *= -1;
         _switchButtons.transform.position = currentPosition_s;
 
@@ -178,7 +229,7 @@ public class UIManager : MonoBehaviour
         _uiSwitchToggle.transform.position = currentPosition_t;
 
         currentPosition_i.x *= -1;
-        _itemButton.transform.position = currentPosition_i;
+        _itemNeedleButton.transform.position = currentPosition_i;
         if (isActive)
         {
             // 왼손모드
@@ -207,6 +258,12 @@ public class UIManager : MonoBehaviour
     public void OnUpdateUIWaitBallSprite(int ballLv)
     {
         _cloudSprite.spriteName = GameManager.Instance.lastBall.fruitData.fruits[ballLv].attribute.imgName;
+    }
+
+    public void OnUpdateUIItemCount(int count)
+    {
+        UILabel needleCount = _itemNeedleButton.GetComponentInChildren<UILabel>();
+        // UI Count 업뎃하삼 
     }
     #endregion
 }

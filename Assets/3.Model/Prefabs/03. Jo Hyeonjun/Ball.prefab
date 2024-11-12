@@ -152,7 +152,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 100
   mHeight: 100
-  mDepth: 1
+  mDepth: 20
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 100
   mHeight: 100
-  mDepth: 0
+  mDepth: 25
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 1
