@@ -52,19 +52,20 @@ public class NeedleManager : MonoBehaviour
             else
             {
                 button.enabled = true;
-                button.transform.parent.GetComponent<UISprite>().color = Color.white;                
+                button.transform.parent.GetComponent<UISprite>().color = Color.white;
+                
             }
         }
     }
 
-    public void CancleUseNeedle(Action action)
+    public void CancleUseNeedle()
     {
         foreach (var button in buttons)
         {
             button.enabled = false;
             button.transform.parent.GetComponent<UISprite>().color = Color.white;
 
-            action.Invoke();
+           // action.Invoke();
         }
     }
 }

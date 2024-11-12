@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
         UIEventListener.Get(_leftMoveButton.gameObject).onPress = OnPressLeftMoveButton;
         UIEventListener.Get(_rightMoveButton.gameObject).onPress = OnPressRightMoveButton;
 
-        UIEventListener.Get(_activezone).onClick += OnClickInside;
+      //  UIEventListener.Get(_activezone).onClick += OnClickInside;
         UIEventListener.Get(_backGround).onClick += OnClickOutside;
 
         _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
@@ -121,31 +121,28 @@ public class UIManager : MonoBehaviour
     }
 
     // 버튼 - 아이템
-    private bool isActiveItemMode = false;
-
     private void OnClickItemButton()
     {
         ItemEnvironmentBox.SetActive(true);
         NeedleManager.instance.ReadyUseNeedle(()=>
         {
             ItemEnvironmentBox.SetActive(false);
-        });
-        isActiveItemMode = true;
-
+        });     
     }
 
 
-    private void OnClickInside(GameObject go)
-    {
-        Debug.Log("사각형 영역 내부에서 클릭되었습니다.");
-
-    }
+  //  private void OnClickInside(GameObject go)
+  //  {
+  //      Debug.Log("사각형 영역 내부에서 클릭되었습니다.");
+  //
+  //  }
 
     private void OnClickOutside(GameObject go)
     {
         Debug.Log("사각형 영역 외부에서 클릭되었습니다.");
         // 사각형 밖에서의 클릭 시 처리 로직
         ItemEnvironmentBox.SetActive(false);
+        NeedleManager.instance.CancleUseNeedle();
     
     }
 

@@ -20,5 +20,6 @@ public class Needle : MonoBehaviour
         Debug.Log("Use Needle");
         fruit.SetActive(false);
         UIManager.Instance.ItemEnvironmentBox.SetActive(false);
+        NeedleManager.instance.CancleUseNeedle();
     }
 }
