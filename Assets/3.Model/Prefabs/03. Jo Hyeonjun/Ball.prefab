@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 6542416874696268898}
   - component: {fileID: 23112826647461800}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Needle Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
