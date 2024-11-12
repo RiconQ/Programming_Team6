@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
         instantBall.effect = instantEffect;
 
         BallPool.Add(instantBall);
+
+        NeedleManager.instance.AddButton(instantBall.GetComponentInChildren<UIButton>());
+
         return instantBall;
     }
 
