@@ -17,8 +17,8 @@ MonoBehaviour:
     level: 4
     name: "\uADE4"
     mass: 3
-    scaleX: 0.31
-    scaleY: 0.31
+    scaleX: 0.82
+    scaleY: 0.82
     score: 15
     imgName: Dongle 4
-    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}
+    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}

@@ -29,5 +29,5 @@ public class FruitAttribute
     public float scaleY;
     public int score;
     public string imgName;
-    public NGUIAtlas atlas;
+    public UIAtlas atlas;
 }

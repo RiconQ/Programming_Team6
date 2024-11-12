@@ -17,8 +17,8 @@ MonoBehaviour:
     level: 1
     name: "\uB538\uAE30"
     mass: 1.5
-    scaleX: 0.18
-    scaleY: 0.18
+    scaleX: 0.43
+    scaleY: 0.43
     score: 3
     imgName: Dongle 1
-    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}
+    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}
