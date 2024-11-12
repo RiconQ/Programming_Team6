@@ -17,8 +17,8 @@ MonoBehaviour:
     level: 5
     name: "\uC0AC\uACFC"
     mass: 3.5
-    scaleX: 0.37
-    scaleY: 0.37
+    scaleX: 0.95
+    scaleY: 0.95
     score: 21
     imgName: Dongle 5
-    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}
+    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}

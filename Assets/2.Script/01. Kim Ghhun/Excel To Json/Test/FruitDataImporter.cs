@@ -9,7 +9,7 @@ using UnityEngine.U2D;
 public class FruitDataImporter : ScriptableObject
 {
     public FruitData[] fruits;
-    public NGUIAtlas atlas;
+    public UIAtlas atlas;
 
     public void UpdateFruitAttribute(string jsonPath)
     {
@@ -32,7 +32,7 @@ public class FruitDataImporter : ScriptableObject
             attribute.scaleX = (float)(double)jsonData[i]["Scale_X"];
             attribute.scaleY = (float)(double)jsonData[i]["Scale_Y"];
             attribute.score = (int)(double)jsonData[i]["Synthesis_Score"];
-            attribute.imgName = jsonData[i]["Default_Img"].ToString();
+            attribute.imgName = jsonData[i]["Spawn_Img"].ToString();
             attribute.atlas = atlas;
 
             fruits[i].SetAttribute(attribute);

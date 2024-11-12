@@ -15,10 +15,10 @@ MonoBehaviour:
   attribute:
     id: 6
     level: 6
-    name: "\uC5C6\uC74C"
+    name: "\uBC30"
     mass: 4
-    scaleX: 0.44
-    scaleY: 0.44
+    scaleX: 1.08
+    scaleY: 1.08
     score: 28
     imgName: Dongle 6
-    atlas: {fileID: 11400000, guid: 5aed253390d6ff042b2fcab4965dc0a3, type: 2}
+    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}
