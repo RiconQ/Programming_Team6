@@ -2141,13 +2141,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameStopButton: {fileID: 1457100256}
   _gameRestartButton: {fileID: 1570712040}
+  _dropButton: {fileID: 1278936882}
   _leftMoveButton: {fileID: 1074021098}
   _rightMoveButton: {fileID: 1588614776}
-  _dropButton: {fileID: 1278936882}
+  _itemButton: {fileID: 0}
+  _pauseResumeButton: {fileID: 0}
+  _resetCancelButton: {fileID: 0}
+  _resetNoButton: {fileID: 0}
+  _resetYesButton: {fileID: 0}
+  _gameoverResetButton: {fileID: 0}
+  _retryPanel: {fileID: 0}
+  _pausePanel: {fileID: 0}
+  _gameoverPanel: {fileID: 0}
   _uiSwitchToggle: {fileID: 256150807}
   _highScoreLabel: {fileID: 1564761699}
   _nowScoreLabel: {fileID: 1458474878}
   _cloudSprite: {fileID: 0}
+  _switchButtons: {fileID: 0}
 --- !u!114 &828740151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2963,6 +2973,7 @@ MonoBehaviour:
   poolCursor: 0
   scoreText: {fileID: 1576047878}
   maxScoreText: {fileID: 1632369354}
+  GameOverUI: {fileID: 0}
 --- !u!4 &1063370407
 Transform:
   m_ObjectHideFlags: 0

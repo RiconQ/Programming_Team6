@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _dropButton;
     [SerializeField] private UIButton _leftMoveButton;
     [SerializeField] private UIButton _rightMoveButton;
+    [SerializeField] private UIButton _itemButton;
 
     [Header("----------SubButton")]
     [SerializeField] private UIButton _pauseResumeButton;
@@ -169,11 +170,15 @@ public class UIManager : MonoBehaviour
     {
         Vector3 currentPosition_s = _switchButtons.transform.position;
         Vector3 currentPosition_t = _uiSwitchToggle.transform.position;
+        Vector3 currentPosition_i = _itemButton.transform.position;
         currentPosition_s.x *= -1;
         _switchButtons.transform.position = currentPosition_s;
 
         currentPosition_t.x *= -1;
         _uiSwitchToggle.transform.position = currentPosition_t;
+
+        currentPosition_i.x *= -1;
+        _itemButton.transform.position = currentPosition_i;
         if (isActive)
         {
             // 왼손모드
