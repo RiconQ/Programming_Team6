@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     public Text maxScoreText;
     public GameObject GameOverUI;
 
+    [Header("About Item")]
+    [SerializeField] int userLevel;
+    [SerializeField] int itemProbability;
+
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
     public event Action<int> OnScoreMaxChanged;
@@ -64,7 +68,9 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(gameObject);
     }
+    
 
+  
     private void Start()
     {
         SoundManager.instance.PlayBGM();
@@ -76,7 +82,7 @@ public class GameManager : MonoBehaviour
     private Ball MakeBall()
     {
         GameObject instant = Instantiate(BallPrefab, BallGroup);
-        instant.name = "Ball " + BallPool.Count;
+        instant.name = "Ball " + BallPool.Count; 
         Ball instantBall = instant.GetComponent<Ball>();
 
         GameObject instantEffectOBJ = Instantiate(effectPrefab, effectGroup);
@@ -176,7 +182,7 @@ public class GameManager : MonoBehaviour
 
     // 점수 추가 메소드
     public void Addscore(int add)
-    {
+    { 
         if (isGameOver) return;
         score += add;
         //scoreText.text = score.ToString();
@@ -227,6 +233,11 @@ public class GameManager : MonoBehaviour
         GameOverUI.SetActive(true);
     }
 
+    private bool isDropItem()
+    {
+        float itemPercent = UnityEngine.Random.Range(0f, 1f);
+        return (itemPercent < 0.5f);
+    }
 }
 
 

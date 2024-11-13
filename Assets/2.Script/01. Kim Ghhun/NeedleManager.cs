@@ -12,9 +12,6 @@ public class NeedleManager : MonoBehaviour
     public int needleItemCount = 10;
     [SerializeField] private Color disenableColor = Color.black;
     [SerializeField] private GameManager gameManager;
-
-    public bool isUseNeedle = false;
-
     public bool test;
     private void Awake()
     {

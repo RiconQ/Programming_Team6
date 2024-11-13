@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 59493330}
   - component: {fileID: 59493331}
   m_Layer: 5
-  m_Name: Arrow_R
+  m_Name: Arrow_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,7 +292,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 46
   mHeight: 54
-  mDepth: 1
+  mDepth: 2
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -1389,11 +1389,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons: []
-  needleLevel: 2
-  needleItemCount: 3
+  needleLevel: 1
+  needleItemCount: 10
   disenableColor: {r: 0, g: 0, b: 0, a: 1}
   gameManager: {fileID: 1063370406}
-  isUseNeedle: 0
   test: 0
 --- !u!4 &161879613
 Transform:
@@ -2127,7 +2126,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 150
   mHeight: 300
-  mDepth: 0
+  mDepth: 1
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -2164,8 +2163,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 297620804}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 0.98039216, g: 0.96862745, b: 0.9411765, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -3366,7 +3365,7 @@ MonoBehaviour:
   tweenTarget: {fileID: 544623198}
   hover: {r: 0.9811321, g: 0.96724814, b: 0.93948025, a: 1}
   pressed: {r: 1, g: 1, b: 1, a: 1}
-  disabledColor: {r: 1, g: 1, b: 1, a: 1}
+  disabledColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   duration: 0.1
   dragHighlight: 0
   hoverSprite: 
@@ -3410,7 +3409,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 315
   mHeight: 150
-  mDepth: 0
+  mDepth: 1
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 1
@@ -5631,6 +5630,8 @@ MonoBehaviour:
   scoreText: {fileID: 1576047878}
   maxScoreText: {fileID: 1632369354}
   GameOverUI: {fileID: 1563900087}
+  userLevel: 1
+  itemProbability: 1
 --- !u!4 &1063370407
 Transform:
   m_ObjectHideFlags: 0
@@ -7488,7 +7489,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 46
   mHeight: 54
-  mDepth: 1
+  mDepth: 2
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -8196,7 +8197,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 46
   mHeight: 54
-  mDepth: 1
+  mDepth: 2
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -11696,7 +11697,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 150
   mHeight: 300
-  mDepth: 0
+  mDepth: 1
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -11733,8 +11734,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 1887370429}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 0.98039216, g: 0.96862745, b: 0.9411765, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0

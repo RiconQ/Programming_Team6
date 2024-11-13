@@ -36,6 +36,7 @@ public class Ball : MonoBehaviour
     private float BorderLeft;
     private float BorderRight;
 
+
     private void Awake()
     {
         // ���� ������Ʈ �ҷ�����
@@ -283,6 +284,13 @@ public class Ball : MonoBehaviour
         return ballScale;
     }
 
+    private bool isGetItem()
+    {
+        float getItem = Random.Range(0, 1);
+        return (getItem < 0.5);
+    }
+
     private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
     private string GetBallSprite(int level) => fruitData.fruits[level].attribute.imgName;
+
 }

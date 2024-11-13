@@ -10,7 +10,8 @@ public class Needle : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("Add Listener");
+        // Debug.Log("Add Listener");
+        _ballButton.onClick.Clear();
         _ballButton.onClick.Add(new EventDelegate(() => OnUseNeedle()));    
     }
 
@@ -25,4 +26,5 @@ public class Needle : MonoBehaviour
 
         UIManager.Instance.OnUpdateUIItemCount();
     }
+
 }
