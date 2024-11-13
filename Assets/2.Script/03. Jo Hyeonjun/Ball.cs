@@ -56,7 +56,7 @@ public class Ball : MonoBehaviour
         sprite.atlas = fruitData.atlas;
 
         sprite.spriteName = GetBallSprite(level);
-        Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
+     //   Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
 
         // ��� ���� ���� ����
         // �ð� ����� �ε��� ���⸸ �ϵ� �ڵ��Ͽ����ϴ�... (���� �ذ� ����)
@@ -244,21 +244,29 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
         transform.localScale = Vector2.one * ballScale;
         sprite.spriteName = GetBallSprite(level);
-        Debug.Log($"Level Up - Level : {level}, Sprite : {sprite.spriteName}");
+     //   Debug.Log($"Level Up - Level : {level}, Sprite : {sprite.spriteName}");
         //gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
         //gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
         
         EffectPlay();
-        // ������ ���� Ȯ�� ��� �� ����
-        if(level == 3)
-        {
-            if (Random.Range(0, 100) < lv3ItemChance)
-            {
-                isBouns = true;
-                sprite.color = Color.green;
-            }
-        }
 
+       // ������ ���� Ȯ�� ��� �� ����
+       // if(level == 3)
+       // {
+       //     if (Random.Range(0, 100) < lv3ItemChance)
+       //     {
+       //         isBouns = true;
+       //         sprite.color = Color.green;
+       //     }
+       // }
+
+        if(GameManager.Instance.IsDropItem())
+        {
+            //아이템 종류 정하고, 떨구는 로직
+           var itemInfo = GameManager.Instance.ChooseItem(); // 아이템 종류 
+           
+        }
+        
         // �ٽ� ���� ����ǰ�
         rigid.simulated = true;
         circle_col.enabled = true; 
