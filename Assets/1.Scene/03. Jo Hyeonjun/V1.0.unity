@@ -5632,6 +5632,7 @@ MonoBehaviour:
   GameOverUI: {fileID: 1563900087}
   userLevel: 1
   itemProbability: 1
+  itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
 --- !u!4 &1063370407
 Transform:
   m_ObjectHideFlags: 0

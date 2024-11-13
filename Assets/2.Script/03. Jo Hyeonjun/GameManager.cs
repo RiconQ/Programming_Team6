@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
 
     // 게임 매니져 싱글톤 적용
     public static GameManager Instance;
+
+    public ItemReward itemReward;
+
     private void Awake()
     {
         if (Instance == null)
