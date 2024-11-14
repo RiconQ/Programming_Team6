@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private float rightBorder;
 
     [Header("Pooling")]
+    public FruitDataImporter fruitData;
     public GameObject BallPrefab;
     public Transform BallGroup;
     public List<Ball> BallPool;
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SoundManager.instance.PlayBGM();
-        waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
+        waitBallLv = GetSpawnLevel();
         NextBall();
 
         // 유저 레벨 판별
@@ -140,7 +141,7 @@ public class GameManager : MonoBehaviour
         lastBall.transform.position += Vector3.right * UnityEngine.Random.Range(-0.01f, 0.01f);
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
-        waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
+        waitBallLv = GetSpawnLevel();
         OnWaitBallLvChanged?.Invoke(waitBallLv);
 
         SoundManager.instance.PlaySFX("Next");
@@ -246,6 +247,18 @@ public class GameManager : MonoBehaviour
         GameOverUI.SetActive(true);
     }
 
+    // Excel에서 불러온 스폰 확률을 기반하여 다음 구슬의 레벨 설정
+    private int GetSpawnLevel()
+    {
+        float randomfloat = UnityEngine.Random.Range(0.0f, 1.0f);
+        for (int lv = 0; lv < 10; lv++)
+        {
+            randomfloat -= fruitData.fruits[lv].attribute.spawnProb;
+            if (randomfloat < 0) return lv;
+        }
+        Debug.Log("확률의 합이 1 미만인것 같습니다.");
+        return 0;
+    }
 
     //유저 레벨 확인 후, 그 값에 해당하는 테이블 값 가져오기
     public RewardTable SelectUserLevel()

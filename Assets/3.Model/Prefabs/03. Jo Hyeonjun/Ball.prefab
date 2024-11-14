@@ -113,6 +113,7 @@ MonoBehaviour:
   effect: {fileID: 0}
   rigid: {fileID: 0}
   sprite: {fileID: 0}
+  maxLevel: 10
   fruitData: {fileID: 11400000, guid: c0173ff8fff8f5b499b65f12dfae5efa, type: 2}
   lv3ItemChance: 30
   warningTime: 0.5

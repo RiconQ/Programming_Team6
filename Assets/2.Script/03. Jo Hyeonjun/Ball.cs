@@ -21,6 +21,7 @@ public class Ball : MonoBehaviour
 
     // [JSON ����] ���� ���� ����
     [Header("Info")]
+    public int maxLevel;
     public FruitDataImporter fruitData;
 
     [Range(0, 100)] 
@@ -116,7 +117,7 @@ public class Ball : MonoBehaviour
             Ball other = collision.gameObject.GetComponent<Ball>();
 
             // �ռ� ���� ���� �� (�ϴ� �ִ� ������ ������� ����)
-            if (level == other.level && !isMerge && !other.isMerge && level < 10)
+            if (level == other.level && !isMerge && !other.isMerge)
             {
                 float myX = transform.position.x;
                 float myY = transform.position.y;
@@ -143,8 +144,18 @@ public class Ball : MonoBehaviour
                 if (myY < otherY || (myY == otherY && myX > otherX))
                 {
                     Vector3 targetPos = new Vector3((myX + otherX) / 2, (myY + otherY) / 2, 0);
+                    // 점수가 재료 구슬의 레벨에 따라 증가
+                    GameManager.Instance.Addscore(fruitData.fruits[level].attribute.score);
                     other.Hide(targetPos);
-                    LevelUp(targetPos);
+                    if (level < maxLevel)
+                    {
+                        LevelUp(targetPos);
+                    }
+                    // 최대 레벨 2개가 합쳐지는 경우, 둘 다 사라지게 됨
+                    else
+                    {
+                        Hide(targetPos);
+                    }
                 }
             }
         }
@@ -212,7 +223,6 @@ public class Ball : MonoBehaviour
         }
         isMerge = false;
         // ���� ����, �ӽ÷� ������ŭ
-        GameManager.Instance.Addscore(level);
         gameObject.SetActive(false);
     }
 
@@ -250,17 +260,16 @@ public class Ball : MonoBehaviour
         
         EffectPlay();
 
-       // ������ ���� Ȯ�� ��� �� ����
-       // if(level == 3)
-       // {
-       //     if (Random.Range(0, 100) < lv3ItemChance)
-       //     {
-       //         isBouns = true;
-       //         sprite.color = Color.green;
-       //     }
-       // }
+        // 테스트를 위해 아이템 기능 임시 부활
+        float rr = UnityEngine.Random.Range(0.0f, 1.0f);
+        if (rr < fruitData.fruits[level].attribute.itemProb)
+        {
+            isBouns = true;
+            sprite.color = Color.green;
+        }
+        // ������ ���� Ȯ�� ��� �� ����
 
-        if(GameManager.Instance.IsDropItem())
+        if (GameManager.Instance.IsDropItem())
         {
             //아이템 종류 정하고, 떨구는 로직
            var itemInfo = GameManager.Instance.ChooseItem(); // 아이템 종류 

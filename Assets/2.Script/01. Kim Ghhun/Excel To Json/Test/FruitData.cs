@@ -22,12 +22,18 @@ public class FruitData : ScriptableObject
 public class FruitAttribute
 {
     public int id;
-    public int level;
     public string name;
-    public float mass;
+    public int level;
     public float scaleX;
     public float scaleY;
+    public float mass;
     public int score;
+    public float spawnProb;
+    public float itemProb;
+    // public float animTime;
+    // public string synEffect;
     public string imgName;
+    // public string defaultImg;
+    // public string spawnAnim;
     public UIAtlas atlas;
 }
