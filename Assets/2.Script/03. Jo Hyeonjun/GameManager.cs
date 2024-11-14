@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
 
         BallPool.Add(instantBall);
 
-        NeedleManager.instance.AddButton(instantBall.GetComponentInChildren<UIButton>());
+        //NeedleManager.instance.AddButton(instantBall.GetComponentInChildren<UIButton>());
 
         return instantBall;
     }

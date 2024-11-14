@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _dropButton;
     [SerializeField] private UIButton _leftMoveButton;
     [SerializeField] private UIButton _rightMoveButton;
-    [SerializeField] private UIButton _itemNeedleButton;
+    //[SerializeField] private UIButton _itemNeedleButton;
 
     [Header("----------SubButton")]
     [SerializeField] private UIButton _pauseResumeButton;
@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
         _gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameRestartButton()));
         _dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
 
-        _itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
+        //_itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
 
         // _leftMoveButton.onClick.Add(new EventDelegate(() => OnClickLeftMoveButton()));
         // _rightMoveButton.onClick.Add(new EventDelegate(() => OnClickRightMoveButton()));
@@ -220,15 +220,15 @@ public class UIManager : MonoBehaviour
     {
         Vector3 currentPosition_s = _switchButtons.transform.position;
         Vector3 currentPosition_t = _uiSwitchToggle.transform.position;
-        Vector3 currentPosition_i = _itemNeedleButton.transform.position;
+        //Vector3 currentPosition_i = _itemNeedleButton.transform.position;
         currentPosition_s.x *= -1;
         _switchButtons.transform.position = currentPosition_s;
 
         currentPosition_t.x *= -1;
         _uiSwitchToggle.transform.position = currentPosition_t;
 
-        currentPosition_i.x *= -1;
-        _itemNeedleButton.transform.position = currentPosition_i;
+        //currentPosition_i.x *= -1;
+        //_itemNeedleButton.transform.position = currentPosition_i;
         if (isActive)
         {
             // 왼손모드
@@ -261,8 +261,8 @@ public class UIManager : MonoBehaviour
 
     public void OnUpdateUIItemCount()
     {
-        UILabel needleCount = _itemNeedleButton.GetComponentInChildren<UILabel>();
-        needleCount.text = NeedleManager.instance.needleItemCount.ToString();
+        //UILabel needleCount = _itemNeedleButton.GetComponentInChildren<UILabel>();
+        //needleCount.text = NeedleManager.instance.needleItemCount.ToString();
     }
     #endregion
 }
