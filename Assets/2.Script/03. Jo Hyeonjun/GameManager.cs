@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Pooling")]
     public GameObject BallPrefab;
-    public Transform BallGroup; 
+    public Transform BallGroup;
     public List<Ball> BallPool;
     public GameObject effectPrefab;
     public Transform effectGroup;
@@ -50,6 +50,13 @@ public class GameManager : MonoBehaviour
 
     public ItemReward itemReward;
 
+    public RewardTable rewardTable;
+    public RewardInfo rewardInfo;
+
+
+
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -71,21 +78,24 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(gameObject);
     }
-    
 
-  
+
+
     private void Start()
     {
         SoundManager.instance.PlayBGM();
         waitBallLv = UnityEngine.Random.Range(0, SpawnSpecies);
         NextBall();
+
+        // 유저 레벨 판별
+        rewardTable = SelectUserLevel();
     }
 
     // [오브젝트 풀링] 게임 시작 or 모든 풀링 사용 중 일때, 새로운 오브젝트 생성
     private Ball MakeBall()
     {
         GameObject instant = Instantiate(BallPrefab, BallGroup);
-        instant.name = "Ball " + BallPool.Count; 
+        instant.name = "Ball " + BallPool.Count;
         Ball instantBall = instant.GetComponent<Ball>();
 
         GameObject instantEffectOBJ = Instantiate(effectPrefab, effectGroup);
@@ -185,7 +195,7 @@ public class GameManager : MonoBehaviour
 
     // 점수 추가 메소드
     public void Addscore(int add)
-    { 
+    {
         if (isGameOver) return;
         score += add;
         //scoreText.text = score.ToString();
@@ -232,15 +242,48 @@ public class GameManager : MonoBehaviour
         // BGM 정지 및 게임 오버 사운드
         SoundManager.instance.StopBGM();
         SoundManager.instance.PlaySFX("GameOver");
-       
+
         GameOverUI.SetActive(true);
     }
 
-    private bool isDropItem()
+
+    //유저 레벨 확인 후, 그 값에 해당하는 테이블 값 가져오기
+    public RewardTable SelectUserLevel()
+    {
+        for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
+        {
+            RewardTable reward = itemReward.rewardDataTable[i];
+            if (userLevel >= reward.Min_Lv && userLevel <= reward.Max_Lv)
+            {
+                return reward;
+            }
+        }
+        return null;
+    }
+
+    public bool IsDropItem()
     {
         float itemPercent = UnityEngine.Random.Range(0f, 1f);
         return (itemPercent < 0.5f);
     }
+
+    //리워드 인포에서 하나를 선택해 아이템 생성하기
+    public RewardInfo ChooseItem()
+    {
+        //RewardInfo에서 랜덤값 하나 가져오기 -> 추후 확률 조정 필요
+        int id = UnityEngine.Random.Range(0, itemReward.rewardInfos.Count);
+        RewardInfo selectedReward = itemReward.rewardInfos[id];
+
+
+        //RewardInfo에 있는 ItemKind를 가져오기    
+        ItemInfo correspondingItem = itemReward.itemInfos.Find(item => item.ID == selectedReward.Kind);
+        Debug.Log($"{correspondingItem.Item_Name}이 {selectedReward.Amount}개 생성");
+        
+
+        //
+        return selectedReward;
+    }
+
 }
 
 
