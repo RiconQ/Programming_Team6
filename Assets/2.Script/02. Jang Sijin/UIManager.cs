@@ -11,23 +11,24 @@ using UnityEngine.EventSystems;
 public class UIManager : MonoBehaviour
 {
     [Header("----------Button")]
-    [SerializeField] private UIButton _gameStopButton;
-    [SerializeField] private UIButton _gameRestartButton;
+  //  [SerializeField] private UIButton _gameStopButton;
+  //  [SerializeField] private UIButton _gameRestartButton;
     [SerializeField] private UIButton _dropButton;
     [SerializeField] private UIButton _leftMoveButton;
     [SerializeField] private UIButton _rightMoveButton;
+    [SerializeField] private UIButton _gameexitButton;
     //[SerializeField] private UIButton _itemNeedleButton;
 
     [Header("----------SubButton")]
-    [SerializeField] private UIButton _pauseResumeButton;
-    [SerializeField] private UIButton _resetCancelButton;
-    [SerializeField] private UIButton _resetNoButton;
-    [SerializeField] private UIButton _resetYesButton;
+    //[SerializeField] private UIButton _pauseResumeButton;
+    //[SerializeField] private UIButton _resetCancelButton;
+    //[SerializeField] private UIButton _resetNoButton;
+    //[SerializeField] private UIButton _resetYesButton;
     [SerializeField] private UIButton _gameoverResetButton;
 
     [Header("----------Panel")]
-    [SerializeField] private UIPanel _retryPanel;
-    [SerializeField] private UIPanel _pausePanel;
+    //[SerializeField] private UIPanel _retryPanel;
+    //[SerializeField] private UIPanel _pausePanel;
     [SerializeField] private UIPanel _gameoverPanel;
 
     [Header("----------Toggle")]
@@ -39,9 +40,9 @@ public class UIManager : MonoBehaviour
 
     [Header("----------ETC")]
     [SerializeField] private UISprite _cloudSprite;
-    public GameObject ItemEnvironmentBox;
-    [SerializeField] private GameObject _activezone;
-    [SerializeField] private GameObject _backGround;
+   // public GameObject ItemEnvironmentBox;
+   // [SerializeField] private GameObject _activezone;
+   // [SerializeField] private GameObject _backGround;
     [SerializeField] private GameObject _switchButtons;
 
 
@@ -64,9 +65,10 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnWaitBallLvChanged += OnUpdateUIWaitBallSprite;
 
         // 버튼에 OnClick 이벤트 할당
-        _gameStopButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
-        _gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameRestartButton()));
+      //  _gameStopButton.onClick.Add(new EventDelegate(() => OnClickGameStopButton()));
+      //  _gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameRestartButton()));
         _dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
+        _gameexitButton.onClick.Add(new EventDelegate(() => OnClickGameExitButton()));
 
         //_itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
 
@@ -77,13 +79,13 @@ public class UIManager : MonoBehaviour
         UIEventListener.Get(_leftMoveButton.gameObject).onPress = OnPressLeftMoveButton;
         UIEventListener.Get(_rightMoveButton.gameObject).onPress = OnPressRightMoveButton;
 
-        UIEventListener.Get(_activezone).onClick += OnClickInside;
-        UIEventListener.Get(_backGround).onClick += OnClickOutside;
+     //   UIEventListener.Get(_activezone).onClick += OnClickInside;
+     //   UIEventListener.Get(_backGround).onClick += OnClickOutside;
 
-        _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
-        _resetCancelButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
-        _resetNoButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
-        _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton())); ;
+       // _pauseResumeButton.onClick.Add(new EventDelegate(() => OnClickPauseResumeButton()));
+       // _resetCancelButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
+       // _resetNoButton.onClick.Add(new EventDelegate(() => OnClickResetCancelButton()));
+       // _resetYesButton.onClick.Add(new EventDelegate(() => OnClickResetAcceptButton())); ;
         _gameoverResetButton.onClick.Add(new EventDelegate(() => OnClickGameoverResetButton())); ;
 
         // 토글
@@ -100,19 +102,19 @@ public class UIManager : MonoBehaviour
 
     #region Button OnClick Event Method
     // 버튼 - 일시정지 눌렀을 때
-    private void OnClickGameStopButton()
-    {
-        Time.timeScale = 0;
-        _pausePanel.gameObject.SetActive(true);
-    }
+ //   private void OnClickGameStopButton()
+ //   {
+ //       Time.timeScale = 0;
+ //       _pausePanel.gameObject.SetActive(true);
+ //   }
 
     // 버튼 - 재시작 눌렀을 때
-    private void OnClickGameRestartButton()
-    {
-        // 일단 일시정지 효과도 부여
-        Time.timeScale = 0;
-        _retryPanel.gameObject.SetActive(true);
-    }
+   // private void OnClickGameRestartButton()
+   // {
+   //     // 일단 일시정지 효과도 부여
+   //     Time.timeScale = 0;
+   //     _retryPanel.gameObject.SetActive(true);
+   // }
 
     // 버튼 - 드랍
     private void OnClickDropButton()
@@ -120,35 +122,41 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.DropTheBall();
     }
 
-    // 버튼 - 아이템
-    private void OnClickItemButton()
+    // 버튼 - 게임종료
+    private void OnClickGameExitButton()
     {
-        if (NeedleManager.instance.needleItemCount > 0)
-        {
-            ItemEnvironmentBox.SetActive(true);
-            NeedleManager.instance.ReadyUseNeedle(() =>
-            {
-                ItemEnvironmentBox.SetActive(false);
-            });
-        }
-        else
-        {
-            Debug.Log("바늘 없음");
-            // 재화 구입 구현 필요
-        }
+        Application.Quit();
     }
-      private void OnClickInside(GameObject go)
-      {
-          Debug.Log("사각형 영역 내부에서 클릭되었습니다.");   
-      }
+
+    // 버튼 - 아이템
+    // private void OnClickItemButton()
+    // {
+    //     if (NeedleManager.instance.needleItemCount > 0)
+    //     {
+    //         ItemEnvironmentBox.SetActive(true);
+    //         NeedleManager.instance.ReadyUseNeedle(() =>
+    //         {
+    //             ItemEnvironmentBox.SetActive(false);
+    //         });
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("바늘 없음");
+    //         // 재화 구입 구현 필요
+    //     }
+    // }
+    // private void OnClickInside(GameObject go)
+    //   {
+    //       Debug.Log("사각형 영역 내부에서 클릭되었습니다.");   
+    //   }
 
     // 아이템 버튼 클릭 후, 활성화 된 화면 밖을 클릭했을 때
-    private void OnClickOutside(GameObject go)
-    {
-        Debug.Log("사각형 영역 외부에서 클릭되었습니다.");
-        ItemEnvironmentBox.SetActive(false);
-        NeedleManager.instance.CancleUseNeedle();
-    }
+    // private void OnClickOutside(GameObject go)
+    // {
+    //     Debug.Log("사각형 영역 외부에서 클릭되었습니다.");
+    //     ItemEnvironmentBox.SetActive(false);
+    //     NeedleManager.instance.CancleUseNeedle();
+    // }
 
     private bool isLeftButtonPressed = false;  // 버튼 눌린 상태 추적
     private bool isRightButtonPressed = false;
@@ -183,18 +191,18 @@ public class UIManager : MonoBehaviour
 
     #region SubButton OnClick Event Method
     // 세부 버튼 - 일시정지 해제
-    private void OnClickPauseResumeButton()
-    {
-        Time.timeScale = 1;
-        _pausePanel.gameObject.SetActive(false);
-    }
+  //  private void OnClickPauseResumeButton()
+  //  {
+  //      Time.timeScale = 1;
+  //      _pausePanel.gameObject.SetActive(false);
+  //  }
 
     // 세부 버튼 - 재시작 취소
-    private void OnClickResetCancelButton()
-    {
-        Time.timeScale = 1;
-        _retryPanel.gameObject.SetActive(false);
-    }
+  //  private void OnClickResetCancelButton()
+  //  {
+  //      Time.timeScale = 1;
+  //      _retryPanel.gameObject.SetActive(false);
+  //  }
 
     // 세부 버튼 - 재시작 확인
     private void OnClickResetAcceptButton()
