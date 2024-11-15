@@ -148,6 +148,21 @@ public class GameManager : MonoBehaviour
         StartCoroutine(NextBall_co());
     }
 
+    // 합성되어 새로운 구슬이 생성
+    public void AppearNextLevel(Vector3 targetPos, int lv)
+    {
+        Ball newBall = GetBall();
+        newBall.level = lv;
+        // 좌표 설정
+        newBall.transform.position = targetPos;
+        // 오브젝트 활성화
+        newBall.gameObject.SetActive(true);
+        // 물리 또한 즉시 활성화
+        newBall.rigid.simulated = true;
+        newBall.circle_col.enabled = true;
+    }
+
+
     // 기존 구슬이 드랍될 때까지 + 0.5초 대기 후 다음 구슬
     private IEnumerator NextBall_co()
     {
@@ -155,7 +170,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         NextBall();
     }
-
+    /*
     // [레거시] 터치가 시작될 때 
     public void TouchDown()
     {
@@ -170,7 +185,7 @@ public class GameManager : MonoBehaviour
         lastBall.Drop();
         lastBall = null;
     }
-
+    */
     // 좌,우 버튼 누르면
     public void MoveTheBall(int direction)
     {

@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
     [Header("Component")]
     public ParticleSystem effect;
     public Rigidbody2D rigid;
-    CircleCollider2D circle_col;
+    public CircleCollider2D circle_col;
     [SerializeField]private UISprite sprite;
 
     // [JSON ����] ���� ���� ����
@@ -96,6 +96,7 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
+        // [Legacy] 터치식 드랍
         /*
         if (isDrag)
         {
@@ -107,6 +108,8 @@ public class Ball : MonoBehaviour
             transform.position = mousePos;
         }
         */
+
+        //  [Not Yet] 가이드 라인 표시
         /*
         if (!isDropped)
         {
@@ -135,7 +138,7 @@ public class Ball : MonoBehaviour
     public void Drop()
     {
         // isDrag = false;
-        // isDropped = true;
+        // isDropped = true; // 라인 렌더러 관련
         rigid.simulated = true;
 
     }
@@ -179,79 +182,36 @@ public class Ball : MonoBehaviour
                     Vector3 targetPos = new Vector3((myX + otherX) / 2, (myY + otherY) / 2, 0);
                     // 점수가 재료 구슬의 레벨에 따라 증가
                     GameManager.Instance.Addscore(fruitData.fruits[level].attribute.score);
+                    // 접촉한 2개의 구슬은 모두 사라짐
                     other.Hide(targetPos);
-                    if (level < maxLevel)
-                    {
-                        LevelUp(targetPos);
-                    }
-                    // 최대 레벨 2개가 합쳐지는 경우, 둘 다 사라지게 됨
-                    else
-                    {
-                        Hide(targetPos);
-                    }
+                    Hide(targetPos);
+                    // 중점에 새로운 구슬 생성됨
+                    GameManager.Instance.AppearNextLevel(targetPos, level + 1);
                 }
             }
-        }
-    }
-    IEnumerator AttachSFX_co()
-    {
-        if (isAttach) yield break;
-        isAttach = true;
-        SoundManager.instance.PlaySFX("Attach");
-        yield return new WaitForSeconds(0.2f);
-        isAttach = false;
-    }
-
-    // ������ ���� ���ο� �ӹ��� ���� �� (���� ���� ���� �޼ҵ�)
-    private float deadTime;
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.tag == "Finish")
-        {
-            deadTime += Time.deltaTime;
-            if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
-            if (deadTime > failTime)
-            {
-                GameManager.Instance.GameOver();
-            }
-        }
-    }
-    
-    // ������ ���� ������ ����� ��
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Finish")
-        {
-            deadTime = 0;
-            sprite.color = Color.white;
         }
     }
 
     public void Hide(Vector3 targetPos)
     {
         isMerge = true; // �ռ� ���� ���·�
+        // Physical off
         rigid.simulated = false;
-        circle_col.enabled = false; // ���� ���� off
-        StartCoroutine(Hide_co(targetPos));
+        circle_col.enabled = false;
+        // Disappear Effect
+        transform.DOScale(0, 0.3f).OnComplete(() => gameObject.SetActive(false));
+        // StartCoroutine(Hide_co(targetPos));
     }
 
+    /*
     private IEnumerator Hide_co(Vector3 targetPos)
     {
         // �ռ��Ǵ� 2���� �������� �̵���Ű��
         int frameCount = 0;
-        while(frameCount < 10)
+        while (frameCount < 18)
         {
             frameCount++;
-            // ���� ���� ���ΰ��
-            if (targetPos.y < 900)
-            {
-                transform.position = Vector3.Lerp(transform.position, targetPos, 0.4f);
-            }
-            // ���� ������ ���� ������� ���
-            else
-            {
-                transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.4f);
-            }
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, 0.4f);
             yield return null;
         }
         isMerge = false;
@@ -287,10 +247,10 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
         transform.localScale = Vector2.one * ballScale;
         sprite.spriteName = GetBallSprite(level);
-     //   Debug.Log($"Level Up - Level : {level}, Sprite : {sprite.spriteName}");
+        //   Debug.Log($"Level Up - Level : {level}, Sprite : {sprite.spriteName}");
         //gameObject.GetComponent<UISprite>().spriteName = GetBallSprite(level);
         //gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.BallSprites[level];
-        
+
         EffectPlay();
 
         // 테스트를 위해 아이템 기능 임시 부활
@@ -305,15 +265,50 @@ public class Ball : MonoBehaviour
         if (GameManager.Instance.IsDropItem())
         {
             //아이템 종류 정하고, 떨구는 로직
-           var itemInfo = GameManager.Instance.ChooseItem(); // 아이템 종류 
-           
+            var itemInfo = GameManager.Instance.ChooseItem(); // 아이템 종류 
+
         }
-        
+
         // �ٽ� ���� ����ǰ�
         rigid.simulated = true;
-        circle_col.enabled = true; 
+        circle_col.enabled = true;
         isMerge = false;
     }
+    */
+    IEnumerator AttachSFX_co()
+    {
+        if (isAttach) yield break;
+        isAttach = true;
+        SoundManager.instance.PlaySFX("Attach");
+        yield return new WaitForSeconds(0.2f);
+        isAttach = false;
+    }
+
+    // ������ ���� ���ο� �ӹ��� ���� �� (���� ���� ���� �޼ҵ�)
+    private float deadTime;
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.tag == "Finish")
+        {
+            deadTime += Time.deltaTime;
+            if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
+            if (deadTime > failTime)
+            {
+                GameManager.Instance.GameOver();
+            }
+        }
+    }
+    
+    // ������ ���� ������ ����� ��
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Finish")
+        {
+            deadTime = 0;
+            sprite.color = Color.white;
+        }
+    }
+
 
     private void EffectPlay()
     {
