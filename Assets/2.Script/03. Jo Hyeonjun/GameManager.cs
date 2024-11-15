@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
     public Sprite[] BallSprites; // JSON 적용 이후 미사용 - 구슬 스프라이트
     public Ball lastBall; // 다음에 나올 공
     private int waitBallLv; // 예고된 공의 레벨
-    private float leftBorder;
-    private float rightBorder;
+    private float BorderX; // 드랍할 공의 좌,우 범위
+    private float recentX = 0; // 가장 최근에 드랍한 X 좌표
+
 
     [Header("Pooling")]
     public FruitDataImporter fruitData;
@@ -135,10 +136,9 @@ public class GameManager : MonoBehaviour
         lastBall = newBall;
 
         lastBall.level = waitBallLv;
-        leftBorder = -2.75f + lastBall.transform.localScale.x;
-        rightBorder = 2.75f - lastBall.transform.localScale.x;
-        // 눈사람 방지 위해 x를 아주 미세하게 랜덤
-        lastBall.transform.position += Vector3.right * UnityEngine.Random.Range(-0.01f, 0.01f);
+        BorderX = 2.74f - lastBall.transform.localScale.x;
+        MoveBallInBorder(recentX);
+
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
         waitBallLv = GetSpawnLevel();
@@ -176,20 +176,21 @@ public class GameManager : MonoBehaviour
     {
         if (lastBall == null) return;
         lastBall.transform.position += Vector3.right * direction * 0.1f;
-        if (lastBall.transform.position.x > rightBorder)
-        {
-            lastBall.transform.position = new Vector3(rightBorder, lastBall.transform.position.y, 0);
-        }
-        else if (lastBall.transform.position.x < leftBorder)
-        {
-            lastBall.transform.position = new Vector3(leftBorder, lastBall.transform.position.y, 0);
-        }
+        MoveBallInBorder(lastBall.transform.position.x);
+    }
+
+    // 드랍할 공의 범위 아웃 체크
+    public void MoveBallInBorder(float posX)
+    {
+        posX = Mathf.Clamp(posX, -BorderX, BorderX) + UnityEngine.Random.Range(-0.01f, 0.01f);
+        lastBall.transform.position = new Vector3(posX, lastBall.transform.position.y, 0);
     }
 
     // 드랍 버튼 누르면
     public void DropTheBall()
     {
         if (lastBall == null) return;
+        recentX = lastBall.transform.position.x;
         lastBall.Drop();
         lastBall = null;
     }

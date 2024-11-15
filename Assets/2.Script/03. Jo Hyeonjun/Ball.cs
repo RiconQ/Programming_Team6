@@ -8,7 +8,8 @@ public class Ball : MonoBehaviour
     // ������ ����
     [Header("State")]
     public int level; 
-    private bool isDrag; // �巡�� ���ΰ�?
+    // private bool isDrag; // [Legacy] �巡�� ���ΰ�?
+    // private bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
     private bool isBouns; // ������ ���Ե� �����ΰ�?
 
@@ -37,14 +38,22 @@ public class Ball : MonoBehaviour
     private float BorderLeft;
     private float BorderRight;
 
+    // 도움 선 관련
+    [Header("Support Line")]
+    private Vector3 startPoint;  // 선을 시작할 위치
+    private LineRenderer lineRenderer;  // LineRenderer 컴포넌트
+
 
     private void Awake()
     {
         // ���� ������Ʈ �ҷ�����
-        isDrag = false;
         rigid = GetComponent<Rigidbody2D>();
         circle_col = GetComponent<CircleCollider2D>();
         sprite = GetComponent<UISprite>();
+
+        startPoint = transform.position + Vector3.down * transform.localScale.y;
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 2;
     }
 
     private void OnEnable()
@@ -69,8 +78,9 @@ public class Ball : MonoBehaviour
     {
         // ���� ��Ȱ��ȭ �� ��
         // �Ӽ� �ʱ�ȭ
+        // isDrag = false;
+        // isDropped = false;
         level = 0;
-        isDrag = false;
         isMerge = false;
         isBouns = false;
         // transform �ʱ�ȭ
@@ -86,6 +96,7 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (isDrag)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -95,16 +106,38 @@ public class Ball : MonoBehaviour
             mousePos.z = 0;
             transform.position = mousePos;
         }
+        */
+        /*
+        if (!isDropped)
+        {
+            // 아래 방향으로 Raycast 발사
+            Ray ray = new Ray(startPoint, Vector3.down);
+            RaycastHit hit;
+            /*
+            // Ray가 충돌하면
+            if (Physics.Raycast(ray, out hit, 100f, ~0))
+            {
+                // 충돌 지점까지 선을 그립니다.
+                lineRenderer.SetPosition(0, startPoint);  // 시작점
+                lineRenderer.SetPosition(1, hit.point);  // 충돌 지점
+            }
+
+            lineRenderer.SetPosition(0, startPoint);  // 시작점
+            lineRenderer.SetPosition(1, startPoint + Vector3.down * 10);  // 충돌 지점
+        }
+        */
     }
 
     public void Drag()
     {
-        isDrag = true;
+        // isDrag = true;
     }
     public void Drop()
     {
-        isDrag = false;
+        // isDrag = false;
+        // isDropped = true;
         rigid.simulated = true;
+
     }
 
     // ������ �ٸ� �ݶ��̴��� �������� ��
