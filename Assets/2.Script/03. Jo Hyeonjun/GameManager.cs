@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int score { get; private set; }
     public int maxScore { get; private set; }
     private bool isGameOver;
+    public bool debugMode = false;
 
     [Header("Setting")]
     public int SpawnSpecies; // [조절 대상] 스폰되는 가짓 수. (1 = 최소 레벨 구슬만 등장)
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("Object")]
     public Sprite[] BallSprites; // JSON 적용 이후 미사용 - 구슬 스프라이트
     public Ball lastBall; // 다음에 나올 공
+    public float spawnCooltime = 0.5f;
     private int waitBallLv; // 예고된 공의 레벨
     private float BorderX; // 드랍할 공의 좌,우 범위
     private float recentX = 0; // 가장 최근에 드랍한 X 좌표
@@ -92,10 +94,18 @@ public class GameManager : MonoBehaviour
         // 유저 레벨 판별
         rewardTable = SelectUserLevel();
     }
-    
+
+    int frameCnt = 0;
     private void Update()
     {
-        // DropTheBall();
+        // 5 프레임마다 궤적 선 갱신
+        frameCnt++;
+        if(frameCnt >= 5)
+        {
+            frameCnt = 0;
+            if (lastBall != null) lastBall.DrawLine(true);
+        }
+        if(debugMode) DropTheBall();
     }
     
     // [오브젝트 풀링] 게임 시작 or 모든 풀링 사용 중 일때, 새로운 오브젝트 생성
@@ -148,6 +158,7 @@ public class GameManager : MonoBehaviour
         lastBall.gameObject.SetActive(true);
         // 드랍하기 전의 공이므로 공의 rigid Off
         lastBall.rigid.simulated = false;
+        lastBall.DrawLine(true);
         waitBallLv = GetSpawnLevel();
         OnWaitBallLvChanged?.Invoke(waitBallLv);
 
@@ -176,7 +187,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator NextBall_co()
     {
         yield return new WaitUntil(() => lastBall == null);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(spawnCooltime);
         NextBall();
     }
     /*
@@ -199,8 +210,10 @@ public class GameManager : MonoBehaviour
     public void MoveTheBall(int direction)
     {
         if (lastBall == null) return;
+        lastBall.DrawLine(false);
         lastBall.transform.position += Vector3.right * direction * 0.1f;
         MoveBallInBorder(lastBall.transform.position.x);
+        lastBall.DrawLine(true);
     }
 
     // 드랍할 공의 범위 아웃 체크

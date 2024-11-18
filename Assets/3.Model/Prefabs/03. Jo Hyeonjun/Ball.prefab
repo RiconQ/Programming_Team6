@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
+  isDropped: 0
   effect: {fileID: 0}
   rigid: {fileID: 0}
   circle_col: {fileID: 0}
@@ -121,7 +122,8 @@ MonoBehaviour:
   warningTime: 0.5
   failTime: 0.75
   hideTime: 0.3
-  appearTime: 0.1
+  spawnAppearTime: 0.5
+  physicOnTime: 0.4
 --- !u!114 &4882336803019771498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +234,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.02665329
         inSlope: 0
         outSlope: 0
         tangentMode: 0

@@ -33,7 +33,8 @@ public class Ball : MonoBehaviour
     public float warningTime = 0.50f;
     public float failTime = 0.75f;
     public float hideTime = 0.30f;
-    public float appearTime = 0.50f;
+    public float spawnAppearTime = 0.50f;
+    public float physicOnTime = 0.40f;
 
 
     // ��� ���� X ����
@@ -43,7 +44,6 @@ public class Ball : MonoBehaviour
 
     // 도움 선 관련
     [Header("Support Line")]
-    private Vector3 startPoint;  // 선을 시작할 위치
     private LineRenderer lineRenderer;  // LineRenderer 컴포넌트
 
 
@@ -54,26 +54,20 @@ public class Ball : MonoBehaviour
         circle_col = GetComponent<CircleCollider2D>();
         sprite = GetComponent<UISprite>();
 
-        startPoint = transform.position + Vector3.down * transform.localScale.y;
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 2;
     }
 
     private void OnEnable()
     {
-        // ������ ������ �� ȿ��. DOTween Ȱ��
         var ballScale = GetBallScale(level);
-        transform.DOScale(ballScale, appearTime);//.SetEase(Ease.OutBack).
-                                                 //.OnComplete(() => PhysicChange(true));
-        PhysicChange(true);
-        this.GetComponent<CircleCollider2D>().radius = 47;
-        rigid.mass = GetBallMass(level);
-        sprite.atlas = fruitData.atlas;
 
-        sprite.spriteName = GetBallSprite(level);
-        // 테스트를 위해 아이템 기능 임시 부활
-        if(isDropped)
+        // 드랍된 구슬, 즉 합성을 통해 만들어 진 경우
+        if (isDropped)
         {
+            // 구슬 크기는 즉시 적용되며, 시간 지연 후 물리 켜짐
+            transform.DOScale(ballScale, 0).OnComplete(()=> StartCoroutine("PhysicON_co"));
+
+            // 아이템 생성 여부
             float rr = UnityEngine.Random.Range(0.0f, 1.0f);
             if (rr < fruitData.fruits[level].attribute.itemProb)
             {
@@ -82,11 +76,31 @@ public class Ball : MonoBehaviour
             }
         }
 
+        // 스폰된 구슬인 경우
+        else
+        {
+            transform.DOScale(ballScale, spawnAppearTime).SetEase(Ease.OutBack);
+        }
+
+        this.GetComponent<CircleCollider2D>().radius = 47;
+        rigid.mass = GetBallMass(level);
+        sprite.atlas = fruitData.atlas;
+
+        sprite.spriteName = GetBallSprite(level);
+
+
         //   Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
         // ��� ���� ���� ����
         // �ð� ����� �ε��� ���⸸ �ϵ� �ڵ��Ͽ����ϴ�... (���� �ذ� ����)
         // BorderLeft = -2.75f + transform.localScale.x;
         // BorderRight = -BorderLeft;
+    }
+
+    // 합성으로 생겨난 구슬의 물리 On 지연 시간
+    IEnumerator PhysicON_co()
+    {
+        yield return new WaitForSeconds(physicOnTime);
+        PhysicChange(true);
     }
 
     private void OnDisable()
@@ -104,7 +118,6 @@ public class Ball : MonoBehaviour
         transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
         PhysicChange(false);
-        rigid.simulated = false;
     }
 
     private void Update()
@@ -122,26 +135,6 @@ public class Ball : MonoBehaviour
         }
         */
 
-        //  [Not Yet] 가이드 라인 표시
-        /*
-        if (!isDropped)
-        {
-            // 아래 방향으로 Raycast 발사
-            Ray ray = new Ray(startPoint, Vector3.down);
-            RaycastHit hit;
-            /*
-            // Ray가 충돌하면
-            if (Physics.Raycast(ray, out hit, 100f, ~0))
-            {
-                // 충돌 지점까지 선을 그립니다.
-                lineRenderer.SetPosition(0, startPoint);  // 시작점
-                lineRenderer.SetPosition(1, hit.point);  // 충돌 지점
-            }
-
-            lineRenderer.SetPosition(0, startPoint);  // 시작점
-            lineRenderer.SetPosition(1, startPoint + Vector3.down * 10);  // 충돌 지점
-        }
-        */
     }
 
     public void Drag()
@@ -152,8 +145,8 @@ public class Ball : MonoBehaviour
     {
         // isDrag = false;
         isDropped = true;
+        DrawLine(false);
         PhysicChange(true);
-        rigid.simulated = true;
     }
 
     // ������ �ٸ� �ݶ��̴��� �������� ��
@@ -189,6 +182,31 @@ public class Ball : MonoBehaviour
             }
         }
     }
+    // 예상 궤적 그리는 메소드. 생성 또는 이동 직후 그려짐
+    public void DrawLine(bool isDraw)
+    {
+        lineRenderer.positionCount = isDraw? 2 : 0;
+        if (isDraw)
+        {
+            // 시작점, 도착점 초기 지정
+            Vector3 startPoint = transform.position + Vector3.down * transform.localScale.y;
+            Vector3 endPoint = startPoint + Vector3.down * 100;
+
+            // 아래 방향으로 Ray 발사
+            RaycastHit2D hit = Physics2D.Raycast(startPoint, Vector2.down, 100f, ~LayerMask.GetMask("Ignore Raycast"));
+
+            // Ray가 충돌하면 도착점 재지정
+            if (hit.collider != null)
+            {
+                endPoint = hit.point;
+            }
+            else { print("!"); }
+            // 궤적 그리기
+            lineRenderer.SetPosition(0, startPoint);
+            lineRenderer.SetPosition(1, endPoint);
+        }
+    }
+
 
     // 아이템을 획득했을 때 메소드
     private void GetItem(Ball b)
@@ -337,6 +355,7 @@ public class Ball : MonoBehaviour
     // 물리 On/Off 메소드
     private void PhysicChange(bool isOn)
     {
+        rigid.simulated = isOn;
         circle_col.enabled = isOn;
         if(!isOn)
         {

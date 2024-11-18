@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _leftMoveButton;
     [SerializeField] private UIButton _rightMoveButton;
     [SerializeField] private UIButton _gameexitButton;
+    [SerializeField] private UIButton _debugOnButton;
     //[SerializeField] private UIButton _itemNeedleButton;
 
     [Header("----------SubButton")]
@@ -69,6 +70,7 @@ public class UIManager : MonoBehaviour
       //  _gameRestartButton.onClick.Add(new EventDelegate(() => OnClickGameRestartButton()));
         _dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
         _gameexitButton.onClick.Add(new EventDelegate(() => OnClickGameExitButton()));
+        _debugOnButton.onClick.Add(new EventDelegate(() => OnClickDebugOnButton()));
 
         //_itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
 
@@ -128,6 +130,11 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
+    private void OnClickDebugOnButton()
+    {
+        Time.timeScale = 3;
+        GameManager.Instance.debugMode = true;
+    }
     // 버튼 - 아이템
     // private void OnClickItemButton()
     // {
