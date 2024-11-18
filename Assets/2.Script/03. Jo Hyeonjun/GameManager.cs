@@ -92,7 +92,12 @@ public class GameManager : MonoBehaviour
         // 유저 레벨 판별
         rewardTable = SelectUserLevel();
     }
-
+    
+    private void Update()
+    {
+        // DropTheBall();
+    }
+    
     // [오브젝트 풀링] 게임 시작 or 모든 풀링 사용 중 일때, 새로운 오브젝트 생성
     private Ball MakeBall()
     {
@@ -141,6 +146,8 @@ public class GameManager : MonoBehaviour
 
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
+        // 드랍하기 전의 공이므로 공의 rigid Off
+        lastBall.rigid.simulated = false;
         waitBallLv = GetSpawnLevel();
         OnWaitBallLvChanged?.Invoke(waitBallLv);
 
@@ -155,6 +162,8 @@ public class GameManager : MonoBehaviour
         newBall.level = lv;
         // 좌표 설정
         newBall.transform.position = targetPos;
+        // 합성된 구슬은 이미 드랍 상태
+        newBall.isDropped = true;
         // 오브젝트 활성화
         newBall.gameObject.SetActive(true);
         // 물리 또한 즉시 활성화
@@ -248,7 +257,7 @@ public class GameManager : MonoBehaviour
         // 0.05초 간격으로 사라짐
         foreach (Ball b in balls)
         {
-            b.Hide(Vector3.up * 999);
+            b.Hide();
             yield return new WaitForSeconds(0.05f);
         }
 

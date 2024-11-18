@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
     [Header("State")]
     public int level; 
     // private bool isDrag; // [Legacy] �巡�� ���ΰ�?
-    // private bool isDropped; // 드랍된 상태인가?
+    public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
     private bool isBouns; // ������ ���Ե� �����ΰ�?
 
@@ -29,9 +29,12 @@ public class Ball : MonoBehaviour
     public int lv3ItemChance; // ���� 3(4��°) - ������ ���Ե� ������ Ȯ��
 
     // ���� ���� ����
-    [Header("About Game Over")]
+    [Header("About Time")]
     public float warningTime = 0.50f;
     public float failTime = 0.75f;
+    public float hideTime = 0.30f;
+    public float appearTime = 0.50f;
+
 
     // ��� ���� X ����
     [Header("Drop Border")]
@@ -60,18 +63,30 @@ public class Ball : MonoBehaviour
     {
         // ������ ������ �� ȿ��. DOTween Ȱ��
         var ballScale = GetBallScale(level);
-        transform.DOScale(ballScale, 0.5f).SetEase(Ease.OutBack);
+        transform.DOScale(ballScale, appearTime);//.SetEase(Ease.OutBack).
+                                                 //.OnComplete(() => PhysicChange(true));
+        PhysicChange(true);
         this.GetComponent<CircleCollider2D>().radius = 47;
         rigid.mass = GetBallMass(level);
         sprite.atlas = fruitData.atlas;
 
         sprite.spriteName = GetBallSprite(level);
-     //   Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
+        // 테스트를 위해 아이템 기능 임시 부활
+        if(isDropped)
+        {
+            float rr = UnityEngine.Random.Range(0.0f, 1.0f);
+            if (rr < fruitData.fruits[level].attribute.itemProb)
+            {
+                isBouns = true;
+                sprite.color = Color.green;
+            }
+        }
 
+        //   Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
         // ��� ���� ���� ����
         // �ð� ����� �ε��� ���⸸ �ϵ� �ڵ��Ͽ����ϴ�... (���� �ذ� ����)
-        BorderLeft = -2.75f + transform.localScale.x;
-        BorderRight = 2.75f - transform.localScale.x;
+        // BorderLeft = -2.75f + transform.localScale.x;
+        // BorderRight = -BorderLeft;
     }
 
     private void OnDisable()
@@ -79,7 +94,7 @@ public class Ball : MonoBehaviour
         // ���� ��Ȱ��ȭ �� ��
         // �Ӽ� �ʱ�ȭ
         // isDrag = false;
-        // isDropped = false;
+        isDropped = false;
         level = 0;
         isMerge = false;
         isBouns = false;
@@ -88,10 +103,8 @@ public class Ball : MonoBehaviour
         transform.localScale = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
+        PhysicChange(false);
         rigid.simulated = false;
-        rigid.velocity = Vector2.zero;
-        rigid.angularVelocity = 0;
-        circle_col.enabled = true;
     }
 
     private void Update()
@@ -138,9 +151,9 @@ public class Ball : MonoBehaviour
     public void Drop()
     {
         // isDrag = false;
-        // isDropped = true; // 라인 렌더러 관련
+        isDropped = true;
+        PhysicChange(true);
         rigid.simulated = true;
-
     }
 
     // ������ �ٸ� �ݶ��̴��� �������� ��
@@ -155,36 +168,21 @@ public class Ball : MonoBehaviour
             // �ռ� ���� ���� �� (�ϴ� �ִ� ������ ������� ����)
             if (level == other.level && !isMerge && !other.isMerge)
             {
-                float myX = transform.position.x;
-                float myY = transform.position.y;
-                float otherX = other.transform.position.x;
-                float otherY = other.transform.position.y;
-                // �ռ��Ǵ� 2���� ���� �߿� �������� �ִ� ���
-                // �켱 ����� ��� �� 10�� ������ ó��
-                if (isBouns)
-                {
-                    isBouns = false;
-                    sprite.color = Color.white;
-                    Debug.Log("Get Bouns!");
-                    GameManager.Instance.Addscore(10);
-                }
-                if (other.isBouns)
-                {
-                    other.isBouns = false;
-                    other.sprite.color = Color.white;
-                    Debug.Log("Get Bouns!");
-                    GameManager.Instance.Addscore(10);
-                }
+                Vector3 myPos = transform.position;
+                Vector3 otherPos = other.transform.position;
+
+                if (isBouns) GetItem(this);
+                if (other.isBouns) GetItem(other);
 
                 // �� ��ü�� �� �Ʒ��� �ְų�, ���� ���̸� �����ʿ� ���� ��
-                if (myY < otherY || (myY == otherY && myX > otherX))
+                if (myPos.y < otherPos.y || (myPos.y == otherPos.y && myPos.x > otherPos.x))
                 {
-                    Vector3 targetPos = new Vector3((myX + otherX) / 2, (myY + otherY) / 2, 0);
+                    Vector3 targetPos = (otherPos + myPos) / 2;
                     // 점수가 재료 구슬의 레벨에 따라 증가
-                    GameManager.Instance.Addscore(fruitData.fruits[level].attribute.score);
+                    GameManager.Instance.Addscore(GetBallScore(level));
                     // 접촉한 2개의 구슬은 모두 사라짐
-                    other.Hide(targetPos);
-                    Hide(targetPos);
+                    other.Hide();
+                    Hide();
                     // 중점에 새로운 구슬 생성됨
                     GameManager.Instance.AppearNextLevel(targetPos, level + 1);
                 }
@@ -192,17 +190,28 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void Hide(Vector3 targetPos)
+    // 아이템을 획득했을 때 메소드
+    private void GetItem(Ball b)
+    {
+        // 아이템 속성 없애기
+        b.isBouns = false;
+        b.sprite.color = Color.white;
+        // 아이템 획득 효과
+        Debug.Log("Get Bouns!");
+        GameManager.Instance.Addscore(10);
+    }
+
+    public void Hide()
     {
         isMerge = true; // �ռ� ���� ���·�
         // Physical off
-        rigid.simulated = false;
-        circle_col.enabled = false;
+        PhysicChange(false);
         // Disappear Effect
-        transform.DOScale(0, 0.3f).OnComplete(() => gameObject.SetActive(false));
+        transform.DOScale(0, hideTime).OnComplete(() => gameObject.SetActive(false));
         // StartCoroutine(Hide_co(targetPos));
     }
 
+    #region Legacy(Hide_co, LevelUp, LevelUp_co)
     /*
     private IEnumerator Hide_co(Vector3 targetPos)
     {
@@ -224,7 +233,7 @@ public class Ball : MonoBehaviour
         isMerge = true; // �ռ� ���� ���·�
         rigid.velocity = Vector2.zero; // �̵��ӵ��� 0����
         rigid.angularVelocity = 0; // ȸ���ӵ��� 0����
-        rigid.simulated = false;
+        rigid.simu1lated = false;
         circle_col.enabled = false; // ���� ���� off
 
         StartCoroutine(LevelUp_co(targetPos));
@@ -270,11 +279,12 @@ public class Ball : MonoBehaviour
         }
 
         // �ٽ� ���� ����ǰ�
-        rigid.simulated = true;
+        rigid.simul1ated = true;
         circle_col.enabled = true;
         isMerge = false;
     }
     */
+    #endregion
     IEnumerator AttachSFX_co()
     {
         if (isAttach) yield break;
@@ -288,7 +298,7 @@ public class Ball : MonoBehaviour
     private float deadTime;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "Finish")
+        if(collision.CompareTag("Finish"))
         {
             deadTime += Time.deltaTime;
             if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
@@ -317,6 +327,26 @@ public class Ball : MonoBehaviour
         effect.Play();
     }
 
+
+    private bool isGetItem()
+    {
+        float getItem = Random.Range(0, 1);
+        return (getItem < 0.5);
+    }
+
+    // 물리 On/Off 메소드
+    private void PhysicChange(bool isOn)
+    {
+        circle_col.enabled = isOn;
+        if(!isOn)
+        {
+            rigid.velocity = Vector2.zero;
+            rigid.angularVelocity = 0;
+        }
+    }
+
+    // Data Table 에서 정보 가져오는 메소드
+
     private Vector3 GetBallScale(int level)
     {
         var ballScale = new Vector3
@@ -328,14 +358,8 @@ public class Ball : MonoBehaviour
 
         return ballScale;
     }
-
-    private bool isGetItem()
-    {
-        float getItem = Random.Range(0, 1);
-        return (getItem < 0.5);
-    }
-
     private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
     private string GetBallSprite(int level) => fruitData.fruits[level].attribute.imgName;
+    private int GetBallScore(int level) => fruitData.fruits[level].attribute.score;
 
 }
