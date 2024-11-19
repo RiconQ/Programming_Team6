@@ -12,20 +12,20 @@ public class GameManager : MonoBehaviour
     private bool isGameOver;
     public bool debugMode = false;
 
-    [Header("Setting")]
+    [Header("----------Setting")]
     public int SpawnSpecies; // [조절 대상] 스폰되는 가짓 수. (1 = 최소 레벨 구슬만 등장)
 
 
-    [Header("Object")]
+    [Header("----------Object")]
     public Sprite[] BallSprites; // JSON 적용 이후 미사용 - 구슬 스프라이트
     public Ball lastBall; // 다음에 나올 공
-    public float spawnCooltime = 0.5f;
+    public float spawnDelaytime = 0.3f;
     private int waitBallLv; // 예고된 공의 레벨
-    private float BorderX; // 드랍할 공의 좌,우 범위
+    private float borderLeft, borderRight; // 드랍할 공의 좌,우 범위
     private float recentX = 0; // 가장 최근에 드랍한 X 좌표
 
 
-    [Header("Pooling")]
+    [Header("----------Pooling")]
     public FruitDataImporter fruitData;
     public GameObject BallPrefab;
     public Transform BallGroup;
@@ -35,12 +35,16 @@ public class GameManager : MonoBehaviour
     [Range(1, 30)] public int poolSize;
     public int poolCursor;
 
-    [Header("UI")]
+    [Header("----------UI")]
     public Text scoreText;
     public Text maxScoreText;
     public GameObject GameOverUI;
 
-    [Header("About Item")]
+    [Header("----------Wall")]
+    public Transform leftWall;
+    public Transform rightWall;
+
+    [Header("----------About Item")]
     [SerializeField] int userLevel;
     [SerializeField] int itemProbability;
 
@@ -91,6 +95,12 @@ public class GameManager : MonoBehaviour
         waitBallLv = GetSpawnLevel();
         NextBall();
 
+        // 스폰 구슬의 레벨 최댓값의 scale + 0.015f
+        float borderFix = GetMaxSpawnLevelScale() + 0.015f;
+        print(borderFix);
+        borderLeft = leftWall.position.x + leftWall.lossyScale.x / 2 + borderFix;
+        borderRight = rightWall.position.x - rightWall.lossyScale.x / 2 - borderFix;
+
         // 유저 레벨 판별
         rewardTable = SelectUserLevel();
     }
@@ -103,7 +113,10 @@ public class GameManager : MonoBehaviour
         if(frameCnt >= 5)
         {
             frameCnt = 0;
-            if (lastBall != null) lastBall.DrawLine(true);
+            if (lastBall != null)
+            {
+                if(!lastBall.rigid.simulated) lastBall.DrawLine(true);
+            }
         }
         if(debugMode) DropTheBall();
     }
@@ -151,7 +164,6 @@ public class GameManager : MonoBehaviour
         lastBall = newBall;
 
         lastBall.level = waitBallLv;
-        BorderX = 2.74f - lastBall.transform.localScale.x;
         MoveBallInBorder(recentX);
 
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
@@ -166,6 +178,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(NextBall_co());
     }
 
+    // 기존 구슬이 드랍되어 무언가 닿을 때까지 + 일정 시간 대기 후 다음 구슬
+    private IEnumerator NextBall_co()
+    {
+        yield return new WaitUntil(() => lastBall == null);
+        yield return new WaitForSeconds(spawnDelaytime);
+        NextBall();
+    }
+
     // 합성되어 새로운 구슬이 생성
     public void AppearNextLevel(Vector3 targetPos, int lv)
     {
@@ -177,19 +197,9 @@ public class GameManager : MonoBehaviour
         newBall.isDropped = true;
         // 오브젝트 활성화
         newBall.gameObject.SetActive(true);
-        // 물리 또한 즉시 활성화
-        newBall.rigid.simulated = true;
-        newBall.circle_col.enabled = true;
     }
 
 
-    // 기존 구슬이 드랍될 때까지 + 0.5초 대기 후 다음 구슬
-    private IEnumerator NextBall_co()
-    {
-        yield return new WaitUntil(() => lastBall == null);
-        yield return new WaitForSeconds(spawnCooltime);
-        NextBall();
-    }
     /*
     // [레거시] 터치가 시작될 때 
     public void TouchDown()
@@ -209,7 +219,9 @@ public class GameManager : MonoBehaviour
     // 좌,우 버튼 누르면
     public void MoveTheBall(int direction)
     {
+        // 없거나 떨어지는 중이면 조작 불가능
         if (lastBall == null) return;
+        if (lastBall.rigid.simulated) return;
         lastBall.DrawLine(false);
         lastBall.transform.position += Vector3.right * direction * 0.1f;
         MoveBallInBorder(lastBall.transform.position.x);
@@ -219,7 +231,7 @@ public class GameManager : MonoBehaviour
     // 드랍할 공의 범위 아웃 체크
     public void MoveBallInBorder(float posX)
     {
-        posX = Mathf.Clamp(posX, -BorderX, BorderX) + UnityEngine.Random.Range(-0.01f, 0.01f);
+        posX = Mathf.Clamp(posX, borderLeft, borderRight) + UnityEngine.Random.Range(-0.01f, 0.01f);
         lastBall.transform.position = new Vector3(posX, lastBall.transform.position.y, 0);
     }
 
@@ -229,7 +241,8 @@ public class GameManager : MonoBehaviour
         if (lastBall == null) return;
         recentX = lastBall.transform.position.x;
         lastBall.Drop();
-        lastBall = null;
+        // 공이 무언가에 닿고 나서야 null이 되어 다음 드랍 가능하도록 변경
+        // lastBall = null;
     }
 
     // 점수 추가 메소드
@@ -291,7 +304,7 @@ public class GameManager : MonoBehaviour
         float randomfloat = UnityEngine.Random.Range(0.0f, 1.0f);
         for (int lv = 0; lv < 10; lv++)
         {
-            randomfloat -= fruitData.fruits[lv].attribute.spawnProb;
+            randomfloat -= GetSpawnProb(lv);
             if (randomfloat < 0) return lv;
         }
         Debug.Log("확률의 합이 1 미만인것 같습니다.");
@@ -310,6 +323,22 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    // 구슬의 스폰 확률 가져오기
+    private float GetSpawnProb(int lv)
+    {
+        return fruitData.fruits[lv].attribute.spawnProb;
+    }
+
+    // 스폰 구슬의 최대 레벨의 크기 구하기 (드랍 x 범위 설정 용)
+    private float GetMaxSpawnLevelScale()
+    {
+        for (int i = fruitData.fruits.Length - 1; i > 0; i--)
+        {
+            if (GetSpawnProb(i) > 0) return fruitData.fruits[i].attribute.scaleX;
+        }
+        return fruitData.fruits[0].attribute.scaleX;
     }
 
     public bool IsDropItem()

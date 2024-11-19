@@ -34,13 +34,8 @@ public class Ball : MonoBehaviour
     public float failTime = 0.75f;
     public float hideTime = 0.30f;
     public float spawnAppearTime = 0.50f;
-    public float physicOnTime = 0.40f;
-
-
-    // ��� ���� X ����
-    [Header("Drop Border")]
-    private float BorderLeft;
-    private float BorderRight;
+    public float physicOnTime = 0.40f; // 합성되어 생겨난 구슬의 물리가 켜지는 딜레이 시간
+    public float physicOffTime = 0.10f; // 재료 구슬의 물리가 꺼지는 딜레이 시간
 
     // 도움 선 관련
     [Header("Support Line")]
@@ -65,7 +60,7 @@ public class Ball : MonoBehaviour
         if (isDropped)
         {
             // 구슬 크기는 즉시 적용되며, 시간 지연 후 물리 켜짐
-            transform.DOScale(ballScale, 0).OnComplete(()=> StartCoroutine("PhysicON_co"));
+            transform.DOScale(ballScale, 0).OnComplete(()=> StartCoroutine(PhysicON_co()));
 
             // 아이템 생성 여부
             float rr = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -117,7 +112,7 @@ public class Ball : MonoBehaviour
         transform.localScale = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
-        PhysicChange(false);
+        // PhysicChange(false);
     }
 
     private void Update()
@@ -144,7 +139,7 @@ public class Ball : MonoBehaviour
     public void Drop()
     {
         // isDrag = false;
-        isDropped = true;
+        // isDropped = true;
         DrawLine(false);
         PhysicChange(true);
     }
@@ -154,6 +149,13 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine(AttachSFX_co());
+        // 만약 드랍한 구슬이었다면
+        if (!isDropped)
+        {
+            isDropped = true;
+            GameManager.Instance.lastBall = null;
+        }
+
         if (collision.gameObject.tag == "Ball")
         {
             Ball other = collision.gameObject.GetComponent<Ball>();
@@ -222,11 +224,15 @@ public class Ball : MonoBehaviour
     public void Hide()
     {
         isMerge = true; // �ռ� ���� ���·�
-        // Physical off
-        PhysicChange(false);
         // Disappear Effect
         transform.DOScale(0, hideTime).OnComplete(() => gameObject.SetActive(false));
-        // StartCoroutine(Hide_co(targetPos));
+        if(gameObject.activeInHierarchy) StartCoroutine(PhysicOff_co());
+    }
+
+    IEnumerator PhysicOff_co()
+    {
+        yield return new WaitForSeconds(physicOffTime);
+        PhysicChange(false);
     }
 
     #region Legacy(Hide_co, LevelUp, LevelUp_co)
@@ -355,13 +361,13 @@ public class Ball : MonoBehaviour
     // 물리 On/Off 메소드
     private void PhysicChange(bool isOn)
     {
-        rigid.simulated = isOn;
-        circle_col.enabled = isOn;
         if(!isOn)
         {
             rigid.velocity = Vector2.zero;
             rigid.angularVelocity = 0;
         }
+        rigid.simulated = isOn;
+        circle_col.enabled = isOn;
     }
 
     // Data Table 에서 정보 가져오는 메소드
