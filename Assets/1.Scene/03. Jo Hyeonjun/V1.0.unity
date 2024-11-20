@@ -4731,14 +4731,7 @@ MonoBehaviour:
   itemProbability: 1
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
   rewardTable:
-    ID: 0
-    Min_Lv: 0
-    Max_Lv: 0
-  rewardInfo:
-    ID: 0
-    Kind: 0
-    Key: 0
-    Amount: 0
+    userLevel: 0
 --- !u!4 &1063370407
 Transform:
   m_ObjectHideFlags: 0
