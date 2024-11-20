@@ -4,12 +4,14 @@ using System.IO;
 using LitJson;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
+using static RewardTable;
+using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "ItemReward", menuName = "Reward/ItemReward")]
 public class ItemReward : ScriptableObject
 {
     public List<RewardTable> rewardDataTable = new List<RewardTable>();
-    public List<RewardInfo> rewardInfos = new List<RewardInfo>();
     public List<ItemInfo> itemInfos = new List<ItemInfo>();
 
     [HideInInspector] public string rewardTableJson;
@@ -31,47 +33,36 @@ public class ItemReward : ScriptableObject
         for (int i = 0; i < jsonData.Count; i++)
         {
             var tempData = new RewardTable();
-            tempData.ID = (int)(double)jsonData[i][0];
-            tempData.Min_Lv = (int)(double)jsonData[i][1];
-            tempData.Max_Lv = (int)(double)jsonData[i][2];
-            tempData.Reward = new List<List<int>>();
+            tempData.userLevel = (int)(double)jsonData[i][0];
+            tempData.reward = new List<List<rewardStruct>>();
             //Debug.Log(jsonData[i].Count);
-            for (int j = 3; j < jsonData[i].Count; j++)
+            for (int j = 1; j < jsonData[i].Count; j++)
             {
-                List<int> tempArray = new List<int>();
-                tempArray =
-                    jsonData[i][j].ToString()
-                    .Split(',')
-                    .Select(s => int.Parse(s.Trim()))
-                    .ToList();
-                tempData.Reward.Add(tempArray);
+                var tmpReward = new List<rewardStruct>();
+                //Debug.Log(jsonData[i][j].ToString());
+                var matches = Regex.Matches(jsonData[i][j].ToString(), @"\[(\d+),\s*(\d+),\s*(\d+)\]");
+
+                foreach (Match match in matches)
+                {
+                    var tmpStruct = new rewardStruct();
+                    tmpStruct.kind = int.Parse(match.Groups[1].Value);
+                    tmpStruct.value = int.Parse(match.Groups[2].Value);
+                    tmpStruct.amount = int.Parse(match.Groups[3].Value);
+                    Debug.Log(tmpStruct.kind + " " + tmpStruct.value + " " + tmpStruct.amount);
+                    tmpReward.Add(tmpStruct);
+                }
+                tempData.reward.Add(tmpReward);
+
+                //debug
+                //for (int k = 0; k < tempData.reward.Count; j++)
+                //{
+                //    foreach(var item in tempData.reward[k])
+                //    {
+                //        Debug.Log(item.kind + " " + item.value + " " + item.amount);
+                //    }
+                //}
             }
-
             rewardDataTable.Add(tempData);
-        }
-    }
-
-    public void SetRewardInfo()
-    {
-        rewardInfos.Clear();
-        if (!File.Exists(rewardInfoJson))
-        {
-            Debug.LogError("File Not Found");
-            return;
-        }
-
-        string jsonContent = File.ReadAllText(rewardInfoJson);
-        JsonData jsonData = JsonMapper.ToObject(jsonContent);
-
-        for (int i = 0; i < jsonData.Count; i++)
-        {
-            var tempData = new RewardInfo();
-            tempData.ID = (int)(double)jsonData[i][0];
-            tempData.Kind = (int)(double)jsonData[i][1];
-            tempData.Key = (int)(double)jsonData[i][2];
-            tempData.Amount = (int)(double)jsonData[i][3];
-
-            rewardInfos.Add(tempData);
         }
     }
 
@@ -111,24 +102,17 @@ public class ItemReward : ScriptableObject
 [Serializable]
 public class RewardTable
 {
-    public int ID;
-    public int Min_Lv;
-    public int Max_Lv;
-    public List<List<int>> Reward;
+    public int userLevel;
+    public List<List<rewardStruct>> reward;
 }
 
-/// <summary>
-/// 아이템 묶음 테이블
-/// </summary>
 [Serializable]
-public class RewardInfo
+public struct rewardStruct
 {
-    public int ID;
-    public int Kind;
-    public int Key;
-    public int Amount;
+    public int kind;
+    public int value;
+    public int amount;
 }
-
 /// <summary>
 /// 아이템 테이블(임의제작)
 /// </summary>

@@ -9,7 +9,7 @@ public class ItemRewardEditor : Editor
     private string excelFilePath;
 
     private int rewardTableSheet;
-    private int rewardInfoSheet;
+    //private int rewardInfoSheet;
     private int itemInfoSheet;
 
     public override void OnInspectorGUI()
@@ -23,7 +23,7 @@ public class ItemRewardEditor : Editor
             excelFilePath = EditorUtility.OpenFilePanel("Select Excel File", "", "xlsx");
         }
         rewardTableSheet = EditorGUILayout.IntField("Enter Reward Table Sheet", rewardTableSheet);
-        rewardInfoSheet = EditorGUILayout.IntField("Enter Reward Info Sheet", rewardInfoSheet);
+        //rewardInfoSheet = EditorGUILayout.IntField("Enter Reward Info Sheet", rewardInfoSheet);
         itemInfoSheet = EditorGUILayout.IntField("Enter Item Info Sheet", itemInfoSheet);
 
         EditorGUILayout.TextField("Excel File Path", excelFilePath);
@@ -41,16 +41,15 @@ public class ItemRewardEditor : Editor
                 itemReward.rewardTableJson = converter.jsonOutputPath;
                 itemReward.SetRewardTable();
 
-                converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{rewardInfoSheet}", "json");
-                converter.ConvertExcelToJson(rewardInfoSheet);
-                itemReward.rewardInfoJson = converter.jsonOutputPath;
-                itemReward.SetRewardInfo();
+                ///converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{rewardInfoSheet}", "json");
+                ///converter.ConvertExcelToJson(rewardInfoSheet);
+                ///itemReward.rewardInfoJson = converter.jsonOutputPath;
+                ///itemReward.SetRewardInfo();
 
                 converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{itemInfoSheet}", "json");
                 converter.ConvertExcelToJson(itemInfoSheet);
                 itemReward.itemInfoJson = converter.jsonOutputPath;
                 itemReward.SetItemInfo();
-
             }
             else
             {

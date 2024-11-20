@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     public ItemReward itemReward;
 
     public RewardTable rewardTable;
-    public RewardInfo rewardInfo;
+    //public RewardInfo rewardInfo;
 
 
 
@@ -317,10 +317,10 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
         {
             RewardTable reward = itemReward.rewardDataTable[i];
-            if (userLevel >= reward.Min_Lv && userLevel <= reward.Max_Lv)
-            {
-                return reward;
-            }
+            //if (userLevel >= reward.Min_Lv && userLevel <= reward.Max_Lv)
+            //{
+            //    return reward;
+            //}
         }
         return null;
     }
@@ -347,22 +347,22 @@ public class GameManager : MonoBehaviour
         return (itemPercent < 0.5f);
     }
 
-    //리워드 인포에서 하나를 선택해 아이템 생성하기
-    public RewardInfo ChooseItem()
-    {
-        //RewardInfo에서 랜덤값 하나 가져오기 -> 추후 확률 조정 필요
-        int id = UnityEngine.Random.Range(0, itemReward.rewardInfos.Count);
-        RewardInfo selectedReward = itemReward.rewardInfos[id];
-
-
-        //RewardInfo에 있는 ItemKind를 가져오기    
-        ItemInfo correspondingItem = itemReward.itemInfos.Find(item => item.ID == selectedReward.Kind);
-        Debug.Log($"{correspondingItem.Item_Name}이 {selectedReward.Amount}개 생성");
-        
-
-        //
-        return selectedReward;
-    }
+    ////리워드 인포에서 하나를 선택해 아이템 생성하기
+    //public RewardInfo ChooseItem()
+    //{
+    //    //RewardInfo에서 랜덤값 하나 가져오기 -> 추후 확률 조정 필요
+    //    int id = UnityEngine.Random.Range(0, itemReward.rewardInfos.Count);
+    //    RewardInfo selectedReward = itemReward.rewardInfos[id];
+    //
+    //
+    //    //RewardInfo에 있는 ItemKind를 가져오기    
+    //    ItemInfo correspondingItem = itemReward.itemInfos.Find(item => item.ID == selectedReward.Kind);
+    //    Debug.Log($"{correspondingItem.Item_Name}이 {selectedReward.Amount}개 생성");
+    //    
+    //
+    //    //
+    //    return selectedReward;
+    //}
 
 }
 
