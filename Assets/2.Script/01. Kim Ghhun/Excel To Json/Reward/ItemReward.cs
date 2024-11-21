@@ -21,6 +21,7 @@ public class ItemReward : ScriptableObject
     public void SetRewardTable()
     {
         rewardDataTable.Clear();
+
         if (!File.Exists(rewardTableJson))
         {
             Debug.LogError("File Not Found");
@@ -33,6 +34,7 @@ public class ItemReward : ScriptableObject
         for (int i = 0; i < jsonData.Count; i++)
         {
             var tempData = new RewardTable();
+            tempData.reward = new List<List<rewardStruct>>();
             tempData.userLevel = (int)(double)jsonData[i][0];
             tempData.reward = new List<List<rewardStruct>>();
             //Debug.Log(jsonData[i].Count);

@@ -103,6 +103,12 @@ public class GameManager : MonoBehaviour
 
         // 유저 레벨 판별
         rewardTable = SelectUserLevel();
+        Debug.Log($"유저 레벨: {rewardTable.userLevel}");
+      //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
+   //     Debug.Log(itemReward.rewardDataTable.)
+        Debug.Log(itemReward.rewardDataTable[0].reward);
+
+
     }
 
     int frameCnt = 0;
@@ -316,11 +322,13 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
         {
-            RewardTable reward = itemReward.rewardDataTable[i];
-            //if (userLevel >= reward.Min_Lv && userLevel <= reward.Max_Lv)
-            //{
-            //    return reward;
-            //}
+            RewardTable userLevelTable = itemReward.rewardDataTable[i];
+            if (userLevel == userLevelTable.userLevel)
+            {
+                Debug.Log(userLevelTable.userLevel);
+            //    Debug.Log(userLevelTable.reward[2]);
+                return userLevelTable;
+            }
         }
         return null;
     }
@@ -347,22 +355,8 @@ public class GameManager : MonoBehaviour
         return (itemPercent < 0.5f);
     }
 
-    ////리워드 인포에서 하나를 선택해 아이템 생성하기
-    //public RewardInfo ChooseItem()
-    //{
-    //    //RewardInfo에서 랜덤값 하나 가져오기 -> 추후 확률 조정 필요
-    //    int id = UnityEngine.Random.Range(0, itemReward.rewardInfos.Count);
-    //    RewardInfo selectedReward = itemReward.rewardInfos[id];
-    //
-    //
-    //    //RewardInfo에 있는 ItemKind를 가져오기    
-    //    ItemInfo correspondingItem = itemReward.itemInfos.Find(item => item.ID == selectedReward.Kind);
-    //    Debug.Log($"{correspondingItem.Item_Name}이 {selectedReward.Amount}개 생성");
-    //    
-    //
-    //    //
-    //    return selectedReward;
-    //}
+// 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
+
 
 }
 
