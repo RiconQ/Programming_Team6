@@ -34,27 +34,28 @@ public class ItemReward : ScriptableObject
         for (int i = 0; i < jsonData.Count; i++)
         {
             var tempData = new RewardTable();
-            tempData.reward = new List<List<rewardStruct>>();
+            tempData.reward = new List<LevelRewardTable>();
             tempData.userLevel = (int)(double)jsonData[i][0];
-            tempData.reward = new List<List<rewardStruct>>();
             //Debug.Log(jsonData[i].Count);
             for (int j = 1; j < jsonData[i].Count; j++)
             {
-                var tmpReward = new List<rewardStruct>();
+                var tmpReward = new LevelRewardTable();
                 //Debug.Log(jsonData[i][j].ToString());
                 var matches = Regex.Matches(jsonData[i][j].ToString(), @"\[(\d+),\s*(\d+),\s*(\d+)\]");
 
                 foreach (Match match in matches)
                 {
-                    var tmpStruct = new rewardStruct();
+                    var tmpStruct = new RewardInfo();
+                    //tmpStruct.Add(int.Parse(match.Groups[1].Value));
+                    //tmpStruct.Add(int.Parse(match.Groups[2].Value));
+                    //tmpStruct.Add(int.Parse(match.Groups[3].Value));
                     tmpStruct.kind = int.Parse(match.Groups[1].Value);
                     tmpStruct.value = int.Parse(match.Groups[2].Value);
                     tmpStruct.amount = int.Parse(match.Groups[3].Value);
-                    Debug.Log(tmpStruct.kind + " " + tmpStruct.value + " " + tmpStruct.amount);
-                    tmpReward.Add(tmpStruct);
+                    // Debug.Log(tmpStruct.kind + " " + tmpStruct.value + " " + tmpStruct.amount);
+                    tmpReward.rewardInfos.Add(tmpStruct);
                 }
                 tempData.reward.Add(tmpReward);
-
                 //debug
                 //for (int k = 0; k < tempData.reward.Count; j++)
                 //{
@@ -65,7 +66,23 @@ public class ItemReward : ScriptableObject
                 //}
             }
             rewardDataTable.Add(tempData);
+
+            Debug.Log("test " + rewardDataTable[i].userLevel + " And " + rewardDataTable[i].reward.Count);
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.AssetDatabase.SaveAssets();
+#endif
         }
+        
+        //for(int i = 0;i < jsonData.Count; i++)
+        //{
+        //    Debug.Log("test 2 " + rewardDataTable[i].userLevel + " And " + rewardDataTable[i].reward.Count);
+        //    for(int j = 0; j < rewardDataTable[i].reward.Count; j++)
+        //    {
+        //        Debug.Log("Test 3 " + rewardDataTable[i].reward[j].Count);
+        //    }
+        //}
     }
 
     public void SetItemInfo()
@@ -95,6 +112,21 @@ public class ItemReward : ScriptableObject
         UnityEditor.EditorUtility.SetDirty(this);
         UnityEditor.AssetDatabase.SaveAssets();
 #endif
+
+       // Check();
+    }
+
+    public void Check()
+    {
+        Debug.Log($"Check Start {rewardDataTable.Count} And {rewardDataTable[0].reward is null}");
+        for (int i = 0; i < rewardDataTable.Count; i++)
+        {
+            Debug.Log("test 2 " + rewardDataTable[i].userLevel + " And " + rewardDataTable[i].reward.Count);
+            for (int j = 0; j < rewardDataTable[i].reward.Count; j++)
+            {
+                Debug.Log("Test 3 " + rewardDataTable[i].reward.Count);
+            }
+        }
     }
 }
 
@@ -105,11 +137,17 @@ public class ItemReward : ScriptableObject
 public class RewardTable
 {
     public int userLevel;
-    public List<List<rewardStruct>> reward;
+    public List<LevelRewardTable> reward = new List<LevelRewardTable>();
 }
 
 [Serializable]
-public struct rewardStruct
+public class LevelRewardTable
+{
+    public List<RewardInfo> rewardInfos = new List<RewardInfo>();
+}
+
+[Serializable]
+public class RewardInfo
 {
     public int kind;
     public int value;

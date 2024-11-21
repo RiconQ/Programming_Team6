@@ -101,12 +101,17 @@ public class GameManager : MonoBehaviour
         borderLeft = leftWall.position.x + leftWall.lossyScale.x / 2 + borderFix;
         borderRight = rightWall.position.x - rightWall.lossyScale.x / 2 - borderFix;
 
+        //itemReward.Check();
+        //Debug.Log("Check End");
+
         // 유저 레벨 판별
         rewardTable = SelectUserLevel();
+
+
         Debug.Log($"유저 레벨: {rewardTable.userLevel}");
-      //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
-   //     Debug.Log(itemReward.rewardDataTable.)
-        Debug.Log(itemReward.rewardDataTable[0].reward);
+        //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
+        //     Debug.Log(itemReward.rewardDataTable.)
+        Debug.Log(itemReward.rewardDataTable[0].reward.Count);
 
 
     }
@@ -116,17 +121,17 @@ public class GameManager : MonoBehaviour
     {
         // 5 프레임마다 궤적 선 갱신
         frameCnt++;
-        if(frameCnt >= 5)
+        if (frameCnt >= 5)
         {
             frameCnt = 0;
             if (lastBall != null)
             {
-                if(!lastBall.rigid.simulated) lastBall.DrawLine(true);
+                if (!lastBall.rigid.simulated) lastBall.DrawLine(true);
             }
         }
-        if(debugMode) DropTheBall();
+        if (debugMode) DropTheBall();
     }
-    
+
     // [오브젝트 풀링] 게임 시작 or 모든 풀링 사용 중 일때, 새로운 오브젝트 생성
     private Ball MakeBall()
     {
@@ -320,15 +325,42 @@ public class GameManager : MonoBehaviour
     //유저 레벨 확인 후, 그 값에 해당하는 테이블 값 가져오기
     public RewardTable SelectUserLevel()
     {
+        var tempLevelTable = new RewardTable();
         for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
         {
-            RewardTable userLevelTable = itemReward.rewardDataTable[i];
-            if (userLevel == userLevelTable.userLevel)
+            if (itemReward.rewardDataTable[i].userLevel == userLevel)
             {
-                Debug.Log(userLevelTable.userLevel);
-            //    Debug.Log(userLevelTable.reward[2]);
-                return userLevelTable;
+                tempLevelTable.userLevel = itemReward.rewardDataTable[i].userLevel;
+                //Debug.Log(tempLevelTable.userLevel);
+                //Debug.Log(itemReward.rewardDataTable[i].reward.Count);
+                //if (itemReward.rewardDataTable[i].reward is null)
+                //{
+                //    Debug.Log("test 2 is null");
+                //}
+
+                tempLevelTable.reward = itemReward.rewardDataTable[i].reward;
+
+                //if (tempLevelTable.reward is null)
+                //{
+                //    Debug.Log("Select User Level Null");
+                //}
             }
+
+            //RewardTable userLevelTable = itemReward.rewardDataTable[i];
+            //if (userLevel == userLevelTable.userLevel)
+            //{
+            //    Debug.Log(userLevelTable.userLevel);
+            //    if(userLevelTable.reward is null)
+            //    {
+            //        Debug.Log("Select User Level Null");
+            //    }
+            //    if (itemReward.rewardDataTable[i] is null)
+            //    {
+            //        Debug.Log("test 2 is null");
+            //    }
+            ////    Debug.Log(userLevelTable.reward[2]);
+            return tempLevelTable;
+
         }
         return null;
     }
@@ -355,7 +387,7 @@ public class GameManager : MonoBehaviour
         return (itemPercent < 0.5f);
     }
 
-// 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
+    // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
 
 
 }

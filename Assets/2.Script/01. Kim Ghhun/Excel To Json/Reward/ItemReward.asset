@@ -14,10 +14,895 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewardDataTable:
   - userLevel: 1
+    reward:
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 1
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
+      - kind: 5
+        value: 2
+        amount: 1
   - userLevel: 2
+    reward:
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 3
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
+      - kind: 5
+        value: 4
+        amount: 1
   - userLevel: 3
+    reward:
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 5
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
+      - kind: 5
+        value: 6
+        amount: 1
   - userLevel: 4
+    reward:
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 7
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
+      - kind: 5
+        value: 8
+        amount: 1
   - userLevel: 5
+    reward:
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 9
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+    - rewardInfos:
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
+      - kind: 5
+        value: 10
+        amount: 1
   itemInfos:
   - ID: 5
     Item_Kind: 1
@@ -60,7 +945,7 @@ MonoBehaviour:
     Item_Name: "\uD558\uB298\uC0C9 \uC6D0"
     Item_Img: SkyBlueColor 9
   rewardTableJson: "C:/Users/KGA/Downloads/\uC218\uBC15 \uAC8C\uC784 \uB370\uC774\uD130
-    \uD14C\uC774\uBE14 (1).json"
+    \uD14C\uC774\uBE14.json"
   rewardInfoJson: C:/Users/KGA/Downloads/123 (2).json
   itemInfoJson: "C:/Users/KGA/Downloads/\uC218\uBC15 \uAC8C\uC784 \uB370\uC774\uD130
-    \uD14C\uC774\uBE14 (1).json"
+    \uD14C\uC774\uBE14.json"
