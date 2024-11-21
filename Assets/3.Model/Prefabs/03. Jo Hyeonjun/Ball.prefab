@@ -124,7 +124,7 @@ MonoBehaviour:
   hideTime: 0.3
   spawnAppearTime: 0.5
   physicOnTime: 0.2
-  physicOffTime: 0
+  physicOffTime: 0.1
 --- !u!114 &4882336803019771498
 MonoBehaviour:
   m_ObjectHideFlags: 0
