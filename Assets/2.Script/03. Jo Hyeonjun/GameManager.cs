@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     public ItemReward itemReward;
 
     public RewardTable rewardTable;
-    //public RewardInfo rewardInfo;
+    public ItemInfo itemInfo;
 
 
 
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"유저 레벨: {rewardTable.userLevel}");
         //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
         //     Debug.Log(itemReward.rewardDataTable.)
-        Debug.Log(itemReward.rewardDataTable[0].reward.Count);
+        //  Debug.Log(itemReward.rewardDataTable[0].reward.Count);
 
 
     }
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
         var tempLevelTable = new RewardTable();
         for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
         {
-            if (itemReward.rewardDataTable[i].userLevel == userLevel)
+            if (userLevel == itemReward.rewardDataTable[i].userLevel)
             {
                 tempLevelTable.userLevel = itemReward.rewardDataTable[i].userLevel;
                 //Debug.Log(tempLevelTable.userLevel);
@@ -339,31 +339,33 @@ public class GameManager : MonoBehaviour
                 //}
 
                 tempLevelTable.reward = itemReward.rewardDataTable[i].reward;
-
+                return tempLevelTable;
                 //if (tempLevelTable.reward is null)
                 //{
                 //    Debug.Log("Select User Level Null");
                 //}
             }
-
-            //RewardTable userLevelTable = itemReward.rewardDataTable[i];
-            //if (userLevel == userLevelTable.userLevel)
-            //{
-            //    Debug.Log(userLevelTable.userLevel);
-            //    if(userLevelTable.reward is null)
-            //    {
-            //        Debug.Log("Select User Level Null");
-            //    }
-            //    if (itemReward.rewardDataTable[i] is null)
-            //    {
-            //        Debug.Log("test 2 is null");
-            //    }
-            ////    Debug.Log(userLevelTable.reward[2]);
-            return tempLevelTable;
-
+           
         }
         return null;
+
+        //RewardTable userLevelTable = itemReward.rewardDataTable[i];
+        //if (userLevel == userLevelTable.userLevel)
+        //{
+        //    Debug.Log(userLevelTable.userLevel);
+        //    if(userLevelTable.reward is null)
+        //    {
+        //        Debug.Log("Select User Level Null");
+        //    }
+        //    if (itemReward.rewardDataTable[i] is null)
+        //    {
+        //        Debug.Log("test 2 is null");
+        //    }
+        ////    Debug.Log(userLevelTable.reward[2]);
+
     }
+
+
 
     // 구슬의 스폰 확률 가져오기
     private float GetSpawnProb(int lv)
@@ -384,7 +386,27 @@ public class GameManager : MonoBehaviour
     // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
     public void GetItemReward(int ballLv)
     {
-           Debug.Log(rewardTable.reward[ballLv].rewardInfos.Count);    
+        int ranNum = UnityEngine.Random.Range(0, rewardTable.reward[ballLv].rewardInfos.Count);
+        Debug.Log("볼레벨: " + ballLv);
+        Debug.Log(ranNum + "번째 리스트 사용할거임");
+        //  Debug.Log("리워드인포 카운트: "+ranNum);
+        //  Debug.Log("아이템인포 카운트: "+ itemReward.itemInfos.Count);
+        //  Debug.Log("아이템인포 카운트: "+ itemReward.itemInfos[1].Item_Kind);
+        RewardInfo selectReward = rewardTable.reward[ballLv].rewardInfos[ranNum];
+
+        Debug.Log("카인드: " + selectReward.kind);
+        Debug.Log("벨류: " + selectReward.value);
+        Debug.Log("갯수: " + selectReward.amount);
+
+        for (int i = 0; i < itemReward.itemInfos.Count; i++)
+        {
+            // Debug.Log("아이템인포.벨류: " + itemReward.itemInfos[i].Item_Value);
+            int itemID = itemReward.itemInfos[i].Item_Value;
+
+
+        }
+
+        // Debug.Log(rewardTable.reward[ballLv].rewardInfos[1].kind);    
     }
 
 

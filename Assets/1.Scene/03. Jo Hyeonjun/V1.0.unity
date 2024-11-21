@@ -4727,12 +4727,17 @@ MonoBehaviour:
   GameOverUI: {fileID: 1563900087}
   leftWall: {fileID: 1599069510}
   rightWall: {fileID: 1112951237}
-  userLevel: 1
+  userLevel: 3
   itemProbability: 1
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
   rewardTable:
     userLevel: 0
     reward: []
+  itemInfo:
+    Item_Kind: 0
+    Item_Value: 0
+    Item_Name: 
+    Item_Img: 
 --- !u!4 &1063370407
 Transform:
   m_ObjectHideFlags: 0

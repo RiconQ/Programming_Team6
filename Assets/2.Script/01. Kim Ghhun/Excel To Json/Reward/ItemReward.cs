@@ -100,7 +100,7 @@ public class ItemReward : ScriptableObject
         for (int i = 0; i < jsonData.Count; i++)
         {
             var tempData = new ItemInfo();
-            tempData.ID = (int)(double)jsonData[i][0];
+            tempData.Item_Value = (int)(double)jsonData[i][0];
             tempData.Item_Kind = (int)(double)jsonData[i][1];
             tempData.Item_Name = jsonData[i][2].ToString();
             tempData.Item_Img = jsonData[i][3].ToString();
@@ -159,8 +159,8 @@ public class RewardInfo
 [Serializable]
 public class ItemInfo
 {
-    public int ID;
     public int Item_Kind;
+    public int Item_Value;
     public string Item_Name;
     public string Item_Img;
 }

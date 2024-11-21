@@ -149,6 +149,7 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine(AttachSFX_co());
+  
         // 만약 드랍한 구슬이었다면
         if (!isDropped)
         {
