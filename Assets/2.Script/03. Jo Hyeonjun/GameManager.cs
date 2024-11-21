@@ -381,13 +381,11 @@ public class GameManager : MonoBehaviour
         return fruitData.fruits[0].attribute.scaleX;
     }
 
-    public bool IsDropItem()
-    {
-        float itemPercent = UnityEngine.Random.Range(0f, 1f);
-        return (itemPercent < 0.5f);
-    }
-
     // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
+    public void GetItemReward(int ballLv)
+    {
+           Debug.Log(rewardTable.reward[ballLv].rewardInfos.Count);    
+    }
 
 
 }
