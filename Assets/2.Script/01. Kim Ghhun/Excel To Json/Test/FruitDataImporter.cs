@@ -21,12 +21,13 @@ public class FruitDataImporter : ScriptableObject
 
         string jsonContent = File.ReadAllText(jsonPath);
         JsonData jsonData = JsonMapper.ToObject(jsonContent);
+        Debug.Log("fruits.Length : " + fruits.Length);
         for (int i = 0; i < fruits.Length; i++)
         {
             FruitAttribute attribute = new FruitAttribute();
-            attribute.id = (int)(double)jsonData[i]["ID"];
-            attribute.name = jsonData[i]["Name"].ToString();
+            // attribute.id = (int)(double)jsonData[i]["ID"];
             attribute.level = (int)(double)jsonData[i]["Fruit_Lv"];
+            attribute.name = jsonData[i]["Name"].ToString();
             attribute.scaleX = (float)(double)jsonData[i]["Scale_X"];
             attribute.scaleY = (float)(double)jsonData[i]["Scale_Y"];
             attribute.mass = (float)(double)jsonData[i]["Mass"];

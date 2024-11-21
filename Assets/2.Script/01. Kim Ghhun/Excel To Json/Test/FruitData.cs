@@ -21,18 +21,18 @@ public class FruitData : ScriptableObject
 [System.Serializable]
 public class FruitAttribute
 {
-    public int id;
-    public string name;
+    // public int id;
     public int level;
+    public string name;
     public float scaleX;
     public float scaleY;
     public float mass;
     public int score;
     public float spawnProb;
     public float itemProb;
+    public string imgName;
     // public float animTime;
     // public string synEffect;
-    public string imgName;
     // public string defaultImg;
     // public string spawnAnim;
     public UIAtlas atlas;
