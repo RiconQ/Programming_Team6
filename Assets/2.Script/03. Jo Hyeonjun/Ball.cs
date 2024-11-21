@@ -22,7 +22,7 @@ public class Ball : MonoBehaviour
 
     // [JSON ����] ���� ���� ����
     [Header("Info")]
-    public int maxLevel;
+    // public int maxLevel;
     public FruitDataImporter fruitData;
 
     [Range(0, 100)] 
@@ -56,25 +56,26 @@ public class Ball : MonoBehaviour
     {
         var ballScale = GetBallScale(level);
 
-        // 드랍된 구슬, 즉 합성을 통해 만들어 진 경우
-        if (isDropped)
+        // 합성되어 생긴 구슬
+        if(isDropped)
         {
-            // 구슬 크기는 즉시 적용되며, 시간 지연 후 물리 켜짐
-            transform.DOScale(ballScale, 0).OnComplete(()=> StartCoroutine(PhysicON_co()));
-
-            // 아이템 생성 여부
-            float rr = UnityEngine.Random.Range(0.0f, 1.0f);
-            if (rr < fruitData.fruits[level].attribute.itemProb)
-            {
-                isBouns = true;
-                sprite.color = Color.green;
-            }
+            // 크기는 즉시 적용, 물리는 정해진 시간 후 적용
+            transform.DOScale(ballScale, 0).OnComplete(() => StartCoroutine(PhysicON_co()));
         }
 
-        // 스폰된 구슬인 경우
+        // 스폰된 구슬
         else
         {
+            // 크기는 정해진 시간동안 커짐 (물리는 드랍된 이후 적용)
             transform.DOScale(ballScale, spawnAppearTime).SetEase(Ease.OutBack);
+        }
+
+        // 아이템 생성 여부
+        float rr = UnityEngine.Random.Range(0.0f, 1.0f);
+        if (rr < fruitData.fruits[level].attribute.itemProb)
+        {
+            isBouns = true;
+            sprite.color = Color.green;
         }
 
         this.GetComponent<CircleCollider2D>().radius = 47;
@@ -91,10 +92,11 @@ public class Ball : MonoBehaviour
         // BorderRight = -BorderLeft;
     }
 
-    // 합성으로 생겨난 구슬의 물리 On 지연 시간
+    // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
     {
-        yield return new WaitForSeconds(physicOnTime);
+        float waitTime = isDropped? physicOnTime : 0;
+        yield return new WaitForSeconds(waitTime);
         PhysicChange(true);
     }
 
@@ -104,7 +106,7 @@ public class Ball : MonoBehaviour
         // �Ӽ� �ʱ�ȭ
         // isDrag = false;
         isDropped = false;
-        level = 0;
+        level = 1;
         isMerge = false;
         isBouns = false;
         // transform �ʱ�ȭ
@@ -178,8 +180,11 @@ public class Ball : MonoBehaviour
                     // 접촉한 2개의 구슬은 모두 사라짐
                     other.Hide();
                     Hide();
-                    // 중점에 새로운 구슬 생성됨
-                    GameManager.Instance.AppearNextLevel(targetPos, level + 1);
+                    // 중점에 새로운 구슬 생성됨 (최대 레벨 2개 합성할 땐 안 생성)
+                    if(level < 11)
+                    {
+                        GameManager.Instance.AppearNextLevel(targetPos, level + 1);
+                    }
                 }
             }
         }

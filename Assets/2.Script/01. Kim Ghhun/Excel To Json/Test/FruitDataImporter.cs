@@ -41,7 +41,7 @@ public class FruitDataImporter : ScriptableObject
             // attribute.spawnAnim = jsonData[i]["Spawn_Anim"].ToString();
             attribute.atlas = atlas;
 
-            fruits[i].SetAttribute(attribute);
+            fruits[i + 1].SetAttribute(attribute);
         }
 
     }
