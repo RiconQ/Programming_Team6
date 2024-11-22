@@ -4729,6 +4729,9 @@ MonoBehaviour:
   rightWall: {fileID: 1112951237}
   userLevel: 3
   itemProbability: 1
+  itemOnlyData: {fileID: 3481390269130891312, guid: 68f6a2ed4ec932747b1c854e36dcab28, type: 3}
+  itemSprite: {fileID: 74101859014638253, guid: f5f97fd1ca5706141bd6a37910a392b5, type: 3}
+  inventoryList: []
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
   rewardTable:
     userLevel: 0

@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
 {
     // ������ ����
     [Header("State")]
-    public int level; 
+    public int level;
     // private bool isDrag; // [Legacy] �巡�� ���ΰ�?
     public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
@@ -18,14 +18,14 @@ public class Ball : MonoBehaviour
     public ParticleSystem effect;
     public Rigidbody2D rigid;
     public CircleCollider2D circle_col;
-    [SerializeField]private UISprite sprite;
+    [SerializeField] private UISprite sprite;
 
     // [JSON ����] ���� ���� ����
     [Header("Info")]
     // public int maxLevel;
     public FruitDataImporter fruitData;
 
-    [Range(0, 100)] 
+    [Range(0, 100)]
     public int lv3ItemChance; // ���� 3(4��°) - ������ ���Ե� ������ Ȯ��
 
     // ���� ���� ����
@@ -36,6 +36,11 @@ public class Ball : MonoBehaviour
     public float spawnAppearTime = 0.50f;
     public float physicOnTime = 0.40f; // 합성되어 생겨난 구슬의 물리가 켜지는 딜레이 시간
     public float physicOffTime = 0.10f; // 재료 구슬의 물리가 꺼지는 딜레이 시간
+
+    [Header("Item Info")]
+    private bool hasItem; // 아이템이 생성되었는지 여부
+    private RewardInfo rewardInfo; // 생성된 보상리스트의 정보
+    private ItemInfo itemInfo;  // 생성된 아이템 리스트의 정보
 
     // 도움 선 관련
     [Header("Support Line")]
@@ -57,7 +62,7 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
 
         // 합성되어 생긴 구슬
-        if(isDropped)
+        if (isDropped)
         {
             // 크기는 즉시 적용, 물리는 정해진 시간 후 적용
             transform.DOScale(ballScale, 0).OnComplete(() => StartCoroutine(PhysicON_co()));
@@ -76,6 +81,17 @@ public class Ball : MonoBehaviour
         {
             isBouns = true;
             sprite.color = Color.green;
+            Debug.Log(level);
+            //여기서 그 정보를 가지고 있다가
+            hasItem = true;
+            rewardInfo = GameManager.Instance.FindItemRewardInfo(level);
+            itemInfo = GameManager.Instance.FindItemInfo(rewardInfo);
+            GameManager.Instance.MakeItem(this.gameObject, rewardInfo, itemInfo);
+
+        }
+        else
+        {
+            hasItem = false;
         }
 
         this.GetComponent<CircleCollider2D>().radius = 47;
@@ -95,7 +111,7 @@ public class Ball : MonoBehaviour
     // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
     {
-        float waitTime = isDropped? physicOnTime : 0;
+        float waitTime = isDropped ? physicOnTime : 0;
         yield return new WaitForSeconds(waitTime);
         PhysicChange(true);
     }
@@ -113,6 +129,14 @@ public class Ball : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localScale = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+
+        if (hasItem)
+        {
+            Debug.Log("아이템!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //    GameManager.Instance.AddItemToInventory(rewardInfo); 
+
+            hasItem = false;
+        }
         // ���� �ʱ�ȭ
         // PhysicChange(false);
     }
@@ -151,7 +175,7 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine(AttachSFX_co());
-  
+
         // 만약 드랍한 구슬이었다면
         if (!isDropped)
         {
@@ -182,7 +206,7 @@ public class Ball : MonoBehaviour
                     other.Hide();
                     Hide();
                     // 중점에 새로운 구슬 생성됨 (최대 레벨 2개 합성할 땐 안 생성)
-                    if(level < 11)
+                    if (level < 11)
                     {
                         GameManager.Instance.AppearNextLevel(targetPos, level + 1);
                     }
@@ -193,7 +217,7 @@ public class Ball : MonoBehaviour
     // 예상 궤적 그리는 메소드. 생성 또는 이동 직후 그려짐
     public void DrawLine(bool isDraw)
     {
-        lineRenderer.positionCount = isDraw? 2 : 0;
+        lineRenderer.positionCount = isDraw ? 2 : 0;
         if (isDraw)
         {
             // 시작점, 도착점 초기 지정
@@ -232,7 +256,7 @@ public class Ball : MonoBehaviour
         isMerge = true; // �ռ� ���� ���·�
         // Disappear Effect
         transform.DOScale(0, hideTime).OnComplete(() => gameObject.SetActive(false));
-        if(gameObject.activeInHierarchy) StartCoroutine(PhysicOff_co());
+        if (gameObject.activeInHierarchy) StartCoroutine(PhysicOff_co());
     }
 
     IEnumerator PhysicOff_co()
@@ -328,7 +352,7 @@ public class Ball : MonoBehaviour
     private float deadTime;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Finish"))
+        if (collision.CompareTag("Finish"))
         {
             deadTime += Time.deltaTime;
             if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
@@ -338,7 +362,7 @@ public class Ball : MonoBehaviour
             }
         }
     }
-    
+
     // ������ ���� ������ ����� ��
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -357,17 +381,10 @@ public class Ball : MonoBehaviour
         effect.Play();
     }
 
-
-    private bool isGetItem()
-    {
-        float getItem = Random.Range(0, 1);
-        return (getItem < 0.5);
-    }
-
     // 물리 On/Off 메소드
     private void PhysicChange(bool isOn)
     {
-        if(!isOn)
+        if (!isOn)
         {
             rigid.velocity = Vector2.zero;
             rigid.angularVelocity = 0;

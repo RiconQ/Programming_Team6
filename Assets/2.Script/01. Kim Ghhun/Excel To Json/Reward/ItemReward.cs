@@ -100,8 +100,8 @@ public class ItemReward : ScriptableObject
         for (int i = 0; i < jsonData.Count; i++)
         {
             var tempData = new ItemInfo();
-            tempData.Item_Value = (int)(double)jsonData[i][0];
-            tempData.Item_Kind = (int)(double)jsonData[i][1];
+            tempData.Item_Kind = (int)(double)jsonData[i][0];
+            tempData.Item_Value = (int)(double)jsonData[i][1];
             tempData.Item_Name = jsonData[i][2].ToString();
             tempData.Item_Img = jsonData[i][3].ToString();
 

@@ -904,44 +904,44 @@ MonoBehaviour:
         value: 10
         amount: 1
   itemInfos:
-  - Item_Kind: 1
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 1
     Item_Name: "\uBE68\uAC04 \uC6D0"
     Item_Img: RedColor 0
-  - Item_Kind: 2
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 2
     Item_Name: "\uC8FC\uD669 \uC6D0"
     Item_Img: OrangeColor 1
-  - Item_Kind: 3
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 3
     Item_Name: "\uB178\uB780 \uC6D0"
     Item_Img: YellowColor 2
-  - Item_Kind: 4
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 4
     Item_Name: "\uCD08\uB85D \uC6D0"
     Item_Img: GreenColor 3
   - Item_Kind: 5
     Item_Value: 5
     Item_Name: "\uD30C\uB780 \uC6D0"
     Item_Img: BlueColor 4
-  - Item_Kind: 6
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 6
     Item_Name: "\uBCF4\uB77C \uC6D0"
     Item_Img: PurpleColor 5
-  - Item_Kind: 7
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 7
     Item_Name: "\uAC80\uC740 \uC6D0"
     Item_Img: BlackColor 6
-  - Item_Kind: 8
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 8
     Item_Name: "\uD551\uD06C \uC6D0"
     Item_Img: PinkColor 7
-  - Item_Kind: 9
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 9
     Item_Name: "\uAC08\uC0C9 \uC6D0"
     Item_Img: BrownColor 8
-  - Item_Kind: 10
-    Item_Value: 5
+  - Item_Kind: 5
+    Item_Value: 10
     Item_Name: "\uD558\uB298\uC0C9 \uC6D0"
     Item_Img: SkyBlueColor 9
   rewardTableJson: "C:/Users/KGA/Downloads/\uC218\uBC15 \uAC8C\uC784 \uB370\uC774\uD130

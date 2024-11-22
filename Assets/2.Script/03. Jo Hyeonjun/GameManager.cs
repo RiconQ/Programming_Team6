@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     [Header("----------About Item")]
     [SerializeField] int userLevel;
     [SerializeField] int itemProbability;
+    [SerializeField] GameObject itemOnlyData;
+    [SerializeField] GameObject itemSprite;
+    [SerializeField] List<GameObject> inventoryList;
 
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
@@ -345,7 +348,7 @@ public class GameManager : MonoBehaviour
                 //    Debug.Log("Select User Level Null");
                 //}
             }
-           
+
         }
         return null;
 
@@ -383,33 +386,63 @@ public class GameManager : MonoBehaviour
         return fruitData.fruits[1].attribute.scaleX;
     }
 
-    // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 보상 리스트 가져오기
-    public void GetItemReward(int ballLv)
+    // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 RewardInfo 가져오기
+    public RewardInfo FindItemRewardInfo(int ballLv)
     {
-        int ranNum = UnityEngine.Random.Range(0, rewardTable.reward[ballLv].rewardInfos.Count);
+        //ballLevel은 1부터, List는 0부터
+        int ranNum = UnityEngine.Random.Range(0, rewardTable.reward[ballLv - 1].rewardInfos.Count);
         Debug.Log("볼레벨: " + ballLv);
-        Debug.Log(ranNum + "번째 리스트 사용할거임");
-        //  Debug.Log("리워드인포 카운트: "+ranNum);
-        //  Debug.Log("아이템인포 카운트: "+ itemReward.itemInfos.Count);
-        //  Debug.Log("아이템인포 카운트: "+ itemReward.itemInfos[1].Item_Kind);
-        RewardInfo selectReward = rewardTable.reward[ballLv].rewardInfos[ranNum];
+        Debug.Log(ranNum + 1 + "번째 리스트 사용할거임");
 
-        Debug.Log("카인드: " + selectReward.kind);
-        Debug.Log("벨류: " + selectReward.value);
-        Debug.Log("갯수: " + selectReward.amount);
+        // 과일 레벨에 해당되는 리스트 중, randNum번째 RewardInfo를 사용
+        RewardInfo selectReward = rewardTable.reward[ballLv - 1].rewardInfos[ranNum];
 
-        for (int i = 0; i < itemReward.itemInfos.Count; i++)
-        {
-            // Debug.Log("아이템인포.벨류: " + itemReward.itemInfos[i].Item_Value);
-            int itemID = itemReward.itemInfos[i].Item_Value;
+        Debug.Log("Kind: " + selectReward.kind +
+    "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
+        return selectReward;
+    }
 
-
-        }
-
-        // Debug.Log(rewardTable.reward[ballLv].rewardInfos[1].kind);    
+   
+    //RewardInfo의 Kind, Value 값을 통해 ItemInfo 찾기
+public ItemInfo FindItemInfo(RewardInfo rewardInfo)
+    {
+        ItemInfo itemInfo = itemReward.itemInfos.Find(
+       item => item.Item_Kind == rewardInfo.kind && item.Item_Value == rewardInfo.value);
+        return itemInfo;
     }
 
 
+
+    // 인벤토리 시스템 확인을 위한 임시 스크립트
+    public void MakeItem(GameObject ball, RewardInfo rewardInfo, ItemInfo itemInfo)
+    {
+        for (int i = 0; i < rewardInfo.amount; i++)
+        {
+            GameObject newItem = Instantiate(itemOnlyData); //아이템 데이터 담을 빈 오브젝트 생성
+            newItem.name = itemInfo.Item_Name;
+            Item_AtlasSetting itemData = newItem.GetComponent<Item_AtlasSetting>();
+            itemData.Initialize(itemInfo);  // 빈 오브젝트에 아이템 정보 삽입
+
+
+            Debug.Log("Name: " + itemInfo.Item_Name + "인 보상이 " + (i + 1) + "개째");
+            newItem.transform.SetParent(ball.transform, false); // 구슬의 Transform 아래에 배치
+            newItem.transform.localPosition = Vector3.zero; // 자식의 위치를 부모 중심으로 초기화
+
+        }
+    }
+    // 선택한 RewardInfo와 ItemInf
+    public void AddItemToInventory(RewardInfo rewardInfo, ItemInfo itemInfo)
+    {
+
+ inventoryList.Add()
+ 
+
+        //     GameObject newitemSprite = Instantiate(itemSprite);
+        //     Item_AtlasSetting itemAtlas=newitemSprite.GetComponent<>
+    }
 }
+
+
+
 
 
