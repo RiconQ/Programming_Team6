@@ -249,7 +249,9 @@ public class GameManager : MonoBehaviour
     // 드랍 버튼 누르면
     public void DropTheBall()
     {
+        // 드랍할 공이 비어있거나 완전히 등장하지 않았다면 미적용
         if (lastBall == null) return;
+        if (lastBall.scaleFrames > 0) return;
         recentX = lastBall.transform.position.x;
         lastBall.Drop();
         // 공이 무언가에 닿고 나서야 null이 되어 다음 드랍 가능하도록 변경

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+// using DG.Tweening;
 
 public class Ball : MonoBehaviour
 {
@@ -11,7 +11,8 @@ public class Ball : MonoBehaviour
     // private bool isDrag; // [Legacy] �巡�� ���ΰ�?
     public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
-    private bool isBouns; // ������ ���Ե� �����ΰ�?
+    public bool isBouns; // ������ ���Ե� �����ΰ�?
+    public float scaleFrames; // scale 조절 자체 tween용. 0보다 크면, 크기 변동 중임을 의미
 
     // ���� ������Ʈ
     [Header("Component")]
@@ -33,7 +34,8 @@ public class Ball : MonoBehaviour
     public float warningTime = 0.50f;
     public float failTime = 0.75f;
     public float hideTime = 0.30f;
-    public float spawnAppearTime = 0.50f;
+    public float spawnAppearTime = 0.50f; // 스폰된 구슬이 커지는 시간
+    public float mixAppearTime = 0.20f; // 합성되어 생긴 구슬이 커지는 시간
     public float physicOnTime = 0.40f; // 합성되어 생겨난 구슬의 물리가 켜지는 딜레이 시간
     public float physicOffTime = 0.10f; // 재료 구슬의 물리가 꺼지는 딜레이 시간
 
@@ -59,15 +61,15 @@ public class Ball : MonoBehaviour
         // 합성되어 생긴 구슬
         if(isDropped)
         {
-            // 크기는 즉시 적용, 물리는 정해진 시간 후 적용
-            transform.DOScale(ballScale, 0).OnComplete(() => StartCoroutine(PhysicON_co()));
+            // 크기는 정해진 시간동안 커짐, 물리는 정해진 시간 후 적용
+            StartCoroutine(AnimateScale(Vector3.zero, ballScale, mixAppearTime, "Mix"));
         }
 
         // 스폰된 구슬
         else
         {
             // 크기는 정해진 시간동안 커짐 (물리는 드랍된 이후 적용)
-            transform.DOScale(ballScale, spawnAppearTime).SetEase(Ease.OutBack);
+            StartCoroutine(AnimateScale(Vector3.zero, ballScale, spawnAppearTime, "Spawn"));
         }
 
         // 아이템 생성 여부
@@ -91,12 +93,63 @@ public class Ball : MonoBehaviour
         // BorderLeft = -2.75f + transform.localScale.x;
         // BorderRight = -BorderLeft;
     }
+    /*
+     
+    // Scale Tween 용 Method 
+    private void AnimateScale(Vector3 startScale, Vector3 endScale, float duration, string type)
+    {
+        // TweenScale 컴포넌트 추가
+        TweenScale tween = GetComponent<TweenScale>();
+        tween.from = startScale; // 현재 크기
+        tween.to = endScale; // 최종 크기
+        tween.duration = duration; // 애니메이션 지속 시간
+
+        
+        // 트윈 종료 시 실행할 함수 설정
+        EventDelegate.Set(tween.onFinished, () =>
+        {
+            if (type == "Mix") PhysicOn();
+            else if (type == "Hide") gameObject.SetActive(false);
+        });
+
+        // 트윈 실행
+        tween.PlayForward();
+    }
+    */
+
+    // 등장,소멸 시 크기 조절 효과 (기존의 DOTween 대체, NGUI Tween는 버그가 많아서 사용불가)
+    private IEnumerator AnimateScale(Vector3 startScale, Vector3 endScale, float duration, string type)
+    {
+        // 지속시간 0이면, 즉시 크기 조정
+        if (duration == 0)
+        {
+            transform.localScale = endScale;
+        }
+        else
+        {
+            // 지속시간을 프레임으로 변경
+            scaleFrames = Application.targetFrameRate * duration;
+            float maxFrames = scaleFrames;
+
+            // 남은 지속시간(프레임)에 따른 Scale 조정
+            // 결과적으로 남은 프레임이 0이 되면 endScale에 도달
+            while (scaleFrames > 0)
+            {
+                scaleFrames--;
+                transform.localScale = Vector3.Lerp(endScale, startScale, scaleFrames / maxFrames);
+                yield return null;
+            }
+        }
+        // 크기 조절 종료 시, 타입에 따라 후속 동작 실행(Callback 대체)
+        if (type == "Mix") StartCoroutine(PhysicON_co());
+        if (type == "Hide") gameObject.SetActive(false);
+    }
+
 
     // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
     {
-        float waitTime = isDropped? physicOnTime : 0;
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(physicOnTime);
         PhysicChange(true);
     }
 
@@ -111,7 +164,7 @@ public class Ball : MonoBehaviour
         isBouns = false;
         // transform �ʱ�ȭ
         transform.localPosition = Vector3.zero;
-        transform.localScale = Vector3.zero;
+        // transform.localScale = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
         // PhysicChange(false);
@@ -229,9 +282,13 @@ public class Ball : MonoBehaviour
     public void Hide()
     {
         isMerge = true; // �ռ� ���� ���·�
+        // 합성되는 즉시 물리 제거
+        PhysicChange(false);
         // Disappear Effect
-        transform.DOScale(0, hideTime).OnComplete(() => gameObject.SetActive(false));
-        if(gameObject.activeInHierarchy) StartCoroutine(PhysicOff_co());
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(AnimateScale(transform.localScale, Vector3.zero, hideTime, "Hide"));
+        }
     }
 
     IEnumerator PhysicOff_co()
@@ -344,7 +401,7 @@ public class Ball : MonoBehaviour
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-            sprite.color = Color.white;
+            sprite.color = isBouns? Color.green : Color.white;
         }
     }
 

@@ -112,18 +112,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   isDropped: 0
+  isBouns: 0
   effect: {fileID: 0}
   rigid: {fileID: 0}
   circle_col: {fileID: 0}
   sprite: {fileID: 0}
-  maxLevel: 10
   fruitData: {fileID: 11400000, guid: c0173ff8fff8f5b499b65f12dfae5efa, type: 2}
   lv3ItemChance: 30
   warningTime: 0.5
   failTime: 0.75
-  hideTime: 0.3
+  hideTime: 0.2
   spawnAppearTime: 0.5
-  physicOnTime: 0.2
+  mixAppearTime: 0
+  physicOnTime: 0.1
   physicOffTime: 0.1
 --- !u!114 &4882336803019771498
 MonoBehaviour:
