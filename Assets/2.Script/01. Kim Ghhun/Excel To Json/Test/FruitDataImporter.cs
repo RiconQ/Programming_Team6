@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.U2D;
 
 [CreateAssetMenu(fileName ="FruitData", menuName ="Fruit/FruitDataImporter")]
 public class FruitDataImporter : ScriptableObject
@@ -41,7 +40,7 @@ public class FruitDataImporter : ScriptableObject
             // attribute.spawnAnim = jsonData[i]["Spawn_Anim"].ToString();
             attribute.atlas = atlas;
 
-            fruits[i + 1].SetAttribute(attribute);
+            fruits[i].SetAttribute(attribute);
         }
 
     }
