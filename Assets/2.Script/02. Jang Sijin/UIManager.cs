@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.EventSystems;
 
@@ -215,14 +214,12 @@ public class UIManager : MonoBehaviour
     private void OnClickResetAcceptButton()
     {
         Time.timeScale = 1;
-        DOTween.KillAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnClickGameoverResetButton()
     {
         Time.timeScale = 1;
-        DOTween.KillAll();
         _gameoverPanel.gameObject.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

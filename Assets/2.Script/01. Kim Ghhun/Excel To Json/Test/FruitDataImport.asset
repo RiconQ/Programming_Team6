@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: FruitDataImport
   m_EditorClassIdentifier: 
   fruits:
-  - {fileID: 11400000, guid: 381024cc7addd084e8cf90923167e576, type: 2}
   - {fileID: 11400000, guid: 118ce8013515e5d4593501c1c557ad8d, type: 2}
   - {fileID: 11400000, guid: 371181cd84eadb94b984f973b0a68346, type: 2}
   - {fileID: 11400000, guid: 82e552c6787e2bf44bc9046ead520a2b, type: 2}

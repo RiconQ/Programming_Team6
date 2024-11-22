@@ -6,7 +6,9 @@ using System.IO;
 [CustomEditor(typeof(ItemReward))]
 public class ItemRewardEditor : Editor
 {
-    private string excelFilePath;
+    //private string excelFilePath;
+    private string rewardTableJson;
+    private string itemInfoJson;
 
     private int rewardTableSheet;
     //private int rewardInfoSheet;
@@ -18,37 +20,31 @@ public class ItemRewardEditor : Editor
 
         DrawDefaultInspector();
 
-        if(GUILayout.Button("Select Excel File"))
+        if(GUILayout.Button("Select Reward Table Json File"))
         {
-            excelFilePath = EditorUtility.OpenFilePanel("Select Excel File", "", "xlsx");
+            rewardTableJson = EditorUtility.OpenFilePanel("Select Reward Table File", "", "json");
         }
-        rewardTableSheet = EditorGUILayout.IntField("Enter Reward Table Sheet", rewardTableSheet);
+        //rewardTableSheet = EditorGUILayout.IntField("Enter Reward Table Sheet", rewardTableSheet);
         //rewardInfoSheet = EditorGUILayout.IntField("Enter Reward Info Sheet", rewardInfoSheet);
-        itemInfoSheet = EditorGUILayout.IntField("Enter Item Info Sheet", itemInfoSheet);
+        //itemInfoSheet = EditorGUILayout.IntField("Enter Item Info Sheet", itemInfoSheet);
 
-        EditorGUILayout.TextField("Excel File Path", excelFilePath);
+        if (GUILayout.Button("Select Item Info Json File"))
+        {
+            itemInfoJson = EditorUtility.OpenFilePanel("Select Item Info File", "", "json");
+        }
+
+        EditorGUILayout.TextField("Reward Table File Path", rewardTableJson);
+        EditorGUILayout.TextField("Item Info File Path", itemInfoJson);
 
         GUILayout.Space(20);
         if (GUILayout.Button("Load File and Update Reward"))
         {
-            if (!string.IsNullOrEmpty(excelFilePath))
+            if (!string.IsNullOrEmpty(rewardTableJson) &&!string.IsNullOrEmpty(itemInfoJson))
             {
-                ExcelToJson converter = new ExcelToJson();
-                converter.excelFilePath = excelFilePath;
-
-                converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{rewardTableSheet}", "json");
-                converter.ConvertExcelToJson(rewardTableSheet);
-                itemReward.rewardTableJson = converter.jsonOutputPath;
+                itemReward.rewardTableJson = this.rewardTableJson;
                 itemReward.SetRewardTable();
 
-                ///converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{rewardInfoSheet}", "json");
-                ///converter.ConvertExcelToJson(rewardInfoSheet);
-                ///itemReward.rewardInfoJson = converter.jsonOutputPath;
-                ///itemReward.SetRewardInfo();
-
-                converter.jsonOutputPath = Path.ChangeExtension(excelFilePath + $"_Sheet_{itemInfoSheet}", "json");
-                converter.ConvertExcelToJson(itemInfoSheet);
-                itemReward.itemInfoJson = converter.jsonOutputPath;
+                itemReward.itemInfoJson = this.itemInfoJson;
                 itemReward.SetItemInfo();
             }
             else

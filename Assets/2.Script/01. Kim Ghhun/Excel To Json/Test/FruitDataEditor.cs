@@ -18,16 +18,16 @@ public class FruitDataEditor : Editor
 
         DrawDefaultInspector();
 
-        if(GUILayout.Button("Select Excel File"))
-        {
-            excelFilePath = EditorUtility.OpenFilePanel("Select Excel File", "", "xlsx");
-            excelToJsonPath = Path.ChangeExtension(excelFilePath, "json");
-            jsonFilePath = string.Empty;
-        }
-        sheetNum = EditorGUILayout.IntField("Enter Sheet Number", sheetNum);
-
-        EditorGUILayout.TextField("Excel File Path", excelFilePath);
-
+        //if(GUILayout.Button("Select Excel File"))
+        //{
+        //    excelFilePath = EditorUtility.OpenFilePanel("Select Excel File", "", "xlsx");
+        //    excelToJsonPath = Path.ChangeExtension(excelFilePath, "json");
+        //    jsonFilePath = string.Empty;
+        //}
+        //sheetNum = EditorGUILayout.IntField("Enter Sheet Number", sheetNum);
+        //
+        //EditorGUILayout.TextField("Excel File Path", excelFilePath);
+        //
         GUILayout.Space(15);
 
         if (GUILayout.Button("Select Json File"))
@@ -47,17 +47,17 @@ public class FruitDataEditor : Editor
                 EditorUtility.SetDirty(fruitData);
                 Debug.Log("Update Attribute");
             }
-            else if(!string.IsNullOrEmpty(excelFilePath))
-            {
-                ExcelToJson converter = new ExcelToJson
-                {
-                    excelFilePath = excelFilePath,
-                    jsonOutputPath = excelToJsonPath
-                };
-                converter.ConvertExcelToJson(sheetNum);
-
-                fruitData.UpdateFruitAttribute(excelToJsonPath);
-            }
+            //else if(!string.IsNullOrEmpty(excelFilePath))
+            //{
+            //    ExcelToJson converter = new ExcelToJson
+            //    {
+            //        excelFilePath = excelFilePath,
+            //        jsonOutputPath = excelToJsonPath
+            //    };
+            //    converter.ConvertExcelToJson(sheetNum);
+            //
+            //    fruitData.UpdateFruitAttribute(excelToJsonPath);
+            //}
             else
             {
                 Debug.LogError("Have to select Json file");
