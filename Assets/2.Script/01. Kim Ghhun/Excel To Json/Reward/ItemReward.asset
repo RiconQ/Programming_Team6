@@ -944,8 +944,6 @@ MonoBehaviour:
     Item_Kind: 10
     Item_Name: "\uD558\uB298\uC0C9 \uC6D0"
     Item_Img: SkyBlueColor 9
-  rewardTableJson: "C:/Users/KGA/Downloads/\uC218\uBC15 \uAC8C\uC784 \uB370\uC774\uD130
-    \uD14C\uC774\uBE14.json"
+  rewardTableJson: "C:/Users/KGA/OneDrive/\uBC14\uD0D5 \uD654\uBA74/test/RewardTable.json"
   rewardInfoJson: C:/Users/KGA/Downloads/123 (2).json
-  itemInfoJson: "C:/Users/KGA/Downloads/\uC218\uBC15 \uAC8C\uC784 \uB370\uC774\uD130
-    \uD14C\uC774\uBE14.json"
+  itemInfoJson: "C:/Users/KGA/OneDrive/\uBC14\uD0D5 \uD654\uBA74/test/ItemInfo.json"

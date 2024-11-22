@@ -91,13 +91,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        print(fruitData.fruits[0].attribute.spawnProb);
         SoundManager.instance.PlayBGM();
         waitBallLv = GetSpawnLevel();
         NextBall();
 
         // 스폰 구슬의 레벨 최댓값의 scale + 0.015f
         float borderFix = GetMaxSpawnLevelScale() + 0.015f;
-        print(borderFix);
         borderLeft = leftWall.position.x + leftWall.lossyScale.x / 2 + borderFix;
         borderRight = rightWall.position.x - rightWall.lossyScale.x / 2 - borderFix;
 
@@ -313,7 +313,7 @@ public class GameManager : MonoBehaviour
     private int GetSpawnLevel()
     {
         float randomfloat = UnityEngine.Random.Range(0.0f, 1.0f);
-        for (int lv = 0; lv < 10; lv++)
+        for (int lv = 1; lv <= 11; lv++)
         {
             randomfloat -= GetSpawnProb(lv);
             if (randomfloat < 0) return lv;
@@ -378,7 +378,7 @@ public class GameManager : MonoBehaviour
         {
             if (GetSpawnProb(i) > 0) return fruitData.fruits[i].attribute.scaleX;
         }
-        return fruitData.fruits[0].attribute.scaleX;
+        return fruitData.fruits[1].attribute.scaleX;
     }
 
     public bool IsDropItem()
