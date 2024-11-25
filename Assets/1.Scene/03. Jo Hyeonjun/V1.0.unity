@@ -3659,7 +3659,7 @@ MonoBehaviour:
   _uiSwitchToggle: {fileID: 256150807}
   _highScoreLabel: {fileID: 1564761699}
   _nowScoreLabel: {fileID: 1458474878}
-  _cloudSprite: {fileID: 0}
+  _nextBallSprite: {fileID: 0}
   _switchButtons: {fileID: 0}
 --- !u!114 &828740151
 MonoBehaviour:
@@ -4442,7 +4442,7 @@ MonoBehaviour:
   _uiSwitchToggle: {fileID: 1852947090}
   _highScoreLabel: {fileID: 98435036}
   _nowScoreLabel: {fileID: 2653416}
-  _cloudSprite: {fileID: 1504187736}
+  _nextBallSprite: {fileID: 1504187736}
   _switchButtons: {fileID: 178141913}
 --- !u!65 &1029684408
 BoxCollider:
@@ -4729,8 +4729,8 @@ MonoBehaviour:
   rightWall: {fileID: 1112951237}
   userLevel: 3
   itemProbability: 1
-  itemOnlyData: {fileID: 3481390269130891312, guid: 68f6a2ed4ec932747b1c854e36dcab28, type: 3}
-  itemSprite: {fileID: 74101859014638253, guid: f5f97fd1ca5706141bd6a37910a392b5, type: 3}
+  itemOnlyData: {fileID: 0}
+  itemSprite: {fileID: 0}
   inventoryList: []
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
   rewardTable:

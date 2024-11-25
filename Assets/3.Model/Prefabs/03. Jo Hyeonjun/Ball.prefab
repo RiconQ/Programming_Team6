@@ -85,7 +85,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0.2
-  m_AngularDrag: 0.01
+  m_AngularDrag: 0
   m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -113,6 +113,7 @@ MonoBehaviour:
   level: 0
   isDropped: 0
   isBouns: 0
+  scaleFrames: 0
   effect: {fileID: 0}
   rigid: {fileID: 0}
   circle_col: {fileID: 0}
@@ -122,10 +123,10 @@ MonoBehaviour:
   warningTime: 0.5
   failTime: 0.75
   hideTime: 0.2
-  spawnAppearTime: 0.5
+  spawnAppearTime: 0.1
   mixAppearTime: 0
-  physicOnTime: 0.1
-  physicOffTime: 0.1
+  physicOnTime: 0
+  physicOffTime: 0
 --- !u!114 &4882336803019771498
 MonoBehaviour:
   m_ObjectHideFlags: 0

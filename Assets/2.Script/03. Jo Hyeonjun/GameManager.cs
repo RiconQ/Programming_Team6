@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,6 +48,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int userLevel;
     [SerializeField] int itemProbability;
     [SerializeField] GameObject itemOnlyData;
+    [SerializeField] GameObject itemSprite;
     [SerializeField] List<GameObject> inventoryList;
 
     // [UI Changed Event]
@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        print(fruitData.fruits[0].attribute.spawnProb);
         SoundManager.instance.PlayBGM();
         waitBallLv = GetSpawnLevel();
         NextBall();
@@ -375,7 +374,7 @@ public class GameManager : MonoBehaviour
     // 구슬의 스폰 확률 가져오기
     private float GetSpawnProb(int lv)
     {
-        return fruitData.fruits[lv].attribute.spawnProb;
+        return fruitData.fruits[lv - 1].attribute.spawnProb;
     }
 
     // 스폰 구슬의 최대 레벨의 크기 구하기 (드랍 x 범위 설정 용)
@@ -385,7 +384,7 @@ public class GameManager : MonoBehaviour
         {
             if (GetSpawnProb(i) > 0) return fruitData.fruits[i].attribute.scaleX;
         }
-        return fruitData.fruits[1].attribute.scaleX;
+        return fruitData.fruits[0].attribute.scaleX;
     }
 
     // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 RewardInfo 가져오기
@@ -416,44 +415,31 @@ public ItemInfo FindItemInfo(RewardInfo rewardInfo)
 
 
     // 인벤토리 시스템 확인을 위한 임시 스크립트
-    public List<GameObject> MakeItem(GameObject ball, RewardInfo rewardInfo, ItemInfo itemInfo)
+    public void MakeItem(GameObject ball, RewardInfo rewardInfo, ItemInfo itemInfo)
     {
-        List<GameObject> itemList= new List<GameObject>();
-
         for (int i = 0; i < rewardInfo.amount; i++)
         {
             GameObject newItem = Instantiate(itemOnlyData); //아이템 데이터 담을 빈 오브젝트 생성
             newItem.name = itemInfo.Item_Name;
             Item_AtlasSetting itemData = newItem.GetComponent<Item_AtlasSetting>();
             itemData.Initialize(itemInfo);  // 빈 오브젝트에 아이템 정보 삽입
+
+
             Debug.Log("Name: " + itemInfo.Item_Name + "인 보상이 " + (i + 1) + "개째");
-         
-            itemList.Add(newItem);
-
-
-
             newItem.transform.SetParent(ball.transform, false); // 구슬의 Transform 아래에 배치
             newItem.transform.localPosition = Vector3.zero; // 자식의 위치를 부모 중심으로 초기화
 
         }
-            return itemList;
     }
-
-
-    // 생성된 item을 Ball 프리팹에 Setting
-    public void SetIteminBall(List<GameObject> item, GameObject ball)
-    { 
-        for(int i=0; i<item.Count;i++)
-        {
-            item[i].transform.SetParent(ball.transform, false); // 구슬의 Transform 자식 객체로 설정
-            item[i].transform.localPosition = Vector3.zero; // 자식의 위치를 부모 중심으로 초기화
-        }
-    }
-
-    public void GetItem()
-
+    // 선택한 RewardInfo와 ItemInf
+    public void AddItemToInventory(RewardInfo rewardInfo, ItemInfo itemInfo)
     {
 
+        // inventoryList.Add();
+ 
+
+        //     GameObject newitemSprite = Instantiate(itemSprite);
+        //     Item_AtlasSetting itemAtlas=newitemSprite.GetComponent<>
     }
 }
 
