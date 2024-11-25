@@ -8,7 +8,7 @@ public class Ball : MonoBehaviour
 {
     // ������ ����
     [Header("State")]
-    public int level; 
+    public int level;
     // private bool isDrag; // [Legacy] �巡�� ���ΰ�?
     public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
@@ -20,14 +20,14 @@ public class Ball : MonoBehaviour
     public ParticleSystem effect;
     public Rigidbody2D rigid;
     public CircleCollider2D circle_col;
-    [SerializeField]private UISprite sprite;
+    [SerializeField] private UISprite sprite;
 
     // [JSON ����] ���� ���� ����
     [Header("Info")]
     // public int maxLevel;
     public FruitDataImporter fruitData;
 
-    [Range(0, 100)] 
+    [Range(0, 100)]
     public int lv3ItemChance; // ���� 3(4��°) - ������ ���Ե� ������ Ȯ��
 
     // ���� ���� ����
@@ -49,6 +49,11 @@ public class Ball : MonoBehaviour
     private RewardInfo rewardInfo; // 생성된 보상리스트의 정보
     private ItemInfo itemInfo;  // 생성된 아이템 리스트의 정보
 
+    [SerializeField] private Transform movePos_middle;
+    [SerializeField] private GameObject movePos_end;
+
+    private List<GameObject> generatedItems = new List<GameObject>(); // 생성된 아이템 목록
+
 
     private void Awake()
     {
@@ -65,7 +70,7 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
 
         // 합성되어 생긴 구슬
-        if(isDropped)
+        if (isDropped)
         {
             // 크기는 정해진 시간동안 커짐, 물리는 정해진 시간 후 적용
             StartCoroutine(AnimateScale(Vector3.zero, ballScale, mixAppearTime, "Mix"));
@@ -84,7 +89,18 @@ public class Ball : MonoBehaviour
         {
             isBouns = true;
             sprite.color = Color.green;
+
+            hasItem = true;
+
+            rewardInfo = GameManager.Instance.FindItemRewardInfo(level);
+            itemInfo = GameManager.Instance.FindItemInfo(rewardInfo);
+
+
+            generatedItems = GameManager.Instance.MakeItem(this.gameObject, rewardInfo, itemInfo);
+
+            GameManager.Instance.SetItemInBall(this.gameObject, generatedItems);
         }
+        else hasItem = false;
 
         this.GetComponent<CircleCollider2D>().radius = 47;
         rigid.mass = GetBallMass(level);
@@ -174,6 +190,8 @@ public class Ball : MonoBehaviour
         transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
         // PhysicChange(false);
+
+        // 아이템 획득--------------------------------------------------------
     }
 
 
@@ -225,7 +243,7 @@ public class Ball : MonoBehaviour
                     other.Hide();
                     Hide();
                     // 중점에 새로운 구슬 생성됨 (최대 레벨 2개 합성할 땐 안 생성)
-                    if(level < 11)
+                    if (level < 11)
                     {
                         GameManager.Instance.AppearNextLevel(targetPos, level + 1);
                     }
@@ -236,7 +254,7 @@ public class Ball : MonoBehaviour
     // 예상 궤적 그리는 메소드. 생성 또는 이동 직후 그려짐
     public void DrawLine(bool isDraw)
     {
-        lineRenderer.positionCount = isDraw? 2 : 0;
+        lineRenderer.positionCount = isDraw ? 2 : 0;
         if (isDraw)
         {
             // 시작점, 도착점 초기 지정
@@ -268,6 +286,7 @@ public class Ball : MonoBehaviour
         // 아이템 획득 효과
         Debug.Log("Get Bouns!");
         GameManager.Instance.Addscore(10);
+
     }
 
     public void Hide()
@@ -275,6 +294,24 @@ public class Ball : MonoBehaviour
         isMerge = true; // �ռ� ���� ���·�
         // 합성되는 즉시 물리 제거
         PhysicChange(false);
+
+        if (hasItem && generatedItems != null && generatedItems.Count > 0)
+        {
+            foreach (var item in generatedItems)
+            {
+                // 부모 객체로부터 아이템 분리
+                item.transform.SetParent(null);
+
+             //   Extension.MoveCurve(item, movePos_end.gameObject, movePos_middle, 1f);
+            //    Debug.Log("커브완");
+                // 인벤토리에 추가
+                GameManager.Instance.AddItemsToInventory(generatedItems);
+            }
+
+            // 생성된 아이템 리스트 초기화
+            generatedItems.Clear();
+            hasItem = false;
+        }
         // Disappear Effect
         if (gameObject.activeInHierarchy)
         {
@@ -375,7 +412,7 @@ public class Ball : MonoBehaviour
     private float deadTime;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Finish"))
+        if (collision.CompareTag("Finish"))
         {
             deadTime += Time.deltaTime;
             if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
@@ -385,14 +422,14 @@ public class Ball : MonoBehaviour
             }
         }
     }
-    
+
     // ������ ���� ������ ����� ��
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-            sprite.color = isBouns? Color.green : Color.white;
+            sprite.color = isBouns ? Color.green : Color.white;
         }
     }
 
@@ -414,7 +451,7 @@ public class Ball : MonoBehaviour
     // 물리 On/Off 메소드
     private void PhysicChange(bool isOn)
     {
-        if(!isOn)
+        if (!isOn)
         {
             rigid.velocity = Vector2.zero;
             rigid.angularVelocity = 0;
@@ -436,6 +473,8 @@ public class Ball : MonoBehaviour
 
         return ballScale;
     }
+
+
     private float GetBallMass(int level) => fruitData.fruits[level - 1].attribute.mass;
     private string GetBallSprite(int level) => fruitData.fruits[level - 1].attribute.imgName;
     private int GetBallScore(int level) => fruitData.fruits[level - 1].attribute.score;

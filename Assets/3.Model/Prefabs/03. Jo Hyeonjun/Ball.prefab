@@ -127,6 +127,8 @@ MonoBehaviour:
   mixAppearTime: 0
   physicOnTime: 0
   physicOffTime: 0
+  movePos_middle: {fileID: 0}
+  movePos_end: {fileID: 0}
 --- !u!114 &4882336803019771498
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_AtlasSetting : MonoBehaviour
+public class Item_Data : MonoBehaviour
 {
     public NGUIAtlas rewardAtlas;  // NGUI 아틀라스
     private UISprite itemSprite; // NGUI Sprite 컴포넌트
@@ -27,12 +27,11 @@ public class Item_AtlasSetting : MonoBehaviour
             itemSprite.atlas = rewardAtlas; // 아틀라스 설정
             itemSprite.spriteName = itemImage; // 이미지 이름 설정
 
-            // 디버깅용 로그
-            Debug.Log($"Initialized item sprite with Atlas: {rewardAtlas.name}, Image: {itemImage}");
+          
         }
         else
         {
-            Debug.LogError("UISprite component is missing on this object.");
+            Debug.LogError("아이템 sprite 없음");
         }
     }
 }
