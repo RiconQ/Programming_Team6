@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 // using DG.Tweening;
 
@@ -42,6 +43,11 @@ public class Ball : MonoBehaviour
     // 도움 선 관련
     [Header("Support Line")]
     private LineRenderer lineRenderer;  // LineRenderer 컴포넌트
+
+    [Header("Item Info")]
+    private bool hasItem; // 아이템이 생성되었는지 여부
+    private RewardInfo rewardInfo; // 생성된 보상리스트의 정보
+    private ItemInfo itemInfo;  // 생성된 아이템 리스트의 정보
 
 
     private void Awake()
