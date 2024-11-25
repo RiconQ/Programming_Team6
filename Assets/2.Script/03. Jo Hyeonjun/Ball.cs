@@ -74,7 +74,7 @@ public class Ball : MonoBehaviour
 
         // 아이템 생성 여부
         float rr = UnityEngine.Random.Range(0.0f, 1.0f);
-        if (rr < fruitData.fruits[level].attribute.itemProb)
+        if (rr < fruitData.fruits[level - 1].attribute.itemProb)
         {
             isBouns = true;
             sprite.color = Color.green;
@@ -170,22 +170,7 @@ public class Ball : MonoBehaviour
         // PhysicChange(false);
     }
 
-    private void Update()
-    {
-        // [Legacy] 터치식 드랍
-        /*
-        if (isDrag)
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // ��� ���� ���� ����
-            mousePos.x = Mathf.Clamp(mousePos.x, BorderLeft, BorderRight);
-            mousePos.y = 4;
-            mousePos.z = 0;
-            transform.position = mousePos;
-        }
-        */
 
-    }
 
     public void Drag()
     {
@@ -438,15 +423,15 @@ public class Ball : MonoBehaviour
     {
         var ballScale = new Vector3
             (
-                fruitData.fruits[level].attribute.scaleX,
-                fruitData.fruits[level].attribute.scaleY,
+                fruitData.fruits[level - 1].attribute.scaleX,
+                fruitData.fruits[level - 1].attribute.scaleY,
                 1
             );
 
         return ballScale;
     }
-    private float GetBallMass(int level) => fruitData.fruits[level].attribute.mass;
-    private string GetBallSprite(int level) => fruitData.fruits[level].attribute.imgName;
-    private int GetBallScore(int level) => fruitData.fruits[level].attribute.score;
+    private float GetBallMass(int level) => fruitData.fruits[level - 1].attribute.mass;
+    private string GetBallSprite(int level) => fruitData.fruits[level - 1].attribute.imgName;
+    private int GetBallScore(int level) => fruitData.fruits[level - 1].attribute.score;
 
 }

@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        print(fruitData.fruits[0].attribute.spawnProb);
         SoundManager.instance.PlayBGM();
         waitBallLv = GetSpawnLevel();
         NextBall();
@@ -375,7 +374,7 @@ public class GameManager : MonoBehaviour
     // 구슬의 스폰 확률 가져오기
     private float GetSpawnProb(int lv)
     {
-        return fruitData.fruits[lv].attribute.spawnProb;
+        return fruitData.fruits[lv - 1].attribute.spawnProb;
     }
 
     // 스폰 구슬의 최대 레벨의 크기 구하기 (드랍 x 범위 설정 용)
@@ -385,7 +384,7 @@ public class GameManager : MonoBehaviour
         {
             if (GetSpawnProb(i) > 0) return fruitData.fruits[i].attribute.scaleX;
         }
-        return fruitData.fruits[1].attribute.scaleX;
+        return fruitData.fruits[0].attribute.scaleX;
     }
 
     // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 RewardInfo 가져오기
@@ -436,7 +435,7 @@ public ItemInfo FindItemInfo(RewardInfo rewardInfo)
     public void AddItemToInventory(RewardInfo rewardInfo, ItemInfo itemInfo)
     {
 
- inventoryList.Add()
+        // inventoryList.Add();
  
 
         //     GameObject newitemSprite = Instantiate(itemSprite);
