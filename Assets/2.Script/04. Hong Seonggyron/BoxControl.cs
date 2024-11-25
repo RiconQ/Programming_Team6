@@ -9,7 +9,8 @@ public class BoxControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Item"))
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
         }
     }
 }
