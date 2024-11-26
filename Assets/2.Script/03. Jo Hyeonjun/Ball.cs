@@ -68,7 +68,6 @@ public class Ball : MonoBehaviour
     private void OnEnable()
     {
         var ballScale = GetBallScale(level);
-
         // 합성되어 생긴 구슬
         if (isDropped)
         {
@@ -84,6 +83,8 @@ public class Ball : MonoBehaviour
         }
 
         // 아이템 생성 여부
+
+
         float rr = UnityEngine.Random.Range(0.0f, 1.0f);
         if (rr < fruitData.fruits[level - 1].attribute.itemProb)
         {

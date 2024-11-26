@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
             // 오브젝트 풀링 관련
             BallPool = new List<Ball>();
             for (int i = 0; i < poolSize; i++) MakeBall();
+
+            rewardTable = SelectUserLevel();
         }
         else Destroy(gameObject);
     }
@@ -110,7 +112,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Check End");
 
         // 유저 레벨 판별
-        rewardTable = SelectUserLevel();
+    //    rewardTable = SelectUserLevel();
 
 
         Debug.Log($"유저 레벨: {rewardTable.userLevel}");
@@ -395,6 +397,11 @@ public class GameManager : MonoBehaviour
     {
         //ballLevel은 1부터, List는 0부터
         int ranNum = UnityEngine.Random.Range(0, rewardTable.reward[ballLv - 1].rewardInfos.Count);
+        if (rewardTable == null || rewardTable.reward == null || rewardTable.reward.Count < ballLv)
+        {
+            Debug.LogError($"rewardTable.reward가 유효하지 않습니다. ballLv: {ballLv}, reward.Count: {rewardTable.reward?.Count}");
+            return null;
+        }
         //   Debug.Log("볼레벨: " + ballLv);
         //    Debug.Log(ranNum + 1 + "번째 리스트 사용할거임");
 
