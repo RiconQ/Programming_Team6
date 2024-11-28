@@ -21,5 +21,5 @@ MonoBehaviour:
     score: 36
     spawnProb: 0
     itemProb: 0.5
-    imgName: Dongle 7
-    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}
+    imgName: Peach
+    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
