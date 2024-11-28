@@ -24,4 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f6d22c77af9b7149baaf0610cff2c8a, type: 2}
   - {fileID: 11400000, guid: ef7f7297e355be147ab78c9a226c0dde, type: 2}
   - {fileID: 11400000, guid: b2cfe3a95bd450645a4140e044ed82e0, type: 2}
-  atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}
+  atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}

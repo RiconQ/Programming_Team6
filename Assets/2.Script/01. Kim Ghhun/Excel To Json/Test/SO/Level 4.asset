@@ -21,5 +21,5 @@ MonoBehaviour:
     score: 10
     spawnProb: 0.2
     itemProb: 0.5
-    imgName: Dongle 3
-    atlas: {fileID: 3860080789952859003, guid: 2b6335a3eb7732f4280b60d8212ddf3e, type: 3}
+    imgName: Hanrabong
+    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
