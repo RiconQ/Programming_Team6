@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int itemProbability;
     [SerializeField] GameObject itemOnlyData;
     [SerializeField] List<GameObject> inventoryList;
+    [SerializeField] public List<GameObject> itemPool;
+    //  [SerializeField] Transform itemGroup;
 
     [Header("----------Item Duration")]
     [SerializeField] GameObject endObject;
@@ -112,7 +114,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Check End");
 
         // 유저 레벨 판별
-    //    rewardTable = SelectUserLevel();
+        //    rewardTable = SelectUserLevel();
 
 
         Debug.Log($"유저 레벨: {rewardTable.userLevel}");
@@ -408,8 +410,8 @@ public class GameManager : MonoBehaviour
         // 과일 레벨에 해당되는 리스트 중, randNum번째 RewardInfo를 사용
         RewardInfo selectReward = rewardTable.reward[ballLv - 1].rewardInfos[ranNum];
 
-        //       Debug.Log("Kind: " + selectReward.kind +
-        //   "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
+              Debug.Log("Kind: " + selectReward.kind +
+          "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
         return selectReward;
     }
 
@@ -425,20 +427,49 @@ public class GameManager : MonoBehaviour
     // 인벤토리 시스템 확인을 위한 임시 스크립트
     public List<GameObject> MakeItem(GameObject ball, RewardInfo rewardInfo, ItemInfo itemInfo)
     {
+        // amount만큼 보상을 담을 임시 리스트 생성
         List<GameObject> itemList = new List<GameObject>();
 
         for (int i = 0; i < rewardInfo.amount; i++)
         {
-            GameObject newItem = Instantiate(itemOnlyData); //아이템 데이터 담을 빈 오브젝트 생성
-            newItem.name = itemInfo.Item_Name;
-            Item_Data itemData = newItem.GetComponent<Item_Data>();
-            itemData.Initialize(itemInfo);  // 빈 오브젝트에 아이템 정보 삽입
-            Debug.Log("Name: " + itemInfo.Item_Name + "인 보상이 " + (i + 1) + "개째");
+            GameObject newItem = null;
 
+            // 풀에서 비활성화된 오브젝트 검색
+            foreach (GameObject item in itemPool)
+            {
+                if (!item.activeInHierarchy && item.name == itemInfo.Item_Name) // 비활성화 + 이름 비교
+                {
+                    newItem = item; // 기존 오브젝트 재사용
+                    newItem.SetActive(true);
+                    break;
+                }
+            }
+
+            // 풀에 사용 가능한 오브젝트가 없으면 새로 생성
+            if (newItem == null)
+            {
+                newItem = Instantiate(itemOnlyData); // 새 오브젝트 생성
+                newItem.name = itemInfo.Item_Name;  // 이름 설정
+                itemPool.Add(newItem); // 풀에 추가
+                Debug.Log($"새로운 오브젝트 생성: {newItem.name}");
+            }
+
+            // 초기화 (재사용 또는 새로 생성된 경우 모두)
+            Item_Data data = newItem.GetComponent<Item_Data>();
+            if (data != null)
+            {
+                data.Initialize(itemInfo); // 데이터 초기화
+            }
+
+            // 리스트에 추가
             itemList.Add(newItem);
         }
+
         return itemList;
     }
+
+
+
 
     // 생성된 item Object를 ball에 Setting
     public void SetItemInBall(GameObject ball, List<GameObject> itemList)
@@ -450,7 +481,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ball 프리팹에 자식개체를 인벤토리에 넣기
+    // 자식개체를 인벤토리에 넣기
     public void AddItemsToInventory(List<GameObject> items)
     {
         foreach (var item in items)
@@ -461,7 +492,7 @@ public class GameManager : MonoBehaviour
             // 아이템을 화면에서 제거
             Extension.MoveCurve(item, endObject, controlPoint, 1.0f);
 
-            
+
             Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
         }
     }

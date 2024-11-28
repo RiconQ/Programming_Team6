@@ -3382,7 +3382,6 @@ Transform:
   - {fileID: 1651915561}
   - {fileID: 343179644}
   - {fileID: 1563900088}
-  - {fileID: 2081632664}
   - {fileID: 725951172}
   m_Father: {fileID: 1029684406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3396,7 +3395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 725951172}
   m_Layer: 5
-  m_Name: control
+  m_Name: ControlPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4449,6 +4448,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1975078054}
+  - {fileID: 2081632664}
   - {fileID: 674350209}
   - {fileID: 1407038392}
   m_Father: {fileID: 0}
@@ -4764,6 +4764,7 @@ MonoBehaviour:
   itemProbability: 1
   itemOnlyData: {fileID: 3481390269130891312, guid: 68f6a2ed4ec932747b1c854e36dcab28, type: 3}
   inventoryList: []
+  itemPool: []
   endObject: {fileID: 2081632663}
   controlPoint: {fileID: 725951172}
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
@@ -11165,12 +11166,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081632663}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 780, y: 192, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4265, y: 960, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 674350209}
+  m_Father: {fileID: 1029684406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081632666
 MonoBehaviour:
@@ -11249,18 +11250,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -11268,9 +11269,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   ignoreTimeScale: 1
-  delay: 1
+  delay: 0
   delayAffects: 2
-  duration: 1
+  duration: 3
   steeperCurves: 0
   tweenGroup: 0
   useFixedUpdate: 0
@@ -11278,7 +11279,7 @@ MonoBehaviour:
   eventReceiver: {fileID: 0}
   callWhenFinished: 
   from: {x: 1168, y: 192, z: 0}
-  to: {x: 800, y: 192, z: 0}
+  to: {x: 740, y: 192, z: 0}
   worldSpace: 0
 --- !u!61 &2081632668
 BoxCollider2D:

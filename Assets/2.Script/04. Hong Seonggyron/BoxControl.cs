@@ -11,6 +11,13 @@ public class BoxControl : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
 
+            // 중복 추가 방지
+            if (!GameManager.Instance.itemPool.Contains(collision.gameObject))
+            {
+                GameManager.Instance.itemPool.Add(collision.gameObject);
+            }
+
+            Debug.Log($"오브젝트 반환: {collision.gameObject.name}");
         }
     }
 }

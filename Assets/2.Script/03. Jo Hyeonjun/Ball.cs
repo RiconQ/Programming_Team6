@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 // using DG.Tweening;
@@ -49,8 +50,6 @@ public class Ball : MonoBehaviour
     private RewardInfo rewardInfo; // 생성된 보상리스트의 정보
     private ItemInfo itemInfo;  // 생성된 아이템 리스트의 정보
 
-    [SerializeField] private Transform movePos_middle;
-    [SerializeField] private GameObject movePos_end;
 
     private List<GameObject> generatedItems = new List<GameObject>(); // 생성된 아이템 목록
 
@@ -167,7 +166,7 @@ public class Ball : MonoBehaviour
         if (type == "Mix") StartCoroutine(PhysicON_co());
         if (type == "Hide") gameObject.SetActive(false);
     }
-
+    
 
     // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
@@ -192,7 +191,6 @@ public class Ball : MonoBehaviour
         // ���� �ʱ�ȭ
         // PhysicChange(false);
 
-        // 아이템 획득--------------------------------------------------------
     }
 
 
@@ -296,22 +294,9 @@ public class Ball : MonoBehaviour
         // 합성되는 즉시 물리 제거
         PhysicChange(false);
 
-        if (hasItem && generatedItems != null && generatedItems.Count > 0)
+        if (hasItem && generatedItems.Count > 0)
         {
-            foreach (var item in generatedItems)
-            {
-                // 부모 객체로부터 아이템 분리
-                item.transform.SetParent(null);
-
-             //   Extension.MoveCurve(item, movePos_end.gameObject, movePos_middle, 1f);
-            //    Debug.Log("커브완");
-                // 인벤토리에 추가
-                GameManager.Instance.AddItemsToInventory(generatedItems);
-            }
-
-            // 생성된 아이템 리스트 초기화
-            generatedItems.Clear();
-            hasItem = false;
+            GetItem();
         }
         // Disappear Effect
         if (gameObject.activeInHierarchy)
@@ -320,11 +305,28 @@ public class Ball : MonoBehaviour
         }
     }
 
+    private void GetItem()
+    {
+        foreach (var item in generatedItems)
+        {
+            // 부모 객체로부터 아이템 분리
+            item.transform.SetParent(null);
+
+            // 인벤토리에 추가
+            GameManager.Instance.AddItemsToInventory(generatedItems);
+        }
+
+        // 생성된 아이템 리스트 초기화
+        generatedItems.Clear();
+        hasItem = false;
+    }
+
     IEnumerator PhysicOff_co()
     {
         yield return new WaitForSeconds(physicOffTime);
         PhysicChange(false);
     }
+    
 
     #region Legacy(Hide_co, LevelUp, LevelUp_co)
     /*
@@ -442,12 +444,6 @@ public class Ball : MonoBehaviour
         effect.Play();
     }
 
-
-    private bool isGetItem()
-    {
-        float getItem = Random.Range(0, 1);
-        return (getItem < 0.5);
-    }
 
     // 물리 On/Off 메소드
     private void PhysicChange(bool isOn)
