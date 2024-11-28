@@ -16,13 +16,19 @@ public class ItemManager : MonoBehaviour
     [SerializeField] List<GameObject> inventoryList;
 
 
+    [SerializeField] Transform targetBox;
+
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
+    public void Moving()
+    {
 
 
+    }
 
 }

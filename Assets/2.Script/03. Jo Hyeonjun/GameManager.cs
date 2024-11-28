@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,6 +56,8 @@ public class GameManager : MonoBehaviour
     [Header("----------Item Duration")]
     [SerializeField] GameObject endObject;
     [SerializeField] Transform controlPoint;
+    [SerializeField] Transform targetBox;
+    [SerializeField] Transform originBox;
 
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
@@ -410,8 +413,8 @@ public class GameManager : MonoBehaviour
         // 과일 레벨에 해당되는 리스트 중, randNum번째 RewardInfo를 사용
         RewardInfo selectReward = rewardTable.reward[ballLv - 1].rewardInfos[ranNum];
 
-              Debug.Log("Kind: " + selectReward.kind +
-          "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
+        Debug.Log("Kind: " + selectReward.kind +
+    "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
         return selectReward;
     }
 
@@ -488,15 +491,17 @@ public class GameManager : MonoBehaviour
         {
             // 아이템을 인벤토리에 추가
             inventoryList.Add(item);
-
+           
+            Vector3 target=targetBox.transform.position;
+            BoxControl.instance.StartMoveBox(target);
             // 아이템을 화면에서 제거
             Extension.MoveCurve(item, endObject, controlPoint, 1.0f);
-
-
             Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
         }
     }
+
 }
+
 
 
 

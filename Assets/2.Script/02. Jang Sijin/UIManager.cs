@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        
         GameManager.Instance.OnScoreChanged += OnUpdateUIScoreText;
         GameManager.Instance.OnScoreMaxChanged += OnUpdateUIScoreMaxScoreText;
         GameManager.Instance.OnWaitBallLvChanged += OnUpdateUIWaitBallSprite;
