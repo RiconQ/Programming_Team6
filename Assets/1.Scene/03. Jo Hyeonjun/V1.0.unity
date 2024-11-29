@@ -1834,6 +1834,70 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 150, y: 300, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &321379981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 321379982}
+  - component: {fileID: 321379983}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &321379982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321379981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2120916714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &321379983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321379981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b6b125c4f3577459aae315aabca9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 1566858171}
+  originTransform: {fileID: 2081632664}
+  moveSpeed: 5
+  delayBeforeHide: 1
+  itemToGo: {fileID: 1566858170}
+  sprite_Box: {fileID: 2081632663}
+  controlPoint: {fileID: 725951172}
+  targetBox: {fileID: 1566858171}
+  inventoryList: []
+  itemPool: []
+  itemOnlyData: {fileID: 3481390269130891312, guid: 68f6a2ed4ec932747b1c854e36dcab28, type: 3}
+  itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
+  rewardTable:
+    userLevel: 0
+    reward: []
+  itemInfo:
+    Item_Kind: 0
+    Item_Value: 0
+    Item_Name: 
+    Item_Img: 
 --- !u!1 &343179643
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,10 +4830,6 @@ MonoBehaviour:
   itemOnlyData: {fileID: 3481390269130891312, guid: 68f6a2ed4ec932747b1c854e36dcab28, type: 3}
   inventoryList: []
   itemPool: []
-  endObject: {fileID: 1566858170}
-  controlPoint: {fileID: 725951172}
-  targetBox: {fileID: 0}
-  originBox: {fileID: 0}
   itemReward: {fileID: 11400000, guid: 6017706ff8f400b4bb8a02a67c5cf951, type: 2}
   rewardTable:
     userLevel: 0
@@ -11350,13 +11410,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2081632663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8b6b125c4f3577459aae315aabca9ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 9056e4755f8c66947a6ef0e107e62e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 1566858171}
-  originTransform: {fileID: 2081632664}
-  moveSpeed: 7
-  delayBeforeHide: 1
 --- !u!1 &2103065334
 GameObject:
   m_ObjectHideFlags: 0
@@ -11581,6 +11637,7 @@ Transform:
   m_Children:
   - {fileID: 1063370407}
   - {fileID: 1034758069}
+  - {fileID: 321379982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2121444091

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class ItemManagerf : MonoBehaviour
 {
-    public static ItemManager Instance = null;
+    public static ItemManagerf Instance = null;
 
     [Header("----------Item Duration")]
     [SerializeField] GameObject endObject;

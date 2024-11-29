@@ -88,17 +88,17 @@ public class Ball : MonoBehaviour
         if (rr < fruitData.fruits[level - 1].attribute.itemProb)
         {
             isBouns = true;
-            sprite.color = Color.green;
+          //  sprite.color = Color.green;
 
             hasItem = true;
 
-            rewardInfo = GameManager.Instance.FindItemRewardInfo(level);
-            itemInfo = GameManager.Instance.FindItemInfo(rewardInfo);
+            rewardInfo = ItemManager.instance.FindItemRewardInfo(level);
+            itemInfo = ItemManager.instance.FindItemInfo(rewardInfo);
 
 
-            generatedItems = GameManager.Instance.MakeItem(this.gameObject, rewardInfo, itemInfo);
+            generatedItems = ItemManager.instance.MakeItem(this.gameObject, rewardInfo, itemInfo);
 
-            GameManager.Instance.SetItemInBall(this.gameObject, generatedItems);
+            ItemManager.instance.SetItemInBall(this.gameObject, generatedItems);
         }
         else hasItem = false;
 
@@ -313,7 +313,7 @@ public class Ball : MonoBehaviour
             item.transform.SetParent(null);
 
             // 인벤토리에 추가
-            GameManager.Instance.AddItemsToInventory(generatedItems);
+            ItemManager.instance.AddItemsToInventory(generatedItems);
         }
 
         // 생성된 아이템 리스트 초기화
@@ -432,7 +432,7 @@ public class Ball : MonoBehaviour
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-            sprite.color = isBouns ? Color.green : Color.white;
+         //   sprite.color = isBouns ? Color.green : Color.white;
         }
     }
 

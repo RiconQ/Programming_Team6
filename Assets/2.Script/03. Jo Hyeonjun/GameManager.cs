@@ -46,18 +46,8 @@ public class GameManager : MonoBehaviour
     public Transform rightWall;
 
     [Header("----------About Item")]
-    [SerializeField] int userLevel;
-    [SerializeField] int itemProbability;
-    [SerializeField] GameObject itemOnlyData;
-    [SerializeField] List<GameObject> inventoryList;
-    [SerializeField] public List<GameObject> itemPool;
-    //  [SerializeField] Transform itemGroup;
+    [SerializeField] public int userLevel;
 
-    [Header("----------Item Duration")]
-    [SerializeField] GameObject endObject;
-    [SerializeField] Transform controlPoint;
-    [SerializeField] Transform targetBox;
-    [SerializeField] Transform originBox;
 
     // [UI Changed Event]
     public event Action<int> OnScoreChanged;
@@ -94,8 +84,6 @@ public class GameManager : MonoBehaviour
             // 오브젝트 풀링 관련
             BallPool = new List<Ball>();
             for (int i = 0; i < poolSize; i++) MakeBall();
-
-            rewardTable = SelectUserLevel();
         }
         else Destroy(gameObject);
     }
@@ -117,7 +105,6 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Check End");
 
         // 유저 레벨 판별
-        //    rewardTable = SelectUserLevel();
 
 
         Debug.Log($"유저 레벨: {rewardTable.userLevel}");
@@ -336,51 +323,6 @@ public class GameManager : MonoBehaviour
         return 0;
     }
 
-    //유저 레벨 확인 후, 그 값에 해당하는 테이블 값 가져오기
-    public RewardTable SelectUserLevel()
-    {
-        var tempLevelTable = new RewardTable();
-        for (int i = 0; i < itemReward.rewardDataTable.Count; i++)
-        {
-            if (userLevel == itemReward.rewardDataTable[i].userLevel)
-            {
-                tempLevelTable.userLevel = itemReward.rewardDataTable[i].userLevel;
-                //Debug.Log(tempLevelTable.userLevel);
-                //Debug.Log(itemReward.rewardDataTable[i].reward.Count);
-                //if (itemReward.rewardDataTable[i].reward is null)
-                //{
-                //    Debug.Log("test 2 is null");
-                //}
-
-                tempLevelTable.reward = itemReward.rewardDataTable[i].reward;
-                return tempLevelTable;
-                //if (tempLevelTable.reward is null)
-                //{
-                //    Debug.Log("Select User Level Null");
-                //}
-            }
-
-        }
-        return null;
-
-        //RewardTable userLevelTable = itemReward.rewardDataTable[i];
-        //if (userLevel == userLevelTable.userLevel)
-        //{
-        //    Debug.Log(userLevelTable.userLevel);
-        //    if(userLevelTable.reward is null)
-        //    {
-        //        Debug.Log("Select User Level Null");
-        //    }
-        //    if (itemReward.rewardDataTable[i] is null)
-        //    {
-        //        Debug.Log("test 2 is null");
-        //    }
-        ////    Debug.Log(userLevelTable.reward[2]);
-
-    }
-
-
-
     // 구슬의 스폰 확률 가져오기
     private float GetSpawnProb(int lv)
     {
@@ -395,109 +337,6 @@ public class GameManager : MonoBehaviour
             if (GetSpawnProb(i) > 0) return fruitData.fruits[i].attribute.scaleX;
         }
         return fruitData.fruits[0].attribute.scaleX;
-    }
-
-    // 선택한 유저 레벨의 테이블에서 과일의 레벨값에 따른 RewardInfo 가져오기
-    public RewardInfo FindItemRewardInfo(int ballLv)
-    {
-        //ballLevel은 1부터, List는 0부터
-        int ranNum = UnityEngine.Random.Range(0, rewardTable.reward[ballLv - 1].rewardInfos.Count);
-        if (rewardTable == null || rewardTable.reward == null || rewardTable.reward.Count < ballLv)
-        {
-            Debug.LogError($"rewardTable.reward가 유효하지 않습니다. ballLv: {ballLv}, reward.Count: {rewardTable.reward?.Count}");
-            return null;
-        }
-        //   Debug.Log("볼레벨: " + ballLv);
-        //    Debug.Log(ranNum + 1 + "번째 리스트 사용할거임");
-
-        // 과일 레벨에 해당되는 리스트 중, randNum번째 RewardInfo를 사용
-        RewardInfo selectReward = rewardTable.reward[ballLv - 1].rewardInfos[ranNum];
-
-        Debug.Log("Kind: " + selectReward.kind +
-    "  Value: " + selectReward.value + "  Amount: " + selectReward.amount);
-        return selectReward;
-    }
-
-
-    //RewardInfo의 Kind, Value 값을 통해 ItemInfo 찾기
-    public ItemInfo FindItemInfo(RewardInfo rewardInfo)
-    {
-        ItemInfo itemInfo = itemReward.itemInfos.Find(
-       item => item.Item_Kind == rewardInfo.kind && item.Item_Value == rewardInfo.value);
-        return itemInfo;
-    }
-
-    // 인벤토리 시스템 확인을 위한 임시 스크립트
-    public List<GameObject> MakeItem(GameObject ball, RewardInfo rewardInfo, ItemInfo itemInfo)
-    {
-        // amount만큼 보상을 담을 임시 리스트 생성
-        List<GameObject> itemList = new List<GameObject>();
-
-        for (int i = 0; i < rewardInfo.amount; i++)
-        {
-            GameObject newItem = null;
-
-            // 풀에서 비활성화된 오브젝트 검색
-            foreach (GameObject item in itemPool)
-            {
-                if (!item.activeInHierarchy && item.name == itemInfo.Item_Name) // 비활성화 + 이름 비교
-                {
-                    newItem = item; // 기존 오브젝트 재사용
-                    newItem.SetActive(true);
-                    break;
-                }
-            }
-
-            // 풀에 사용 가능한 오브젝트가 없으면 새로 생성
-            if (newItem == null)
-            {
-                newItem = Instantiate(itemOnlyData); // 새 오브젝트 생성
-                newItem.name = itemInfo.Item_Name;  // 이름 설정
-                itemPool.Add(newItem); // 풀에 추가
-                Debug.Log($"새로운 오브젝트 생성: {newItem.name}");
-            }
-
-            // 초기화 (재사용 또는 새로 생성된 경우 모두)
-            Item_Data data = newItem.GetComponent<Item_Data>();
-            if (data != null)
-            {
-                data.Initialize(itemInfo); // 데이터 초기화
-            }
-
-            // 리스트에 추가
-            itemList.Add(newItem);
-        }
-
-        return itemList;
-    }
-
-
-
-
-    // 생성된 item Object를 ball에 Setting
-    public void SetItemInBall(GameObject ball, List<GameObject> itemList)
-    {
-        for (int i = 0; i < itemList.Count; i++)
-        {
-            itemList[i].transform.SetParent(ball.transform, false);
-            itemList[i].transform.localPosition = Vector2.zero;
-        }
-    }
-
-    // 자식개체를 인벤토리에 넣기
-    public void AddItemsToInventory(List<GameObject> items)
-    {
-        foreach (var item in items)
-        {
-            // 아이템을 인벤토리에 추가
-            inventoryList.Add(item);
-           
-            Vector3 target=targetBox.transform.position;
-            BoxControl.instance.StartMoveBox(target);
-            // 아이템을 화면에서 제거
-            Extension.MoveCurve(item, endObject, controlPoint, 1.0f);
-            Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
-        }
     }
 
 }
