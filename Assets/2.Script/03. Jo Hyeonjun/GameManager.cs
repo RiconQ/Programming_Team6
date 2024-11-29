@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         // 유저 레벨 판별
 
 
-        Debug.Log($"유저 레벨: {rewardTable.userLevel}");
+      
         //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
         //     Debug.Log(itemReward.rewardDataTable.)
         //  Debug.Log(itemReward.rewardDataTable[0].reward.Count);

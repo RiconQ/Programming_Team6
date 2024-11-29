@@ -2,6 +2,7 @@ using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class ItemManager : MonoBehaviour
 {
@@ -18,7 +19,9 @@ public class ItemManager : MonoBehaviour
 
     [Header("----------About Item")]
     [SerializeField] public List<GameObject> itemPool;
+    [SerializeField] private int itemPoolCount;
     [SerializeField] GameObject itemOnlyData;
+    [SerializeField] GameObject particle;
     public ItemReward itemReward;
     [HideInInspector] public RewardTable rewardTable;
     [HideInInspector] public ItemInfo itemInfo;
@@ -99,7 +102,9 @@ public class ItemManager : MonoBehaviour
             inventoryList.Add(item);
 
             Vector3 target = targetBox.transform.position;
-            ItemManager.instance.StartMoveBox(target);
+            StartMoveBox(target);
+            var particle = item.GetComponent<ParticleSystem>();
+            particle.Play();
             // 아이템을 화면에서 제거
             Extension.MoveCurve(item, itemToGo, controlPoint, 1.0f);
             Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
@@ -179,6 +184,17 @@ public class ItemManager : MonoBehaviour
         ItemInfo itemInfo = itemReward.itemInfos.Find(
        item => item.Item_Kind == rewardInfo.kind && item.Item_Value == rewardInfo.value);
         return itemInfo;
+    }
+
+    public List<GameObject> MakeItemStart()
+    {
+        for (int i = 0; i < itemPoolCount; i++)
+        {
+            GameObject newItem = null;
+            newItem = Instantiate(itemOnlyData);
+            itemPool.Add(newItem);
+        }
+        return itemPool;
     }
 
     // 인벤토리 확인을 위한 임시 스크립트
