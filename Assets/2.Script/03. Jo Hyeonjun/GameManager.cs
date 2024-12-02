@@ -175,7 +175,6 @@ public class GameManager : MonoBehaviour
 
         lastBall.level = waitBallLv;
         MoveBallInBorder(recentX);
-        lastBall.isSpawn = true;
 
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
