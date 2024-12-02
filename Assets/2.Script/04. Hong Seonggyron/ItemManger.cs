@@ -19,9 +19,9 @@ public class ItemManager : MonoBehaviour
 
     [Header("----------About Item")]
     [SerializeField] public List<GameObject> itemPool;
+    [SerializeField] public Transform itemGroup;
     [SerializeField] private int itemPoolCount;
     [SerializeField] GameObject itemOnlyData;
-    [SerializeField] GameObject particle;
     public ItemReward itemReward;
     [HideInInspector] public RewardTable rewardTable;
     [HideInInspector] public ItemInfo itemInfo;
@@ -103,13 +103,14 @@ public class ItemManager : MonoBehaviour
 
             Vector3 target = targetBox.transform.position;
             StartMoveBox(target);
-            var particle = item.GetComponent<ParticleSystem>();
-            particle.Play();
+            var particle = item.GetComponentInChildren<ParticleSystem>(true);
+            particle.gameObject.SetActive(true); 
             // 아이템을 화면에서 제거
             Extension.MoveCurve(item, itemToGo, controlPoint, 1.0f);
             Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
         }
     }
+
 
 
     //유저 레벨 확인 후, 그 값에 해당하는 테이블 값 가져오기

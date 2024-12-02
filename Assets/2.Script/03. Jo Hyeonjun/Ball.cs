@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour
     public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
     public bool isBouns; // ������ ���Ե� �����ΰ�?
+    public bool isSpawn; // 스폰되는 구슬인가?
     public float scaleFrames; // scale 조절 자체 tween용. 0보다 크면, 크기 변동 중임을 의미
 
     // ���� ������Ʈ
@@ -52,7 +53,7 @@ public class Ball : MonoBehaviour
 
 
     private List<GameObject> generatedItems = new List<GameObject>(); // 생성된 아이템 목록
-                           
+
     // Collider 조절 관련
     private int[] col_offsetY = { -2, -8, -2, -1, -9, -7, 0, -6, -5, -4, -2 };
     private int[] col_radius = { 47, 41, 48, 48, 40, 43, 47, 44, 45, 46, 47 };
@@ -103,10 +104,10 @@ public class Ball : MonoBehaviour
 
 
         float rr = UnityEngine.Random.Range(0.0f, 1.0f);
-        if (rr < fruitData.fruits[level - 1].attribute.itemProb)
+        if (rr < fruitData.fruits[level - 1].attribute.itemProb && !isSpawn)
         {
             isBouns = true;
-          //  sprite.color = Color.green;
+            //  sprite.color = Color.green;
 
             hasItem = true;
 
@@ -184,7 +185,7 @@ public class Ball : MonoBehaviour
         if (type == "Mix") StartCoroutine(PhysicON_co());
         if (type == "Hide") gameObject.SetActive(false);
     }
-    
+
 
     // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
@@ -223,6 +224,9 @@ public class Ball : MonoBehaviour
         // isDropped = true;
         DrawLine(false);
         PhysicChange(true);
+
+
+        isSpawn = false;
     }
 
     // ������ �ٸ� �ݶ��̴��� �������� ��
@@ -328,7 +332,7 @@ public class Ball : MonoBehaviour
         foreach (var item in generatedItems)
         {
             // 부모 객체로부터 아이템 분리
-            item.transform.SetParent(null);
+            item.transform.SetParent(ItemManager.instance.itemGroup);
 
             // 인벤토리에 추가
             ItemManager.instance.AddItemsToInventory(generatedItems);
@@ -344,7 +348,7 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(physicOffTime);
         PhysicChange(false);
     }
-    
+
 
     #region Legacy(Hide_co, LevelUp, LevelUp_co)
     /*
@@ -450,7 +454,7 @@ public class Ball : MonoBehaviour
         if (collision.tag == "Finish")
         {
             deadTime = 0;
-         //   sprite.color = isBouns ? Color.green : Color.white;
+            //   sprite.color = isBouns ? Color.green : Color.white;
         }
     }
 

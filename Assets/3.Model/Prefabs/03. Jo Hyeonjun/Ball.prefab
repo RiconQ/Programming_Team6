@@ -113,6 +113,7 @@ MonoBehaviour:
   level: 0
   isDropped: 0
   isBouns: 0
+  isSpawn: 0
   scaleFrames: 0
   effect: {fileID: 0}
   rigid: {fileID: 0}
