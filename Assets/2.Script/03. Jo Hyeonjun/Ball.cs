@@ -14,7 +14,6 @@ public class Ball : MonoBehaviour
     public bool isDropped; // 드랍된 상태인가?
     private bool isMerge; // �������� ���ΰ�?
     public bool isBouns; // ������ ���Ե� �����ΰ�?
-    public bool isSpawn; // 스폰되는 구슬인가?
     public float scaleFrames; // scale 조절 자체 tween용. 0보다 크면, 크기 변동 중임을 의미
 
     // ���� ������Ʈ
@@ -53,10 +52,10 @@ public class Ball : MonoBehaviour
 
 
     private List<GameObject> generatedItems = new List<GameObject>(); // 생성된 아이템 목록
-
+                           
     // Collider 조절 관련
-    private int[] col_offsetY = { -2, -8, -2, -1, -9, -7, 0, -6, -5, -4, -2 };
-    private int[] col_radius = { 47, 41, 48, 48, 40, 43, 47, 44, 45, 46, 47 };
+    private int[] col_offsetY = { -2, -6, 0, -1, 0, -2, 0, -6, -4, -7, -2 };
+    private int[] col_radius = { 46, 42, 50, 48, 49, 48, 47, 45, 47, 43, 47 };
 
     private void Awake()
     {
@@ -73,15 +72,15 @@ public class Ball : MonoBehaviour
         var ballScale = GetBallScale(level);
 
         // 레벨에 따른 Collider 조정
-        int offsetX = (level == 8) ? 2 : 0;
+        int offsetX = (level == 8) ? 3 : 0;
         circle_col.offset = new Vector2(offsetX, col_offsetY[level - 1]);
         circle_col.radius = col_radius[level - 1];
 
-        // 레벨 6,10 에서 자연스러운 Collider를 위해 부득이 scaleX 감소
-        if (level == 6 || level == 10)
+        // 레벨 10(멜론) 에서 자연스러운 Collider를 위해 부득이 scaleX 감소
+        if (level == 10)
         {
             transform.localScale = new Vector3(
-                transform.localScale.x - 0.05f,
+                transform.localScale.x - 0.2f,
                 transform.localScale.y,
                 transform.localScale.z);
         }
@@ -101,13 +100,12 @@ public class Ball : MonoBehaviour
         }
 
         // 아이템 생성 여부
-
-
         float rr = UnityEngine.Random.Range(0.0f, 1.0f);
-        if (rr < fruitData.fruits[level - 1].attribute.itemProb && !isSpawn)
+        // 합성으로 만든 구슬(isDropped)이 아니면 아이템 생성 안되게
+        if (rr < fruitData.fruits[level - 1].attribute.itemProb && isDropped)
         {
             isBouns = true;
-            //  sprite.color = Color.green;
+          //  sprite.color = Color.green;
 
             hasItem = true;
 
@@ -121,7 +119,7 @@ public class Ball : MonoBehaviour
         }
         else hasItem = false;
 
-        this.GetComponent<CircleCollider2D>().radius = 47;
+        // this.GetComponent<CircleCollider2D>().radius = 47;
         rigid.mass = GetBallMass(level);
         sprite.atlas = fruitData.atlas;
 
@@ -185,7 +183,7 @@ public class Ball : MonoBehaviour
         if (type == "Mix") StartCoroutine(PhysicON_co());
         if (type == "Hide") gameObject.SetActive(false);
     }
-
+    
 
     // 생겨난 구슬의 물리 On 지연 시간
     IEnumerator PhysicON_co()
@@ -224,9 +222,6 @@ public class Ball : MonoBehaviour
         // isDropped = true;
         DrawLine(false);
         PhysicChange(true);
-
-
-        isSpawn = false;
     }
 
     // ������ �ٸ� �ݶ��̴��� �������� ��
@@ -303,7 +298,7 @@ public class Ball : MonoBehaviour
     {
         // 아이템 속성 없애기
         b.isBouns = false;
-        b.sprite.color = Color.white;
+        // b.sprite.color = Color.white;
         // 아이템 획득 효과
         Debug.Log("Get Bouns!");
         GameManager.Instance.Addscore(10);
@@ -332,7 +327,7 @@ public class Ball : MonoBehaviour
         foreach (var item in generatedItems)
         {
             // 부모 객체로부터 아이템 분리
-            item.transform.SetParent(ItemManager.instance.itemGroup);
+            item.transform.SetParent(null);
 
             // 인벤토리에 추가
             ItemManager.instance.AddItemsToInventory(generatedItems);
@@ -348,7 +343,7 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(physicOffTime);
         PhysicChange(false);
     }
-
+    
 
     #region Legacy(Hide_co, LevelUp, LevelUp_co)
     /*
@@ -453,8 +448,9 @@ public class Ball : MonoBehaviour
     {
         if (collision.tag == "Finish")
         {
+            // 탈락 존에 머물러 있다가 벗어난 과일을 빨간색에서 원래대로
             deadTime = 0;
-            //   sprite.color = isBouns ? Color.green : Color.white;
+            sprite.color = Color.white;
         }
     }
 
