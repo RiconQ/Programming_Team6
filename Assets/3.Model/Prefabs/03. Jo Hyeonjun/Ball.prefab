@@ -180,7 +180,7 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 0}
+  mAtlas: {fileID: 3860080789952859003, guid: 1d5c3d1851936734e9810e256894a626, type: 3}
   mSpriteName: 
   mFixedAspect: 0
   mFillCenter: 1
