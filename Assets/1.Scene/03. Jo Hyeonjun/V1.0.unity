@@ -4543,7 +4543,7 @@ MonoBehaviour:
   _uiSwitchToggle: {fileID: 1852947090}
   _highScoreLabel: {fileID: 98435036}
   _nowScoreLabel: {fileID: 2653416}
-  _nextBallTexture: {fileID: 0}
+  _nextBallTexture: {fileID: 1504187736}
   _switchButtons: {fileID: 178141913}
 --- !u!65 &1029684408
 BoxCollider:

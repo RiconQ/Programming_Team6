@@ -1,0 +1,123 @@
+[
+  {
+    "Fruit_Lv": 1.0,
+    "Name": "체리",
+    "Scale_X": 0.25,
+    "Scale_Y": 0.25,
+    "Mass": 1.5,
+    "Synthesis_Score": 1.0,
+    "Spawn_Probability": 0.2,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Cherry"
+  },
+  {
+    "Fruit_Lv": 2.0,
+    "Name": "딸기",
+    "Scale_X": 0.38,
+    "Scale_Y": 0.38,
+    "Mass": 11.2,
+    "Synthesis_Score": 3.0,
+    "Spawn_Probability": 0.2,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "StrawBerry"
+  },
+  {
+    "Fruit_Lv": 3.0,
+    "Name": "포도",
+    "Scale_X": 0.5,
+    "Scale_Y": 0.5,
+    "Mass": 20.9,
+    "Synthesis_Score": 6.0,
+    "Spawn_Probability": 0.2,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Grape"
+  },
+  {
+    "Fruit_Lv": 4.0,
+    "Name": "한라봉",
+    "Scale_X": 0.63,
+    "Scale_Y": 0.63,
+    "Mass": 30.6,
+    "Synthesis_Score": 10.0,
+    "Spawn_Probability": 0.2,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Hanrabong"
+  },
+  {
+    "Fruit_Lv": 5.0,
+    "Name": "귤",
+    "Scale_X": 0.75,
+    "Scale_Y": 0.75,
+    "Mass": 40.3,
+    "Synthesis_Score": 15.0,
+    "Spawn_Probability": 0.2,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Persimmon"
+  },
+  {
+    "Fruit_Lv": 6.0,
+    "Name": "사과",
+    "Scale_X": 0.88,
+    "Scale_Y": 0.88,
+    "Mass": 50.0,
+    "Synthesis_Score": 21.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Apple"
+  },
+  {
+    "Fruit_Lv": 7.0,
+    "Name": "배",
+    "Scale_X": 1.0,
+    "Scale_Y": 1.0,
+    "Mass": 59.7,
+    "Synthesis_Score": 28.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Pear"
+  },
+  {
+    "Fruit_Lv": 8.0,
+    "Name": "복숭아",
+    "Scale_X": 1.13,
+    "Scale_Y": 1.13,
+    "Mass": 69.4,
+    "Synthesis_Score": 36.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Peach"
+  },
+  {
+    "Fruit_Lv": 9.0,
+    "Name": "파인애플",
+    "Scale_X": 1.25,
+    "Scale_Y": 1.25,
+    "Mass": 79.1,
+    "Synthesis_Score": 45.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "PineApple"
+  },
+  {
+    "Fruit_Lv": 10.0,
+    "Name": "멜론",
+    "Scale_X": 1.38,
+    "Scale_Y": 1.38,
+    "Mass": 88.8,
+    "Synthesis_Score": 55.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "Melon"
+  },
+  {
+    "Fruit_Lv": 11.0,
+    "Name": "수박",
+    "Scale_X": 1.5,
+    "Scale_Y": 1.5,
+    "Mass": 98.5,
+    "Synthesis_Score": 66.0,
+    "Spawn_Probability": 0.0,
+    "Item_Probability": 0.1,
+    "Spawn_Img": "WaterMelon"
+  }
+]
