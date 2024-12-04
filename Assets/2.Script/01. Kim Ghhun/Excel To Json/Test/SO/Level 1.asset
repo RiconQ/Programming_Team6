@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 1
     name: "\uCCB4\uB9AC"
-    scaleX: 0.35
-    scaleY: 0.35
-    mass: 1
+    scaleX: 0.25
+    scaleY: 0.25
+    mass: 1.5
     score: 1
     spawnProb: 0.2
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Cherry
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

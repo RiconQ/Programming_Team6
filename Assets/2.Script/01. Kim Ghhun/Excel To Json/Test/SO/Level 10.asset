@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 10
     name: "\uBA5C\uB860"
-    scaleX: 1.7
-    scaleY: 1.7
-    mass: 5.5
+    scaleX: 1.38
+    scaleY: 1.38
+    mass: 88.8
     score: 55
     spawnProb: 0
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Melon
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

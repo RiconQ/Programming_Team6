@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 3
     name: "\uD3EC\uB3C4"
-    scaleX: 0.65
-    scaleY: 0.65
-    mass: 2
+    scaleX: 0.5
+    scaleY: 0.5
+    mass: 20.9
     score: 6
     spawnProb: 0.2
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Grape
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

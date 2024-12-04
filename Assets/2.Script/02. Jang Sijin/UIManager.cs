@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UILabel _nowScoreLabel;
 
     [Header("----------ETC")]
-    [SerializeField] private UISprite _nextBallSprite;
+    [SerializeField] private UITexture _nextBallTexture;
    // public GameObject ItemEnvironmentBox;
    // [SerializeField] private GameObject _activezone;
    // [SerializeField] private GameObject _backGround;
@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
         _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
 
         // atlas 세팅 - 땜빵 조치
-        _nextBallSprite.atlas = GameManager.Instance.lastBall.fruitData.atlas;
+        //_nextBallTexture.atlas = GameManager.Instance.lastBall.fruitData.atlas;
 
         // 스코어 초기화
         _nowScoreLabel.text = GameManager.Instance.score.ToString();
@@ -269,7 +269,7 @@ public class UIManager : MonoBehaviour
 
     public void OnUpdateUIWaitBallSprite(int ballLv)
     {
-        _nextBallSprite.spriteName = GameManager.Instance.lastBall.fruitData.fruits[ballLv - 1].attribute.imgName;
+        _nextBallTexture.mainTexture = GameManager.Instance.lastBall.GetBallTexture(ballLv);
     }
 
     public void OnUpdateUIItemCount()

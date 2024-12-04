@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 11
     name: "\uC218\uBC15"
-    scaleX: 1.85
-    scaleY: 1.85
-    mass: 6
+    scaleX: 1.5
+    scaleY: 1.5
+    mass: 98.5
     score: 66
     spawnProb: 0
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: WaterMelon
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

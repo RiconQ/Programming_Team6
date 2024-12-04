@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 5
     name: "\uADE4"
-    scaleX: 0.95
-    scaleY: 0.95
-    mass: 3
+    scaleX: 0.75
+    scaleY: 0.75
+    mass: 40.3
     score: 15
     spawnProb: 0.2
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Persimmon
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

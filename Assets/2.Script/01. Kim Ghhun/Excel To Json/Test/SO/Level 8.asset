@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 8
     name: "\uBCF5\uC22D\uC544"
-    scaleX: 1.4
-    scaleY: 1.4
-    mass: 4.5
+    scaleX: 1.13
+    scaleY: 1.13
+    mass: 69.4
     score: 36
     spawnProb: 0
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Peach
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

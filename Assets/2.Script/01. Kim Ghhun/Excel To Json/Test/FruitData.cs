@@ -31,9 +31,9 @@ public class FruitAttribute
     public float spawnProb;
     public float itemProb;
     public string imgName;
+    public Texture2D texture;
     // public float animTime;
     // public string synEffect;
     // public string defaultImg;
-    // public string spawnAnim;
-    public UIAtlas atlas;
+    // public string spawnAnim;       
 }

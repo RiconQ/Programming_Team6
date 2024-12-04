@@ -1,4 +1,6 @@
+using KimGhHun_Proto;
 using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,9 +8,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName ="FruitData", menuName ="Fruit/FruitDataImporter")]
 public class FruitDataImporter : ScriptableObject
-{
-    public FruitData[] fruits;
-    public UIAtlas atlas;
+{    
+    public FruitData[] fruits;    
 
     public void UpdateFruitAttribute(string jsonPath)
     {
@@ -38,7 +39,7 @@ public class FruitDataImporter : ScriptableObject
             attribute.imgName = jsonData[i]["Spawn_Img"].ToString();
             // attribute.defaultImg = jsonData[i]["Default_Img"].ToString();
             // attribute.spawnAnim = jsonData[i]["Spawn_Anim"].ToString();
-            attribute.atlas = atlas;
+            //attribute.atlas = atlas;
 
             fruits[i].SetAttribute(attribute);
         }
