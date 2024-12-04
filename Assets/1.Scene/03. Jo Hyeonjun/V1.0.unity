@@ -3759,7 +3759,7 @@ MonoBehaviour:
   _uiSwitchToggle: {fileID: 256150807}
   _highScoreLabel: {fileID: 1564761699}
   _nowScoreLabel: {fileID: 1458474878}
-  _nextBallSprite: {fileID: 0}
+  _nextBallTexture: {fileID: 0}
   _switchButtons: {fileID: 0}
 --- !u!114 &828740151
 MonoBehaviour:
@@ -4543,7 +4543,7 @@ MonoBehaviour:
   _uiSwitchToggle: {fileID: 1852947090}
   _highScoreLabel: {fileID: 98435036}
   _nowScoreLabel: {fileID: 2653416}
-  _nextBallSprite: {fileID: 1504187736}
+  _nextBallTexture: {fileID: 0}
   _switchButtons: {fileID: 178141913}
 --- !u!65 &1029684408
 BoxCollider:
@@ -4801,18 +4801,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 0
   SpawnSpecies: 3
-  BallSprites:
-  - {fileID: 21300000, guid: efd9769a06fdb8d46a055b3fe93b2146, type: 3}
-  - {fileID: 21300000, guid: 21dfdcad3647fa145997775584e0bdc8, type: 3}
-  - {fileID: 21300000, guid: 2952a68ff2c8102429863296a5c48d11, type: 3}
-  - {fileID: 21300000, guid: 269df0e629d4d3244a9802c6025ec199, type: 3}
-  - {fileID: 21300000, guid: 625bf7f68dafab34485bcdc71b173d4d, type: 3}
-  - {fileID: 21300000, guid: 42744e800e7de0a40a8b8ef81ed5fc63, type: 3}
-  - {fileID: 21300000, guid: 29c1f8ad056c83143a5f9d476ec28fb4, type: 3}
-  - {fileID: 21300000, guid: 14f6042b54e24db40be37efbe1cda475, type: 3}
-  - {fileID: 21300000, guid: 10bacb333774dfe46b3942e59300ef86, type: 3}
-  - {fileID: 21300000, guid: bac4aaded028d48438e8f6172aa3a81c, type: 3}
-  - {fileID: 21300000, guid: 63a2d6b4248fce14cb7256c2e26ec756, type: 3}
   lastBall: {fileID: 188048582747785482, guid: abb9a95b7c634274d8fbcdf08661a11e, type: 3}
   spawnDelaytime: 0
   fruitData: {fileID: 11400000, guid: c0173ff8fff8f5b499b65f12dfae5efa, type: 2}
@@ -7782,7 +7770,7 @@ GameObject:
   - component: {fileID: 1504187735}
   - component: {fileID: 1504187736}
   m_Layer: 5
-  m_Name: Fruit_Sprite
+  m_Name: Fruit_Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7812,37 +7800,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1504187734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+  m_Script: {fileID: 11500000, guid: d5c5ca47aa5c01740810b7c66662099f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 30
+    absolute: 0
   rightAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: -30
+    absolute: 0
   bottomAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 39
+    absolute: 0
   topAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: -26
+    absolute: 0
   updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 100
-  mHeight: 101
-  mDepth: 1
+  mHeight: 100
+  mDepth: 0
   boundless: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 0.990099
+  aspectRatio: 1
   mType: 0
   mFillDirection: 4
   mFillAmount: 1
@@ -7856,10 +7844,16 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 114000010996257438, guid: 4287c1ecfc55dbe46b16761ca7acd1df, type: 3}
-  mSpriteName: inn_star
+  mRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  mTexture: {fileID: 0}
+  mShader: {fileID: 4800000, guid: e75727d9555d9d14ca51d91908c681bc, type: 3}
+  mBorder: {x: 0, y: 0, z: 0, w: 0}
   mFixedAspect: 0
-  mFillCenter: 1
 --- !u!1 &1511457824
 GameObject:
   m_ObjectHideFlags: 0
@@ -8999,6 +8993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651915561}
+  - component: {fileID: 1651915562}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -9023,6 +9018,69 @@ Transform:
   - {fileID: 890425179}
   m_Father: {fileID: 674350209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1651915562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651915560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c5ca47aa5c01740810b7c66662099f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  rightAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  bottomAnchor:
+    target: {fileID: 0}
+    relative: 0
+    absolute: 0
+  topAnchor:
+    target: {fileID: 0}
+    relative: 1
+    absolute: 0
+  updateAnchors: 1
+  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mPivot: 4
+  mWidth: 100
+  mHeight: 100
+  mDepth: 0
+  boundless: 0
+  mMat: {fileID: 0}
+  autoResizeBoxCollider: 0
+  hideIfOffScreen: 0
+  keepAspectRatio: 0
+  aspectRatio: 1
+  mType: 0
+  mFillDirection: 4
+  mFillAmount: 1
+  mInvert: 0
+  mFlip: 0
+  mApplyGradient: 0
+  mGradientTop: {r: 1, g: 1, b: 1, a: 1}
+  mGradientBottom: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  centerType: 1
+  leftType: 1
+  rightType: 1
+  bottomType: 1
+  topType: 1
+  mRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  mTexture: {fileID: 0}
+  mShader: {fileID: 4800000, guid: e75727d9555d9d14ca51d91908c681bc, type: 3}
+  mBorder: {x: 0, y: 0, z: 0, w: 0}
+  mFixedAspect: 0
 --- !u!1 &1680129205
 GameObject:
   m_ObjectHideFlags: 0

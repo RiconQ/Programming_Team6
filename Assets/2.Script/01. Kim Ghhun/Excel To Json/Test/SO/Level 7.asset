@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 7
     name: "\uBC30"
-    scaleX: 1.25
-    scaleY: 1.25
-    mass: 4
+    scaleX: 1
+    scaleY: 1
+    mass: 59.7
     score: 28
     spawnProb: 0
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Pear
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

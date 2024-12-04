@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 4
     name: "\uD55C\uB77C\uBD09"
-    scaleX: 0.8
-    scaleY: 0.8
-    mass: 2.5
+    scaleX: 0.63
+    scaleY: 0.63
+    mass: 30.6
     score: 10
     spawnProb: 0.2
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: Hanrabong
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

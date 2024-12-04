@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 2
     name: "\uB538\uAE30"
-    scaleX: 0.5
-    scaleY: 0.5
-    mass: 1.5
+    scaleX: 0.38
+    scaleY: 0.38
+    mass: 11.2
     score: 3
     spawnProb: 0.2
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: StrawBerry
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}

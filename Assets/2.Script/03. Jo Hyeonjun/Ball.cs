@@ -21,7 +21,7 @@ public class Ball : MonoBehaviour
     public ParticleSystem effect;
     public Rigidbody2D rigid;
     public CircleCollider2D circle_col;
-    [SerializeField] private UISprite sprite;
+    [SerializeField] private UITexture texture;
 
     // [JSON ����] ���� ���� ����
     [Header("Info")]
@@ -62,7 +62,7 @@ public class Ball : MonoBehaviour
         // ���� ������Ʈ �ҷ�����
         rigid = GetComponent<Rigidbody2D>();
         circle_col = GetComponent<CircleCollider2D>();
-        sprite = GetComponent<UISprite>();
+        texture = GetComponent<UITexture>();
 
         lineRenderer = GetComponent<LineRenderer>();
     }
@@ -121,9 +121,9 @@ public class Ball : MonoBehaviour
 
         // this.GetComponent<CircleCollider2D>().radius = 47;
         rigid.mass = GetBallMass(level);
-        sprite.atlas = fruitData.atlas;
+        // sprite.atlas = fruitData.atlas; [장시진 - 주석]
 
-        sprite.spriteName = GetBallSprite(level);
+        texture.mainTexture = GetBallTexture(level);
 
 
         //   Debug.Log($"Last Ball - Level : {level}, Sprite : {sprite.spriteName}");
@@ -435,7 +435,7 @@ public class Ball : MonoBehaviour
         if (collision.CompareTag("Finish"))
         {
             deadTime += Time.deltaTime;
-            if (deadTime > warningTime) sprite.color = new Color(0.8f, 0.2f, 0.2f);
+            if (deadTime > warningTime) texture.color = new Color(0.8f, 0.2f, 0.2f);
             if (deadTime > failTime)
             {
                 GameManager.Instance.GameOver();
@@ -450,7 +450,7 @@ public class Ball : MonoBehaviour
         {
             // 탈락 존에 머물러 있다가 벗어난 과일을 빨간색에서 원래대로
             deadTime = 0;
-            sprite.color = Color.white;
+            texture.color = Color.white;
         }
     }
 
@@ -492,6 +492,9 @@ public class Ball : MonoBehaviour
 
     private float GetBallMass(int level) => fruitData.fruits[level - 1].attribute.mass;
     private string GetBallSprite(int level) => fruitData.fruits[level - 1].attribute.imgName;
+
+    public Texture2D GetBallTexture(int level) => fruitData.fruits[level - 1].attribute.texture;
+
     private int GetBallScore(int level) => fruitData.fruits[level - 1].attribute.score;
 
 }

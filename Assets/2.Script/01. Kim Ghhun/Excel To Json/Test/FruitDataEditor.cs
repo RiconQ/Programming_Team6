@@ -44,6 +44,7 @@ public class FruitDataEditor : Editor
             if (!string.IsNullOrEmpty(jsonFilePath))
             {
                 fruitData.UpdateFruitAttribute(jsonFilePath);
+                LoadAndAssignTextures(fruitData);
                 EditorUtility.SetDirty(fruitData);
                 Debug.Log("Update Attribute");
             }
@@ -65,6 +66,31 @@ public class FruitDataEditor : Editor
         }
         
         GUILayout.Space(10);
+    }
+
+    private void LoadAndAssignTextures(FruitDataImporter fruitData)
+    {
+        string fruitImageFileFolderPath = "Fruit_Images";
+
+        foreach (var fruit in fruitData.fruits)
+        {            
+            if (fruit != null && !string.IsNullOrEmpty(fruit.attribute.imgName))
+            {
+                // Resources에서 텍스처 로드
+                string fullImagePath = $"{fruitImageFileFolderPath}/{fruit.attribute.imgName}";
+                Texture2D texture = Resources.Load<Texture2D>(fullImagePath);
+
+                if (texture != null)
+                {
+                    fruit.attribute.texture = texture; // 텍스처 할당
+                    Debug.Log($"Texture assigned for {fruit.attribute.imgName}");
+                }
+                else
+                {
+                    Debug.LogWarning($"Texture not found for {fruit.attribute.imgName} at {fullImagePath}");
+                }
+            }
+        }
     }
 }
 #endif

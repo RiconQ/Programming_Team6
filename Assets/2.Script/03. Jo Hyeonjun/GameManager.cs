@@ -17,8 +17,7 @@ public class GameManager : MonoBehaviour
     public int SpawnSpecies; // [조절 대상] 스폰되는 가짓 수. (1 = 최소 레벨 구슬만 등장)
 
 
-    [Header("----------Object")]
-    public Sprite[] BallSprites; // JSON 적용 이후 미사용 - 구슬 스프라이트
+    [Header("----------Object")]    
     public Ball lastBall; // 다음에 나올 공
     public float spawnDelaytime = 0.3f;
     private int waitBallLv; // 예고된 공의 레벨

@@ -15,11 +15,11 @@ MonoBehaviour:
   attribute:
     level: 9
     name: "\uD30C\uC778\uC560\uD50C"
-    scaleX: 1.55
-    scaleY: 1.55
-    mass: 5
+    scaleX: 1.25
+    scaleY: 1.25
+    mass: 79.1
     score: 45
     spawnProb: 0
-    itemProb: 0.5
+    itemProb: 0.1
     imgName: PineApple
-    atlas: {fileID: 3860080789952859003, guid: ea0bc1b88bfa4db4ea8e24cb46e641c4, type: 3}
+    texture: {fileID: 0}
