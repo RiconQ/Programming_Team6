@@ -138,9 +138,13 @@ public class GameManager : MonoBehaviour
         instant.name = "Ball " + BallPool.Count;
         Ball instantBall = instant.GetComponent<Ball>();
 
+        //    GameObject instantEffectOBJ = Instantiate(effectPrefab, effectGroup);
+        //    ParticleSystem instantEffect = instantEffectOBJ.GetComponent<ParticleSystem>();
+        //    instantBall.effect = instantEffect;
+
         GameObject instantEffectOBJ = Instantiate(effectPrefab, effectGroup);
-        ParticleSystem instantEffect = instantEffectOBJ.GetComponent<ParticleSystem>();
-        instantBall.effect = instantEffect;
+        NGUIAnimator ani=instantEffectOBJ.GetComponent<NGUIAnimator>();
+        instantBall.animator = ani;
 
         BallPool.Add(instantBall);
 
@@ -184,7 +188,7 @@ public class GameManager : MonoBehaviour
         waitBallLv = GetSpawnLevel();
         OnWaitBallLvChanged?.Invoke(waitBallLv);
 
-        SoundManager.instance.PlaySFX("Next");
+    //    SoundManager.instance.PlaySFX("Next");
         StartCoroutine(NextBall_co());
     }
 

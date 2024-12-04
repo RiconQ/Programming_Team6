@@ -25,6 +25,7 @@ public class ItemManager : MonoBehaviour
     public ItemReward itemReward;
     [HideInInspector] public RewardTable rewardTable;
     [HideInInspector] public ItemInfo itemInfo;
+    [HideInInspector] public int itemCount=0;  // 생성된 아이템 갯수 -> 박스 미리 들어감 방지
 
     [Header("----------Item Duration")]
     [SerializeField] GameObject itemToGo;
@@ -51,34 +52,61 @@ public class ItemManager : MonoBehaviour
         rewardTable = SelectUserLevel();
     }
 
-    public void StartDelayBeforeHideBox_co()
+    public void StartDelayBeforeHideBox()
     {
-        StartCoroutine(DelayBeforeHideBox());
+        StartCoroutine(DelayBeforeHideBox_co());
 
     }
-    private IEnumerator DelayBeforeHideBox()
+    private IEnumerator DelayBeforeHideBox_co()
     {
-        // 설정된 시간만큼 대기
-        yield return new WaitForSeconds(delayBeforeHide);
+        // 초기 대기 시간
+        float currentDelay = delayBeforeHide;
 
-        // HideBox 호출
-        StartMoveBox(originPos);
-    }
-
-    public void StartMoveBox(Vector3 _targetPos)
-    {
-        StartCoroutine(MoveBox_co(_targetPos));
-    }
-
-
-    private IEnumerator MoveBox_co(Vector3 _targetPos)
-    {
-        while (Vector3.Distance(sprite_Box.transform.position, _targetPos) > 0.01f)
+        while (true)
         {
-            sprite_Box.transform.position = Vector3.MoveTowards(sprite_Box.transform.position, _targetPos, moveSpeed * Time.deltaTime);
+            if (itemCount <= 0)
+            {
+                // 설정된 대기 시간만큼 대기
+                yield return new WaitForSeconds(currentDelay);
+
+                // 대기 중 itemCount가 증가하면 대기를 연장
+                if (itemCount > 0)
+                {
+                    Debug.Log("itemCount 증가");
+                    currentDelay += 0.3f; 
+                }
+                else
+                {
+                    // itemCount가 여전히 0 이하이면 박스를 숨김
+                    Debug.Log("박스 숨기기 실행");
+                    StartMoveBox(originPos);
+                    yield break; // 코루틴 종료
+                }
+            }
+            else
+            {
+                // itemCount가 0보다 크면 루프를 벗어나지 않고 계속 확인
+                Debug.Log("아이템 카운트가 여전히 남아 있음");
+                yield return null;
+            }
+        }
+    }
+
+
+    public void StartMoveBox(Vector3 _target)
+    {
+        StartCoroutine(MoveBox_co(_target));
+    }
+
+
+    private IEnumerator MoveBox_co(Vector3 _target)
+    {
+        while (Vector3.Distance(sprite_Box.transform.position, _target) > 0.01f)
+        {
+            sprite_Box.transform.position = Vector3.MoveTowards(sprite_Box.transform.position, _target, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        sprite_Box.transform.position = _targetPos;
+        sprite_Box.transform.position = _target;
     }
 
 
@@ -101,14 +129,20 @@ public class ItemManager : MonoBehaviour
             // 아이템을 인벤토리에 추가
             inventoryList.Add(item);
 
-            Vector3 target = targetBox.transform.position;
-            StartMoveBox(target);
-            var particle = item.GetComponentInChildren<ParticleSystem>(true);
-            particle.gameObject.SetActive(true); 
+            StartMoveBox_a();
+                        var particle = item.GetComponentInChildren<ParticleSystem>(true);
+            particle.gameObject.SetActive(true);
+            particle.gameObject.transform.localPosition = Vector3.zero;
             // 아이템을 화면에서 제거
+            itemCount += 1;
             Extension.MoveCurve(item, itemToGo, controlPoint, 1.0f);
             Debug.Log($"아이템: {item.name}이 인벤토리로 이동");
         }
+    }
+
+    public void StartMoveBox_a()
+    {
+        StartMoveBox(targetPos);
     }
 
 

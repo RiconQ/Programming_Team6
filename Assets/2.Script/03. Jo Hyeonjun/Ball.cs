@@ -18,7 +18,8 @@ public class Ball : MonoBehaviour
 
     // ���� ������Ʈ
     [Header("Component")]
-    public ParticleSystem effect;
+   // public ParticleSystem effect;
+    public NGUIAnimator animator;
     public Rigidbody2D rigid;
     public CircleCollider2D circle_col;
     [SerializeField] private UISprite sprite;
@@ -228,7 +229,6 @@ public class Ball : MonoBehaviour
     private bool isAttach;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        StartCoroutine(AttachSFX_co());
         // 만약 드랍한 구슬이었다면
         if (!isDropped)
         {
@@ -245,7 +245,6 @@ public class Ball : MonoBehaviour
             {
                 Vector3 myPos = transform.position;
                 Vector3 otherPos = other.transform.position;
-
                 if (isBouns) GetItem(this);
                 if (other.isBouns) GetItem(other);
 
@@ -262,6 +261,8 @@ public class Ball : MonoBehaviour
                     if (level < 11)
                     {
                         GameManager.Instance.AppearNextLevel(targetPos, level + 1);
+                        StartCoroutine(AttachSFX_co());
+                        EffectPlay(targetPos);
                     }
                 }
             }
@@ -423,8 +424,8 @@ public class Ball : MonoBehaviour
     {
         if (isAttach) yield break;
         isAttach = true;
-        SoundManager.instance.PlaySFX("Attach");
-        yield return new WaitForSeconds(0.2f);
+        SoundManager.instance.PlaySFX("Next");
+        yield return new WaitForSeconds(0.1f);
         isAttach = false;
     }
 
@@ -455,11 +456,15 @@ public class Ball : MonoBehaviour
     }
 
 
-    private void EffectPlay()
+    private void EffectPlay(Vector3 pos)
     {
-        effect.transform.position = transform.position;
-        effect.transform.localScale = transform.localScale;
-        effect.Play();
+        // effect.transform.position = transform.position;
+        // effect.transform.localScale = transform.localScale;
+        // effect.Play();
+
+        animator.transform.position = pos;
+        animator.transform.localScale = transform.localScale;
+        animator.PlayAnimation();
     }
 
 
