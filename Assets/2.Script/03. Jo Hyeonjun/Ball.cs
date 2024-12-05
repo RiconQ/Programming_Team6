@@ -325,6 +325,7 @@ public class Ball : MonoBehaviour
 
     private void GetItem()
     {
+        if (GameManager.Instance.isGameOver) return;
         foreach (var item in generatedItems)
         {
             // 부모 객체로부터 아이템 분리

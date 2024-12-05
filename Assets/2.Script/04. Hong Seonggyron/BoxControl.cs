@@ -17,12 +17,14 @@ public class BoxControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Item"))
         {
             collision.transform.localScale = Vector3.one;
-            // 충돌한 오브젝트 비활성화
+            // 아이템 비활성화
             collision.gameObject.SetActive(false);
             ItemManager.instance.itemCount -= 1;
-            //  Debug.Log(ItemManager.instance.itemCount);
+
+            //아이템 파티클 해제
             var itemParticle = collision.gameObject.GetComponentInChildren<ParticleSystem>();
             itemParticle.gameObject.SetActive(false);
+            //창고 파티클 활성화
             effect.SetActive(true);
 
             // 중복 추가 방지

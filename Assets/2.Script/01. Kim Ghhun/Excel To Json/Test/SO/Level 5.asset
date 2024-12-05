@@ -20,6 +20,6 @@ MonoBehaviour:
     mass: 40.3
     score: 15
     spawnProb: 0.2
-    itemProb: 0.1
+    itemProb: 1
     imgName: Persimmon
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: e009f917422bfcb4c8077826586788f7, type: 3}

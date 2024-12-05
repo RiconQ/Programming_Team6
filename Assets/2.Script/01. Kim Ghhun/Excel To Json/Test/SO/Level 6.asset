@@ -20,6 +20,6 @@ MonoBehaviour:
     mass: 50
     score: 21
     spawnProb: 0
-    itemProb: 0.1
+    itemProb: 1
     imgName: Apple
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 05987949f3a19dc4a99d4cf5464f24c9, type: 3}

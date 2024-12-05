@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public int score { get; private set; }
     public int maxScore { get; private set; }
-    private bool isGameOver;
+    public bool isGameOver;
     public bool debugMode = false;
 
     [Header("----------Setting")]

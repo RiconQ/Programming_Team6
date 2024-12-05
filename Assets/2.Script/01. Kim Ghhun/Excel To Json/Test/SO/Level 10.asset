@@ -20,6 +20,6 @@ MonoBehaviour:
     mass: 88.8
     score: 55
     spawnProb: 0
-    itemProb: 0.1
+    itemProb: 1
     imgName: Melon
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 1c6a9741ea26acd4b89f1779a9bcbfdc, type: 3}

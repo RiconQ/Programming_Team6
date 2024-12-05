@@ -1,6 +1,7 @@
 using DG.Tweening.Plugins.Core.PathCore;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
@@ -25,7 +26,7 @@ public class ItemManager : MonoBehaviour
     public ItemReward itemReward;
     [HideInInspector] public RewardTable rewardTable;
     [HideInInspector] public ItemInfo itemInfo;
-    [HideInInspector] public int itemCount=0;  // 생성된 아이템 갯수 -> 박스 미리 들어감 방지
+ public int itemCount = 0;  // 생성된 아이템 갯수 -> 박스 미리 들어감 방지
 
     [Header("----------Item Duration")]
     [SerializeField] GameObject itemToGo;
@@ -72,21 +73,21 @@ public class ItemManager : MonoBehaviour
                 // 대기 중 itemCount가 증가하면 대기를 연장
                 if (itemCount > 0)
                 {
-                    Debug.Log("itemCount 증가");
-                    currentDelay += 0.3f; 
+                 //   Debug.Log("itemCount 증가");
+                    currentDelay += 0.3f;
                 }
                 else
                 {
                     // itemCount가 여전히 0 이하이면 박스를 숨김
-                    Debug.Log("박스 숨기기 실행");
-                    StartMoveBox(originPos);
+                  //  Debug.Log("박스 숨기기 실행");
+                    ReturnBox();
                     yield break; // 코루틴 종료
                 }
             }
             else
             {
                 // itemCount가 0보다 크면 루프를 벗어나지 않고 계속 확인
-                Debug.Log("아이템 카운트가 여전히 남아 있음");
+              //  Debug.Log("아이템 카운트가 여전히 남아 있음");
                 yield return null;
             }
         }
@@ -99,14 +100,48 @@ public class ItemManager : MonoBehaviour
     }
 
 
+    public bool isMoving = false;
+
     private IEnumerator MoveBox_co(Vector3 _target)
     {
+        if (isMoving) yield break; // 이미 이동 중이면 실행 중단
+
+        isMoving = true;
+
+        while (!Mathf.Approximately(Vector3.Distance(sprite_Box.transform.position, _target), 0f))
+        {
+            sprite_Box.transform.position = Vector3.MoveTowards(
+                sprite_Box.transform.position, _target, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        sprite_Box.transform.position = _target; // 목표 위치로 정확히 설정
+
+        isMoving = false; // 이동 종료
+    }
+
+
+    private IEnumerator ReturnBox_co(Vector3 _target)
+    {
+        
         while (Vector3.Distance(sprite_Box.transform.position, _target) > 0.01f)
         {
+            if (itemCount > 0)
+            {
+                StartMoveBox(targetPos);
+                yield break;
+            }
             sprite_Box.transform.position = Vector3.MoveTowards(sprite_Box.transform.position, _target, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        sprite_Box.transform.position = _target;
+        // sprite_Box.transform.position = _target;
+       
+    }
+
+
+    public void ReturnBox()
+    {
+        StartCoroutine(ReturnBox_co(originPos));
     }
 
 
@@ -126,11 +161,12 @@ public class ItemManager : MonoBehaviour
     {
         foreach (var item in items)
         {
+            if (GameManager.Instance.isGameOver) return;
             // 아이템을 인벤토리에 추가
             inventoryList.Add(item);
 
-            StartMoveBox_a();
-                        var particle = item.GetComponentInChildren<ParticleSystem>(true);
+            StartMoveBox(targetPos);
+            var particle = item.GetComponentInChildren<ParticleSystem>(true);
             particle.gameObject.SetActive(true);
             particle.gameObject.transform.localPosition = Vector3.zero;
             // 아이템을 화면에서 제거
@@ -140,10 +176,6 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void StartMoveBox_a()
-    {
-        StartMoveBox(targetPos);
-    }
 
 
 

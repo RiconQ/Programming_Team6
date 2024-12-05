@@ -20,6 +20,6 @@ MonoBehaviour:
     mass: 79.1
     score: 45
     spawnProb: 0
-    itemProb: 0.1
+    itemProb: 1
     imgName: PineApple
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 913f6b4a8d9b7454d851a629427a15fa, type: 3}

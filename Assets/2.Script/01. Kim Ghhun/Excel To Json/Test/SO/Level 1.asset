@@ -20,6 +20,6 @@ MonoBehaviour:
     mass: 1.5
     score: 1
     spawnProb: 0.2
-    itemProb: 0.1
+    itemProb: 1
     imgName: Cherry
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: ad1181b66d04e0f40a0f57c9a41ed253, type: 3}
