@@ -44,6 +44,12 @@ public class GameManager : MonoBehaviour
     public Transform leftWall;
     public Transform rightWall;
 
+    [Header("----------Ticket")]
+    private int ticket; // 남은 티켓의 수
+    private double overTime; // 마지막 티켓 충전 후 지난시간
+    [SerializeField] private double chargeTime = 30; // 티켓 충전에 걸리는 시간 (디버그용 으로 30초)
+    [SerializeField] private int maxTicket = 20; // 티켓 최대 보관 수 (20)
+
     [Header("----------About Item")]
     [SerializeField] public int userLevel;
 
@@ -95,6 +101,31 @@ public class GameManager : MonoBehaviour
         waitBallLv = GetSpawnLevel();
         NextBall();
 
+        // 티켓 관련 메소드
+        if (PlayerPrefs.HasKey("ticket"))
+        {
+            // 저장되어 있던 티켓 수
+            ticket = PlayerPrefs.GetInt("ticket");
+            // 경과한 시간(초)
+            overTime = (DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("checkTime"))).TotalSeconds;
+            // 티켓이 max이거나, 경과한 시간이 충전시간 미만이 되면 반복문 종료
+            while (ticket < maxTicket && overTime > chargeTime)
+            {
+                overTime -= chargeTime;
+                ticket++;
+            }
+            if (ticket == maxTicket) overTime = 0;
+            PlayerPrefs.SetInt("ticket", ticket); // 로컬 별 최초 실행시에는 max 부여
+            PlayerPrefs.SetString("checkTime", DateTime.Now.AddSeconds(-overTime).ToString("o"));
+        }
+        else
+        {
+            print("New");
+            PlayerPrefs.SetInt("ticket", maxTicket); // 로컬 별 최초 실행시에는 max 부여
+            PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o")); // 체크 타임 최초 설정
+        }
+        ShowTicketInfo();
+
         // 스폰 구슬의 레벨 최댓값의 scale + 0.015f
         float borderFix = GetMaxSpawnLevelScale() + 0.015f;
         borderLeft = leftWall.position.x + leftWall.lossyScale.x / 2 + borderFix;
@@ -114,19 +145,66 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // 티켓 관련 정보를 갱신하는 메소드
+    private void ShowTicketInfo()
+    {
+        int cooltime = (int)(chargeTime - overTime);
+        int[] cooltime_ = new int[3] { cooltime / 3600, (cooltime % 3600) / 60, cooltime % 60 };
+        if (ticket == maxTicket) cooltime_[2] = 0;
+        UIManager.Instance.ticket.transform.GetChild(0).GetComponent<UILabel>().text = $"{cooltime_[0]:D2}:{cooltime_[1]:D2}:{cooltime_[2]:D2}";
+        UIManager.Instance.ticket.transform.GetChild(1).GetComponent<UILabel>().text = $"{ticket:D2}/{maxTicket}";
+    }
+
+    // 티켓이 사용되는 상황
+    public void TicketUsed()
+    {
+        if (ticket > 0)
+        {
+            Debug.Log("Get Item!");
+            if (ticket == maxTicket)
+            {
+                PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o"));
+            }
+            ticket--;
+        }
+        // 티켓 0 이었으면
+        else
+        {
+            Debug.Log("티켓이 없어서 아이템 못 먹음");
+        }
+        PlayerPrefs.SetInt("ticket", ticket);
+    }
+
     int frameCnt = 0;
     private void Update()
     {
-        // 5 프레임마다 궤적 선 갱신
+        // 5 프레임마다 
         frameCnt++;
         if (frameCnt >= 5)
         {
-            frameCnt = 0;
+            // (드랍할 공이 대기 상태라면) 궤적 선 갱신
             if (lastBall != null)
             {
                 if (!lastBall.rigid.simulated) lastBall.DrawLine(true);
             }
+
+            // (티켓 max 미만이면) 쿨타임 갱신
+            if (ticket < maxTicket)
+            {
+                overTime += 1.0 * frameCnt / Application.targetFrameRate;
+                if (overTime > chargeTime)
+                {
+                    ticket++;
+                    PlayerPrefs.SetInt("ticket", ticket);
+                    PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o"));
+                    overTime -= chargeTime;
+                }
+                ShowTicketInfo();
+            }
+            frameCnt = 0;
         }
+
+        // 이건 디버그용. 자동모드 키면 자동으로 드랍
         if (debugMode) DropTheBall();
     }
 

@@ -71,6 +71,7 @@ public class Ball : MonoBehaviour
     private void OnEnable()
     {
         var ballScale = GetBallScale(level);
+        transform.localRotation = Quaternion.Euler(0, 0, 30);
 
         // 레벨에 따른 Collider 조정
         int offsetX = (level == 8) ? 3 : 0;
@@ -205,7 +206,6 @@ public class Ball : MonoBehaviour
         // transform �ʱ�ȭ
         transform.localPosition = Vector3.zero;
         // transform.localScale = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
         // ���� �ʱ�ȭ
         // PhysicChange(false);
 
@@ -297,13 +297,12 @@ public class Ball : MonoBehaviour
     // 아이템을 획득했을 때 메소드
     private void GetItem(Ball b)
     {
+        if (GameManager.Instance.isGameOver) return;
         // 아이템 속성 없애기
         b.isBouns = false;
         // b.sprite.color = Color.white;
         // 아이템 획득 효과
-        Debug.Log("Get Bouns!");
-        GameManager.Instance.Addscore(10);
-
+        GameManager.Instance.TicketUsed();
     }
 
     public void Hide()
@@ -325,7 +324,6 @@ public class Ball : MonoBehaviour
 
     private void GetItem()
     {
-        if (GameManager.Instance.isGameOver) return;
         foreach (var item in generatedItems)
         {
             // 부모 객체로부터 아이템 분리

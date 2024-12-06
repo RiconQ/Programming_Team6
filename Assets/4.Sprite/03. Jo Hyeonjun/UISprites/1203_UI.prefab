@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1572471750801797902}
   - component: {fileID: 3860080789952859003}
   m_Layer: 0
-  m_Name: UISprites
+  m_Name: 1203_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +44,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: ec996f4bcc166024d8f3036cbb047960, type: 2}
+  material: {fileID: 2100000, guid: a22dbe5e6d8db8c49b73d1bde294def9, type: 2}
   mSprites:
-  - name: Close
-    x: 489
-    y: 221
+  - name: Background
+    x: 0
+    y: 969
+    width: 1920
+    height: 1079
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Basket_Back
+    x: 762
+    y: 269
+    width: 615
+    height: 699
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Basket_DotLine
+    x: 357
+    y: 6
+    width: 650
+    height: 4
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Basket_DotLine (Copy)
+    x: 508
+    y: 14
+    width: 650
+    height: 4
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Basket_Wall
+    x: 0
+    y: 162
+    width: 761
+    height: 806
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Close_button
+    x: 665
+    y: 22
     width: 54
     height: 58
     borderLeft: 0
@@ -59,9 +124,9 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: Drop
-    x: 739
-    y: 872
+  - name: Drop_button
+    x: 0
+    y: 9
     width: 356
     height: 152
     borderLeft: 0
@@ -72,11 +137,11 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: DropLine
-    x: 609
-    y: 118
-    width: 129
-    height: 906
+  - name: Drop_TextKor
+    x: 1378
+    y: 531
+    width: 120
+    height: 76
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -85,11 +150,11 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: GlassBox
-    x: 0
-    y: 280
-    width: 608
-    height: 744
+  - name: Fairy
+    x: 508
+    y: 19
+    width: 156
+    height: 142
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -98,22 +163,9 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: HighScore
-    x: 1418
-    y: 876
-    width: 148
-    height: 148
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
-  - name: Left
-    x: 739
-    y: 691
+  - name: Left_button
+    x: 1251
+    y: 88
     width: 164
     height: 180
     borderLeft: 0
@@ -124,11 +176,11 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: NextFruit
-    x: 1096
-    y: 852
-    width: 172
-    height: 172
+  - name: RingAndNet
+    x: 1378
+    y: 608
+    width: 336
+    height: 360
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -137,24 +189,11 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: Right
-    x: 904
-    y: 691
-    width: 164
-    height: 180
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
-  - name: Score
-    x: 1269
-    y: 876
-    width: 148
-    height: 148
+  - name: Scores
+    x: 357
+    y: 11
+    width: 150
+    height: 150
     borderLeft: 0
     borderRight: 0
     borderTop: 0
@@ -164,8 +203,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: Ticket
-    x: 0
-    y: 47
+    x: 762
+    y: 36
     width: 488
     height: 232
     borderLeft: 0
@@ -176,10 +215,23 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: 'Toggle '
-    x: 489
-    y: 37
+  - name: Toggle_Back
+    x: 1251
+    y: 7
     width: 208
+    height: 80
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: Toggle_Circle
+    x: 665
+    y: 81
+    width: 80
     height: 80
     borderLeft: 0
     borderRight: 0

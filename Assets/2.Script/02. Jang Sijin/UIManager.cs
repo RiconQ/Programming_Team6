@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIButton _rightMoveButton;
     [SerializeField] private UIButton _gameexitButton;
     [SerializeField] private UIButton _debugOnButton;
+    [SerializeField] private UIButton _handSwitchButton;
     //[SerializeField] private UIButton _itemNeedleButton;
 
     [Header("----------SubButton")]
@@ -32,7 +33,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIPanel _gameoverPanel;
 
     [Header("----------Toggle")]
-    [SerializeField] private UIToggle _uiSwitchToggle;
+    // [SerializeField] private UIToggle _uiSwitchToggle;
 
     [Header("----------Label")]
     [SerializeField] private UILabel _highScoreLabel;
@@ -43,7 +44,9 @@ public class UIManager : MonoBehaviour
    // public GameObject ItemEnvironmentBox;
    // [SerializeField] private GameObject _activezone;
    // [SerializeField] private GameObject _backGround;
-    [SerializeField] private GameObject _switchButtons;
+    [SerializeField] private GameObject controller;
+    [SerializeField] private GameObject toggle;
+    [SerializeField] public GameObject ticket;
 
 
     // 게임 매니져 싱글톤 적용
@@ -71,6 +74,8 @@ public class UIManager : MonoBehaviour
         _dropButton.onClick.Add(new EventDelegate(() => OnClickDropButton()));
         _gameexitButton.onClick.Add(new EventDelegate(() => OnClickGameExitButton()));
         _debugOnButton.onClick.Add(new EventDelegate(() => OnClickDebugOnButton()));
+        _handSwitchButton.onClick.Add(new EventDelegate(() => OnClickHandSwitchButton()));
+       // _handSwitchButton.transform.GetChild(0).GetComponent<UIButton>().onClick.Add(new EventDelegate(() => OnClickHandSwitchButton()));
 
         //_itemNeedleButton.onClick.Add(new EventDelegate(() => OnClickItemButton()));
 
@@ -91,7 +96,7 @@ public class UIManager : MonoBehaviour
         _gameoverResetButton.onClick.Add(new EventDelegate(() => OnClickGameoverResetButton())); ;
 
         // 토글
-        _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
+        // _uiSwitchToggle.onChange.Add(new EventDelegate(() => OnToggleChangedUiSwitch(_uiSwitchToggle.value)));
 
         // atlas 세팅 - 땜빵 조치
         //_nextBallTexture.atlas = GameManager.Instance.lastBall.fruitData.atlas;
@@ -225,10 +230,8 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     #endregion
-
-
-
     #region Toggle OnChanged Event Method
+    /*
     private void OnToggleChangedUiSwitch(bool isActive)
     {
         Vector3 currentPosition_s = _switchButtons.transform.position;
@@ -253,7 +256,27 @@ public class UIManager : MonoBehaviour
         }
 
     }
+    */
     #endregion
+
+    public void OnClickHandSwitchButton()
+    {
+        Vector3 tmpPos;
+        // 컨트롤러 위치 변경
+        tmpPos = controller.transform.position;
+        tmpPos.x *= -1;
+        controller.transform.position = tmpPos;
+        // 토글 위치 변경
+        tmpPos = toggle.transform.position;
+        tmpPos.x *= -1;
+        toggle.transform.position = tmpPos;
+        // 토글 상태 원 위치 변경
+        tmpPos = ticket.transform.localPosition;
+        tmpPos.x *= -1;
+        ticket.transform.localPosition = tmpPos;
+    }
+
+    
 
     #region Update UI Method
 
