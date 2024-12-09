@@ -11,13 +11,14 @@ public class GameManager : MonoBehaviour
     public int score { get; private set; }
     public int maxScore { get; private set; }
     public bool isGameOver;
+    public bool canGetItem = false;
     public bool debugMode = false;
 
     [Header("----------Setting")]
     public int SpawnSpecies; // [조절 대상] 스폰되는 가짓 수. (1 = 최소 레벨 구슬만 등장)
 
 
-    [Header("----------Object")]    
+    [Header("----------Object")]
     public Ball lastBall; // 다음에 나올 공
     public float spawnDelaytime = 0.3f;
     private int waitBallLv; // 예고된 공의 레벨
@@ -39,16 +40,14 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text maxScoreText;
     public GameObject GameOverUI;
-
-    [Header("----------Wall")]
-    public Transform leftWall;
-    public Transform rightWall;
+    public GameObject wall;
+    private float borderFix;
 
     [Header("----------Ticket")]
-    private int ticket; // 남은 티켓의 수
-    private double overTime; // 마지막 티켓 충전 후 지난시간
     [SerializeField] private double chargeTime = 30; // 티켓 충전에 걸리는 시간 (디버그용 으로 30초)
     [SerializeField] private int maxTicket = 20; // 티켓 최대 보관 수 (20)
+    private int ticket; // 남은 티켓의 수
+    private double overTime; // 마지막 티켓 충전 후 지난시간
 
     [Header("----------About Item")]
     [SerializeField] public int userLevel;
@@ -112,7 +111,8 @@ public class GameManager : MonoBehaviour
             while (ticket < maxTicket && overTime > chargeTime)
             {
                 overTime -= chargeTime;
-                ticket++;
+                ticket++; 
+                canGetItem = true;
             }
             if (ticket == maxTicket) overTime = 0;
             PlayerPrefs.SetInt("ticket", ticket); // 로컬 별 최초 실행시에는 max 부여
@@ -123,13 +123,17 @@ public class GameManager : MonoBehaviour
             print("New");
             PlayerPrefs.SetInt("ticket", maxTicket); // 로컬 별 최초 실행시에는 max 부여
             PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o")); // 체크 타임 최초 설정
+            canGetItem = true;
         }
         ShowTicketInfo();
 
         // 스폰 구슬의 레벨 최댓값의 scale + 0.015f
-        float borderFix = GetMaxSpawnLevelScale() + 0.015f;
-        borderLeft = leftWall.position.x + leftWall.lossyScale.x / 2 + borderFix;
-        borderRight = rightWall.position.x - rightWall.lossyScale.x / 2 - borderFix;
+        BoxCollider2D[] Wallcols = wall.GetComponents<BoxCollider2D>();
+        borderLeft = Wallcols[0].bounds.max.x + 0.03f;
+        borderRight = Wallcols[1].bounds.min.x - 0.03f;
+        print("L" + borderLeft);
+        print("R" + borderRight);
+
 
         //itemReward.Check();
         //Debug.Log("Check End");
@@ -137,7 +141,7 @@ public class GameManager : MonoBehaviour
         // 유저 레벨 판별
 
 
-      
+
         //  Debug.Log($"리스트카운트: {rewardTable.reward.Count}");
         //     Debug.Log(itemReward.rewardDataTable.)
         //  Debug.Log(itemReward.rewardDataTable[0].reward.Count);
@@ -198,6 +202,7 @@ public class GameManager : MonoBehaviour
                     PlayerPrefs.SetInt("ticket", ticket);
                     PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o"));
                     overTime -= chargeTime;
+                    canGetItem = true;
                 }
                 ShowTicketInfo();
             }
@@ -220,7 +225,7 @@ public class GameManager : MonoBehaviour
         //    instantBall.effect = instantEffect;
 
         GameObject instantEffectOBJ = Instantiate(effectPrefab, effectGroup);
-        NGUIAnimator ani=instantEffectOBJ.GetComponent<NGUIAnimator>();
+        NGUIAnimator ani = instantEffectOBJ.GetComponent<NGUIAnimator>();
         instantBall.animator = ani;
 
         BallPool.Add(instantBall);
@@ -259,13 +264,17 @@ public class GameManager : MonoBehaviour
 
         //lastBall.gameObject.GetComponent<SpriteRenderer>().sprite = BallSprites[lastBall.level];
         lastBall.gameObject.SetActive(true);
+        borderFix = lastBall.transform.lossyScale.x * lastBall.GetComponent<CircleCollider2D>().radius * 6;
+
+        // 초기 과일 위치값 조정(범위 외 방지)
+        MoveBallInBorder(lastBall.transform.position.x);
         // 드랍하기 전의 공이므로 공의 rigid Off
         lastBall.rigid.simulated = false;
         lastBall.DrawLine(true);
         waitBallLv = GetSpawnLevel();
         OnWaitBallLvChanged?.Invoke(waitBallLv);
 
-    //    SoundManager.instance.PlaySFX("Next");
+        //    SoundManager.instance.PlaySFX("Next");
         StartCoroutine(NextBall_co());
     }
 
@@ -314,7 +323,7 @@ public class GameManager : MonoBehaviour
         if (lastBall == null) return;
         if (lastBall.rigid.simulated) return;
         lastBall.DrawLine(false);
-        lastBall.transform.position += Vector3.right * direction * 0.1f;
+        lastBall.transform.position += Vector3.right * direction * 0.05f;
         MoveBallInBorder(lastBall.transform.position.x);
         lastBall.DrawLine(true);
     }
@@ -322,7 +331,7 @@ public class GameManager : MonoBehaviour
     // 드랍할 공의 범위 아웃 체크
     public void MoveBallInBorder(float posX)
     {
-        posX = Mathf.Clamp(posX, borderLeft, borderRight) + UnityEngine.Random.Range(-0.01f, 0.01f);
+        posX = Mathf.Clamp(posX, borderLeft + borderFix, borderRight - borderFix) + UnityEngine.Random.Range(-0.01f, 0.01f);
         lastBall.transform.position = new Vector3(posX, lastBall.transform.position.y, 0);
     }
 
@@ -334,6 +343,8 @@ public class GameManager : MonoBehaviour
         if (lastBall.scaleFrames > 0) return;
         recentX = lastBall.transform.position.x;
         lastBall.Drop();
+        // 티켓 0에서 드랍 누르면 아이템 획득 불가능 상태
+        if (ticket < 1) canGetItem = false;
         // 공이 무언가에 닿고 나서야 null이 되어 다음 드랍 가능하도록 변경
         // lastBall = null;
     }
@@ -419,11 +430,4 @@ public class GameManager : MonoBehaviour
         }
         return fruitData.fruits[0].attribute.scaleX;
     }
-
 }
-
-
-
-
-
-

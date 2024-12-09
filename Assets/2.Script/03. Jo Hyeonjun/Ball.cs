@@ -430,14 +430,14 @@ public class Ball : MonoBehaviour
     }
 
     // ������ ���� ���ο� �ӹ��� ���� �� (���� ���� ���� �޼ҵ�)
-    private float deadTime;
+    private float stayTime;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Finish"))
         {
-            deadTime += Time.deltaTime;
-            if (deadTime > warningTime) texture.color = new Color(0.8f, 0.2f, 0.2f);
-            if (deadTime > failTime)
+            stayTime += Time.deltaTime;
+            if (stayTime > warningTime) texture.color = new Color(0.8f, 0.2f, 0.2f);
+            if (stayTime > failTime)
             {
                 GameManager.Instance.GameOver();
             }
@@ -450,7 +450,7 @@ public class Ball : MonoBehaviour
         if (collision.tag == "Finish")
         {
             // 탈락 존에 머물러 있다가 벗어난 과일을 빨간색에서 원래대로
-            deadTime = 0;
+            stayTime = 0;
             texture.color = Color.white;
         }
     }
