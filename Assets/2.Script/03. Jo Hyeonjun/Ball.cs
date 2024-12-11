@@ -245,8 +245,8 @@ public class Ball : MonoBehaviour
             {
                 Vector3 myPos = transform.position;
                 Vector3 otherPos = other.transform.position;
-                if (isBouns) GetItem(this);
-                if (other.isBouns) GetItem(other);
+                // if (isBouns) GetItem(this);
+                // if (other.isBouns) GetItem(other);
 
                 // �� ��ü�� �� �Ʒ��� �ְų�, ���� ���̸� �����ʿ� ���� ��
                 if (myPos.y < otherPos.y || (myPos.y == otherPos.y && myPos.x > otherPos.x))
@@ -302,7 +302,6 @@ public class Ball : MonoBehaviour
         b.isBouns = false;
         // b.sprite.color = Color.white;
         // 아이템 획득 효과
-        GameManager.Instance.TicketUsed();
     }
 
     public void Hide()
@@ -325,15 +324,18 @@ public class Ball : MonoBehaviour
     private void GetItem()
     {
         if (GameManager.Instance.isGameOver) return;
-        foreach (var item in generatedItems)
+        if (GameManager.Instance.canGetItem)
         {
-            // 부모 객체로부터 아이템 분리
-            item.transform.SetParent(null);
+            foreach (var item in generatedItems)
+            {
+                // 부모 객체로부터 아이템 분리
+                item.transform.SetParent(null);
 
-            // 인벤토리에 추가
-            ItemManager.instance.AddItemsToInventory(generatedItems);
+                // 인벤토리에 추가
+                ItemManager.instance.AddItemsToInventory(generatedItems);
+            }
         }
-
+        GameManager.Instance.TicketUsed();
         // 생성된 아이템 리스트 초기화
         generatedItems.Clear();
         hasItem = false;

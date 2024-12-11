@@ -197,7 +197,7 @@ MonoBehaviour:
   aspectRatio: 2.6
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: 903518cc414920c4586d7893d85bb84d, type: 3}
   mText: 888888
   mFontSize: 45
   mFontStyle: 0
@@ -555,7 +555,7 @@ MonoBehaviour:
   aspectRatio: 2.6
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: 903518cc414920c4586d7893d85bb84d, type: 3}
   mText: 1234
   mFontSize: 45
   mFontStyle: 0
@@ -1397,7 +1397,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 0, b: 0, a: 0.09803922}
+  mColor: {r: 1, g: 0, b: 0, a: 0}
   mPivot: 4
   mWidth: 300
   mHeight: 700
@@ -2833,7 +2833,7 @@ MonoBehaviour:
   aspectRatio: 1.3043479
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: a804d4e108610a7499ee51b5d46b3fbe, type: 3}
   mText: "\uC810\uC218"
   mFontSize: 40
   mFontStyle: 0
@@ -3440,7 +3440,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 0, b: 0, a: 0.09803922}
+  mColor: {r: 1, g: 0, b: 0, a: 0}
   mPivot: 4
   mWidth: 300
   mHeight: 700
@@ -5934,7 +5934,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 0.8178636, b: 0, a: 0.5254902}
+  mColor: {r: 1, g: 0.8178636, b: 0, a: 0}
   mPivot: 4
   mWidth: 650
   mHeight: 4
@@ -8105,7 +8105,7 @@ MonoBehaviour:
   aspectRatio: 1.3043479
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: a804d4e108610a7499ee51b5d46b3fbe, type: 3}
   mText: "\uCD5C\uACE0\uC810\uC218"
   mFontSize: 40
   mFontStyle: 0
@@ -19114,7 +19114,7 @@ Transform:
   m_GameObject: {fileID: 1374359518}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -216, y: 0, z: 0}
+  m_LocalPosition: {x: -204, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19135,11 +19135,11 @@ MonoBehaviour:
   leftAnchor:
     target: {fileID: 741734234}
     relative: 0
-    absolute: -112
+    absolute: -100
   rightAnchor:
     target: {fileID: 741734234}
     relative: 1
-    absolute: 0
+    absolute: -20
   bottomAnchor:
     target: {fileID: 741734234}
     relative: 0
@@ -19151,7 +19151,7 @@ MonoBehaviour:
   updateAnchors: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 320
+  mWidth: 288
   mHeight: 80
   mDepth: 0
   boundless: 0
@@ -19159,10 +19159,10 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 4
+  aspectRatio: 3.6
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mTrueTypeFont: {fileID: 12800000, guid: 895c73b3fdf020b4aab869888328ea84, type: 3}
+  mFont: {fileID: 0}
   mText: "\uC67C\uC190"
   mFontSize: 45
   mFontStyle: 0
@@ -19266,7 +19266,7 @@ MonoBehaviour:
   aspectRatio: 2.25
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: a804d4e108610a7499ee51b5d46b3fbe, type: 3}
   mText: 20/20
   mFontSize: 75
   mFontStyle: 1
@@ -19664,7 +19664,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 0, b: 0, a: 0.09803922}
+  mColor: {r: 1, g: 0, b: 0, a: 0}
   mPivot: 4
   mWidth: 650
   mHeight: 4
@@ -23762,7 +23762,7 @@ MonoBehaviour:
   aspectRatio: 3.6
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mFont: {fileID: 11444848, guid: a804d4e108610a7499ee51b5d46b3fbe, type: 3}
   mText: 00:00:00
   mFontSize: 35
   mFontStyle: 0
@@ -24353,7 +24353,7 @@ Transform:
   m_GameObject: {fileID: 1927906680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 121, y: 0, z: 0}
+  m_LocalPosition: {x: 126, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24374,7 +24374,7 @@ MonoBehaviour:
   leftAnchor:
     target: {fileID: 741734234}
     relative: 0
-    absolute: 225
+    absolute: 230
   rightAnchor:
     target: {fileID: 741734234}
     relative: 1
@@ -24390,7 +24390,7 @@ MonoBehaviour:
   updateAnchors: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 3
-  mWidth: 283
+  mWidth: 278
   mHeight: 80
   mDepth: 0
   boundless: 0
@@ -24398,10 +24398,10 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 3.5375
+  aspectRatio: 3.475
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11444848, guid: 6d121d94009a54694a25cd1ee701db33, type: 3}
+  mTrueTypeFont: {fileID: 12800000, guid: 895c73b3fdf020b4aab869888328ea84, type: 3}
+  mFont: {fileID: 0}
   mText: "\uC624\uB978\uC190"
   mFontSize: 45
   mFontStyle: 0
@@ -24576,25 +24576,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950258119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
+  m_Script: {fileID: 11500000, guid: d5c5ca47aa5c01740810b7c66662099f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 0
+    absolute: -140
   rightAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: 0
+    absolute: 140
   bottomAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 0
+    absolute: 44
   topAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: 0
+    absolute: 276
   updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
@@ -24607,7 +24607,7 @@ MonoBehaviour:
   hideIfOffScreen: 0
   keepAspectRatio: 0
   aspectRatio: 2.1034484
-  mType: 1
+  mType: 0
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
@@ -24620,10 +24620,16 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 3860080789952859003, guid: 15a43d23d591d344aaaf1d2f5e8ff4eb, type: 3}
-  mSpriteName: Ticket
+  mRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  mTexture: {fileID: 2800000, guid: 429239d55d171aa43a5fa070e256bdea, type: 3}
+  mShader: {fileID: 4800000, guid: e75727d9555d9d14ca51d91908c681bc, type: 3}
+  mBorder: {x: 0, y: 0, z: 0, w: 0}
   mFixedAspect: 0
-  mFillCenter: 1
 --- !u!1 &1968806367
 GameObject:
   m_ObjectHideFlags: 0

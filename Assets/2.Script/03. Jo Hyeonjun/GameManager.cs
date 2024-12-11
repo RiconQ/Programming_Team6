@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o")); // 체크 타임 최초 설정
             canGetItem = true;
         }
+        if(ticket > 0) canGetItem = true;
         ShowTicketInfo();
 
         // 스폰 구슬의 레벨 최댓값의 scale + 0.015f
@@ -162,14 +163,14 @@ public class GameManager : MonoBehaviour
     // 티켓이 사용되는 상황
     public void TicketUsed()
     {
-        if (ticket > 0)
+        if (canGetItem)
         {
             Debug.Log("Get Item!");
             if (ticket == maxTicket)
             {
                 PlayerPrefs.SetString("checkTime", DateTime.Now.ToString("o"));
             }
-            ticket--;
+            if (ticket > 0) ticket--;
         }
         // 티켓 0 이었으면
         else
