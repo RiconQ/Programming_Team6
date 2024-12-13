@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public Text maxScoreText;
     public GameObject GameOverUI;
     public GameObject wall;
+    public GameObject fairy;
     private float borderFix;
 
     [Header("----------Ticket")]
@@ -334,6 +335,7 @@ public class GameManager : MonoBehaviour
     {
         posX = Mathf.Clamp(posX, borderLeft + borderFix, borderRight - borderFix) + UnityEngine.Random.Range(-0.01f, 0.01f);
         lastBall.transform.position = new Vector3(posX, lastBall.transform.position.y, 0);
+        fairy.transform.localPosition = lastBall.transform.localPosition + new Vector3(-15, 20, 0);
     }
 
     // 드랍 버튼 누르면
