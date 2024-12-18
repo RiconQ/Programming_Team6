@@ -324,16 +324,16 @@ public class Ball : MonoBehaviour
     private void GetItem()
     {
         if (GameManager.Instance.isGameOver) return;
-        if (GameManager.Instance.canGetItem)
+        foreach (var item in generatedItems)
         {
-            foreach (var item in generatedItems)
-            {
-                // 부모 객체로부터 아이템 분리
-                item.transform.SetParent(null);
+            // 부모 객체로부터 아이템 분리
+            item.transform.SetParent(null);
 
-                // 인벤토리에 추가
+            // 인벤토리에 추가
+            if (GameManager.Instance.canGetItem) 
                 ItemManager.instance.AddItemsToInventory(generatedItems);
-            }
+            else 
+                item.transform.gameObject.SetActive(false);
         }
         GameManager.Instance.TicketUsed();
         // 생성된 아이템 리스트 초기화
